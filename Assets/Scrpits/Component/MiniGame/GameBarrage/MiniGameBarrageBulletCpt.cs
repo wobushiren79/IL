@@ -67,7 +67,7 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
         float angle = VectorUtil.GetAngle(transform.position, targetPositon);
         transform.Rotate(new Vector3(0, 0, 1), -90 + angle);
         if (rbBullet != null)
-            rbBullet.velocity = (targetPositon - transform.position).normalized * force;
+            rbBullet.linearVelocity = (targetPositon - transform.position).normalized * force;
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
     public void StopMove()
     {
         if (rbBullet != null)
-            rbBullet.velocity = Vector3.zero;
+            rbBullet.linearVelocity = Vector3.zero;
     }
 
     /// <summary>

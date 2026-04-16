@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, DialogView.IDialogCallBack
+public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>
 {
     public enum NotifyTypeEnum
     {
@@ -151,14 +151,14 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                         if (manager.gameConfig.isShowDetailsForTower)
                         {
                             AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer + ""));
+                            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1331), itemInfiniteTowerData.layer + ""));
                         }
                         else
                         {
                             if (itemInfiniteTowerData.layer % 10 == 0)
                             {
                                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                                UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer + ""));
+                                UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1331), itemInfiniteTowerData.layer + ""));
                             }
                         }
         
@@ -181,7 +181,7 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                         {
                             //弹出提示
                             AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1332), (itemInfiniteTowerData.layer-1) + ""));
+                            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1332), (itemInfiniteTowerData.layer-1) + ""));
                             itemInfiniteTowerData.proForSend = -1;
                             //还原员工状态
                             for (int c = 0; c < listCharacterData.Count; c++)
@@ -199,7 +199,7 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                     {
                         //弹出提示
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
-                        UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1333), itemInfiniteTowerData.layer + ""));
+                        UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1333), itemInfiniteTowerData.layer + ""));
                         //如果是失败攻略
                         itemInfiniteTowerData.proForSend = -1;
                         //还原员工状态
@@ -247,17 +247,18 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
             if (isCompleteResearch)
             {
                 itemBed.CompleteResearch(gameData);
-                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), itemBed.bedName);
+                string toastStr = string.Format(TextHandler.Instance.GetTextById(1071), itemBed.bedName);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 UIHandler.Instance.ToastHint<ToastView>(IconHandler.Instance.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
                     dialogType = DialogEnum.Achievement,
-                    title = TextHandler.Instance.manager.GetTextById(1048),
+                    title = TextHandler.Instance.GetTextById(1048),
                     content = toastStr,
-                    callBack = this
                 };
+                dialogData.actionSubmit = Submit;
+                dialogData.actionCancel = Cancel;
                 AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
                 achievementDialog.SetData(2, "ui_features_bed");
             }
@@ -295,17 +296,18 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
             if (isCompleteResearch)
             {
                 itemMenu.CompleteResearch(gameData);
-                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), menuInfo.name);
+                string toastStr = string.Format(TextHandler.Instance.GetTextById(1071), menuInfo.name);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 UIHandler.Instance.ToastHint<ToastView>(IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
                     dialogType = DialogEnum.Achievement,
-                    title = TextHandler.Instance.manager.GetTextById(1048),
-                    content = toastStr,
-                    callBack = this
+                    title = TextHandler.Instance.GetTextById(1048),
+                    content = toastStr
                 };
+                dialogData.actionSubmit = Submit;
+                dialogData.actionCancel = Cancel;
                 AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 [Serializable]
 public class NpcTeamBean : BaseBean
 {
+    public long id;
+    public int valid;
     public long team_id;
     public int team_type;
     public string team_leader;

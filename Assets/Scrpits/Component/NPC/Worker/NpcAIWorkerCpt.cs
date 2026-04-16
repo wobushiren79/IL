@@ -97,34 +97,34 @@ public class NpcAIWorkerCpt : BaseNpcAI
         switch (workerIntent)
         {
             case WorkerIntentEnum.Idle:
-                statusStr = TextHandler.Instance.manager.GetTextById(171);
+                statusStr = TextHandler.Instance.GetTextById(171);
                 break;
             case WorkerIntentEnum.Daze:
-                statusStr = TextHandler.Instance.manager.GetTextById(178);
+                statusStr = TextHandler.Instance.GetTextById(178);
                 break;
             case WorkerIntentEnum.WaiterSend:
-                statusStr = TextHandler.Instance.manager.GetTextById(172);
+                statusStr = TextHandler.Instance.GetTextById(172);
                 break;
             case WorkerIntentEnum.WaiterClean:
-                statusStr = TextHandler.Instance.manager.GetTextById(173);
+                statusStr = TextHandler.Instance.GetTextById(173);
                 break;
             case WorkerIntentEnum.WaiterBed:
-                statusStr = TextHandler.Instance.manager.GetTextById(180);
+                statusStr = TextHandler.Instance.GetTextById(180);
                 break;
             case WorkerIntentEnum.Cook:
-                statusStr = TextHandler.Instance.manager.GetTextById(174);
+                statusStr = TextHandler.Instance.GetTextById(174);
                 break;
             case WorkerIntentEnum.Accounting:
-                statusStr = TextHandler.Instance.manager.GetTextById(175);
+                statusStr = TextHandler.Instance.GetTextById(175);
                 break;
             case WorkerIntentEnum.AccostSolicit:
-                statusStr = TextHandler.Instance.manager.GetTextById(176);
+                statusStr = TextHandler.Instance.GetTextById(176);
                 break;
             case WorkerIntentEnum.AccostGuide:
-                statusStr = TextHandler.Instance.manager.GetTextById(179);
+                statusStr = TextHandler.Instance.GetTextById(179);
                 break;
             case WorkerIntentEnum.Beater:
-                statusStr = TextHandler.Instance.manager.GetTextById(177);
+                statusStr = TextHandler.Instance.GetTextById(177);
                 break;
         }
         return workerIntent;

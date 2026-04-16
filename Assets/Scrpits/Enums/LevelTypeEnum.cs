@@ -17,19 +17,19 @@ public class LevelTypeEnumTools
 
         if (level == LevelTypeEnum.Init)
         {
-            levelStr = TextHandler.Instance.manager.GetTextById(104);
+            levelStr = TextHandler.Instance.GetTextById(104);
         }
         else if (level == LevelTypeEnum.Star)
         {
-            levelStr = TextHandler.Instance.manager.GetTextById(101);
+            levelStr = TextHandler.Instance.GetTextById(101);
         }
         else if (level == LevelTypeEnum.Moon)
         {
-            levelStr = TextHandler.Instance.manager.GetTextById(102);
+            levelStr = TextHandler.Instance.GetTextById(102);
         }
         else if (level == LevelTypeEnum.Sun)
         {
-            levelStr = TextHandler.Instance.manager.GetTextById(103);
+            levelStr = TextHandler.Instance.GetTextById(103);
         }
         else
         {

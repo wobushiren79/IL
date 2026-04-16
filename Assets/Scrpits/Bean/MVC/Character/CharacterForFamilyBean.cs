@@ -62,13 +62,13 @@ public class CharacterForFamilyBean : CharacterBean
         switch (GetFamilyType())
         {
             case FamilyTypeEnum.Mate:
-                name = TextHandler.Instance.manager.GetTextById(451);
+                name = TextHandler.Instance.GetTextById(451);
                 break;
             case FamilyTypeEnum.Son:
-                name = TextHandler.Instance.manager.GetTextById(452);
+                name = TextHandler.Instance.GetTextById(452);
                 break;
             case FamilyTypeEnum.Daughter:
-                name = TextHandler.Instance.manager.GetTextById(453);
+                name = TextHandler.Instance.GetTextById(453);
                 break;
         }
         return name;

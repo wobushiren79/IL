@@ -229,12 +229,12 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         if (etBedName.text.Length <= 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1312));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1312));
             return;
         }
 
@@ -242,19 +242,20 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         string moneyStr = "";
         if (customPriceL != 0)
         {
-            moneyStr += customPriceL + TextHandler.Instance.manager.GetTextById(16);
+            moneyStr += customPriceL + TextHandler.Instance.GetTextById(16);
         }
         if (customPriceM != 0)
         {
-            moneyStr += customPriceM + TextHandler.Instance.manager.GetTextById(17);
+            moneyStr += customPriceM + TextHandler.Instance.GetTextById(17);
         }
         if (customPriceS != 0)
         {
-            moneyStr += customPriceS + TextHandler.Instance.manager.GetTextById(18);
+            moneyStr += customPriceS + TextHandler.Instance.GetTextById(18);
         }
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3103), moneyStr);
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3103), moneyStr);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -294,7 +295,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         {
             FindBedDialogView findBedDialog = dialogView as FindBedDialogView;
             gameData.AddBed(findBedDialog.buildBedData);
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1311));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1311));
         }
         else
         {
@@ -314,12 +315,12 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         if (etBedName.text.Length <= 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1312));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1312));
             return;
         }
         //支付金钱
@@ -329,7 +330,8 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.FindBed;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         FindBedDialogView findBedDialog = UIHandler.Instance.ShowDialog<FindBedDialogView>(dialogData);
         //点击继续
         findBedDialog.SetCallBackForContinue((view, data) =>

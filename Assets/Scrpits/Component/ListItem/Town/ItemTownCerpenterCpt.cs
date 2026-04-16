@@ -4,7 +4,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
+public class ItemTownCerpenterCpt : ItemTownStoreCpt
 {
     public GameObject objAttribute;
     public Text tvAttribute;
@@ -86,7 +86,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             objAttribute.gameObject.SetActive(true);
         }
         if (tvAttribute != null)
-            tvAttribute.text = TextHandler.Instance.manager.GetTextById(10) + "+" + aesthetics;
+            tvAttribute.text = TextHandler.Instance.GetTextById(10) + "+" + aesthetics;
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (tvOwn == null)
                 return;
-            tvOwn.text = (TextHandler.Instance.manager.GetTextById(4001) + "\n" + gameData.GetBuildNumber(storeInfo.mark_id));
+            tvOwn.text = (TextHandler.Instance.GetTextById(4001) + "\n" + gameData.GetBuildNumber(storeInfo.mark_id));
         }
     }
 
@@ -150,13 +150,13 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         //检测是否正在修建客栈
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1019));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1019));
             return;
         }
         //检测金钱
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && !gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
@@ -168,24 +168,26 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                 //如果是庭院
                 if (storeInfo.mark_type == 3)
                 {
-                    dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3016));
+                    dialogBean.content = string.Format(TextHandler.Instance.GetTextById(3016));
                 }
                 else
                 {
-                    dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3010), 1 + "");
+                    dialogBean.content = string.Format(TextHandler.Instance.GetTextById(3010), 1 + "");
                 }
             }
             else
-                dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3002), buildItemData.name);
+                dialogBean.content = string.Format(TextHandler.Instance.GetTextById(3002), buildItemData.name);
             dialogBean.dialogType = DialogEnum.Normal;
-            dialogBean.callBack = this;
+            dialogBean.actionSubmit = Submit;
+            dialogBean.actionCancel = Cancel;
             UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
         }
         else
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.dialogType = DialogEnum.PickForNumber;
-            dialogBean.callBack = this;
+            dialogBean.actionSubmit = Submit;
+            dialogBean.actionCancel = Cancel;
             PickForNumberDialogView dialogView = UIHandler.Instance.ShowDialog<PickForNumberDialogView>(dialogBean);
             dialogView.SetData(ivIcon.sprite, 999);
         }
@@ -199,27 +201,27 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         if (dialogView as PickForNumberDialogView)
         {
             PickForNumberDialogView pickForNumberDialog = dialogView as PickForNumberDialogView;
-            long number= pickForNumberDialog.GetPickNumber();
+            long number = pickForNumberDialog.GetPickNumber();
             //检测金钱
-            if (!gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
+            if (!gameData.HasEnoughMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
                 return;
             }
             if (!gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1012));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1012));
                 return;
             }
             if (!gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1021));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1021));
                 return;
             }
             gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
             gameData.PayGuildCoin(storeInfo.guild_coin * number);
             gameData.PayTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number);
-            
+
             //加上获取数量
             int getNumber = 1;
             if (storeInfo.get_number != 0)
@@ -228,31 +230,31 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             }
             gameData.AddBuildNumber(buildItemData.id, number * getNumber);
             RefreshUI();
-            string  toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1010), buildItemData.name+"x"+ (number * getNumber));
+            string toastStr = string.Format(TextHandler.Instance.GetTextById(1010), buildItemData.name + "x" + (number * getNumber));
             UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
         }
-        else 
+        else
         {
 
             //检测金钱
-            if (!gameData.HasEnoughMoney(storeInfo.price_l , storeInfo.price_m , storeInfo.price_s ))
+            if (!gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
                 return;
             }
-            if (!gameData.HasEnoughGuildCoin(storeInfo.guild_coin ))
+            if (!gameData.HasEnoughGuildCoin(storeInfo.guild_coin))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1012));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1012));
                 return;
             }
-            if (!gameData.HasEnoughTrophy(storeInfo.trophy_elementary , storeInfo.trophy_intermediate , storeInfo.trophy_advanced , storeInfo.trophy_legendary ))
+            if (!gameData.HasEnoughTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1021));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1021));
                 return;
             }
             gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-            gameData.PayGuildCoin(storeInfo.guild_coin );
-            gameData.PayTrophy(storeInfo.trophy_elementary , storeInfo.trophy_intermediate , storeInfo.trophy_advanced , storeInfo.trophy_legendary );
+            gameData.PayGuildCoin(storeInfo.guild_coin);
+            gameData.PayTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
 
             string toastStr;
             if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
@@ -288,7 +290,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                 }
 
                 GetUIComponent<UITownCarpenter>().RefreshUI();
-                toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1011), storeInfo.name);
+                toastStr = string.Format(TextHandler.Instance.GetTextById(1011), storeInfo.name);
             }
             else
             {
@@ -301,7 +303,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                 gameData.AddBuildNumber(buildItemData.id, 1 * getNumber);
 
                 RefreshUI();
-                toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1010), buildItemData.name+"x"+ 1 * getNumber);
+                toastStr = string.Format(TextHandler.Instance.GetTextById(1010), buildItemData.name + "x" + 1 * getNumber);
             }
             UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
         }

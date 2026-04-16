@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using Cinemachine;
 
 public class GameControlHandler : BaseHandler<GameControlHandler, GameControlManager>
 {

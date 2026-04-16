@@ -9,7 +9,6 @@ using System;
 public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
     UIMiniGameCombatSelectCharacter.ICallBack,
     UIMiniGameCombatCommand.ICallBack,
-    DialogView.IDialogCallBack,
     PowerTestDialogView.ICallBack,
     IRadioGroupCallBack,
     IRadioButtonCallBack
@@ -298,10 +297,12 @@ public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
 
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.PowerTest;
-            dialogData.callBack = this;
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
+            dialogData.timeDestroyDelay = 1f;
             PowerTestDialogView powerTestDialog = UIHandler.Instance.ShowDialog<PowerTestDialogView>(dialogData);
             powerTestDialog.SetCallBack(this);
-            powerTestDialog.SetData(1.5f, 1);
+            powerTestDialog.SetData(1.5f);
         }
         else
         {

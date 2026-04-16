@@ -1,17 +1,16 @@
-﻿using Cinemachine;
-using UnityEditor;
-using UnityEngine;
+﻿using Unity.Cinemachine;
+
 
 public partial class CameraManager 
 {
-    protected CinemachineVirtualCamera _camera2D;
+    protected CinemachineCamera _camera2D;
 
-    public CinemachineVirtualCamera camera2D
+    public CinemachineCamera camera2D
     {
         get
         {
             if (_camera2D == null)
-                _camera2D = FindWithTag<CinemachineVirtualCamera>(TagInfo.Tag_Camera2D);
+                _camera2D = FindWithTag<CinemachineCamera>(TagInfo.Tag_Camera2D);
             return _camera2D;
         }
     }

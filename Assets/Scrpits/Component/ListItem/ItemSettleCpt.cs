@@ -33,13 +33,13 @@ public class ItemSettleCpt : ItemGameBaseCpt
             //收入
             if (status == 1)
             {
-                tvStatus.text = TextHandler.Instance.manager.GetTextById(181);
+                tvStatus.text = TextHandler.Instance.GetTextById(181);
                 tvStatus.color = Color.green;
             }
             //支出
             else if (status == 0)
             {
-                tvStatus.text = TextHandler.Instance.manager.GetTextById(182);
+                tvStatus.text = TextHandler.Instance.GetTextById(182);
                 tvStatus.color = Color.red;
             }
         }

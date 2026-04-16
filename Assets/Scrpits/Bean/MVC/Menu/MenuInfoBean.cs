@@ -5,6 +5,8 @@ using System;
 [Serializable]
 public class MenuInfoBean : BaseBean
 {
+    public long id;
+    public int valid;
     public long menu_id;
     public string icon_key;//图标
     public string anim_key;//动画名称

@@ -17,7 +17,7 @@ public class SceneInfiniteTowersManager : SceneBaseManager
     {
         foreach (SignForInfiniteTowersCpt itemSign in listSignForLayer)
         {
-            itemSign.SetData(layer + TextHandler.Instance.manager.GetTextById(83));
+            itemSign.SetData(layer + TextHandler.Instance.GetTextById(83));
         }
     }
 
@@ -186,13 +186,13 @@ public class SceneInfiniteTowersManager : SceneBaseManager
                 baseCharacterData = RandomUtil.GetRandomDataByList(listTempCharacter);
             }
             //随机生成身体数据
-            CharacterBean characterOne = ClassUtil.DeepCopyBySerialize(baseCharacterData);
+            CharacterBean characterOne = ClassUtil.DeepCopyBinary(baseCharacterData);
             characterOne.body.CreateRandomBody();
             listData.Add(characterOne);
-            CharacterBean characterTwo = ClassUtil.DeepCopyBySerialize(baseCharacterData);
+            CharacterBean characterTwo = ClassUtil.DeepCopyBinary(baseCharacterData);
             characterTwo.body.CreateRandomBody();
             listData.Add(characterTwo);
-            CharacterBean characterThree = ClassUtil.DeepCopyBySerialize(baseCharacterData);
+            CharacterBean characterThree = ClassUtil.DeepCopyBinary(baseCharacterData);
             characterThree.body.CreateRandomBody();
             listData.Add(characterThree);
         }

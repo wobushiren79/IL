@@ -34,13 +34,13 @@ public partial class UIMainStart : BaseUIComponent
     private void Start()
     {
         if (ui_BTStartText != null)
-            ui_BTStartText.text = TextHandler.Instance.manager.GetTextById(4011);
+            ui_BTStartText.text = TextHandler.Instance.GetTextById(4011);
         if (ui_BTContinueText != null)
-            ui_BTContinueText.text = TextHandler.Instance.manager.GetTextById(4012);
+            ui_BTContinueText.text = TextHandler.Instance.GetTextById(4012);
         if (ui_BTSettingText != null)
-            ui_BTSettingText.text = TextHandler.Instance.manager.GetTextById(4013);
+            ui_BTSettingText.text = TextHandler.Instance.GetTextById(4013);
         if (ui_BTExitText != null)
-            ui_BTExitText.text = TextHandler.Instance.manager.GetTextById(4014);
+            ui_BTExitText.text = TextHandler.Instance.GetTextById(4014);
 
         SetVersion(ProjectConfigInfo.GAME_VERSION);
     }

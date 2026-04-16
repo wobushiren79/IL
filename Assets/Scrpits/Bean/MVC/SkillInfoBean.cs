@@ -3,6 +3,8 @@ using UnityEditor;
 
 public class SkillInfoBean : BaseBean
 {
+    public long id;
+    public int valid;
     public long skill_id;
 
     //图标

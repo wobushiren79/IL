@@ -28,7 +28,8 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
             return;
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.ItemsSelection;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         ItemsSelectionDialogView itemsSelectionDialog = UIHandler.Instance.ShowDialog<ItemsSelectionDialogView>(dialogData);
         itemsSelectionDialog.SetCallBack(this);
         if (type == 1)
@@ -79,7 +80,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     {
         if (listData == null || listData.Count == 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, TextHandler.Instance.manager.GetTextById(1065));
+            UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, TextHandler.Instance.GetTextById(1065));
             return;
         }
         SkillInfoBean skillInfo = listData[0];
@@ -93,7 +94,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         {
             //学习该技能
             characterData.attributes.LearnSkill(itemsInfoData.add_id);
-            string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1064), characterData.baseInfo.name, itemsInfoData.name);
+            string toastStr = string.Format(TextHandler.Instance.GetTextById(1064), characterData.baseInfo.name, itemsInfoData.name);
             UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
             RefreshItems(itemsInfoData.id, -1);
         }
@@ -110,7 +111,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 if (characterData.attributes.CheckLearnBook(itemsInfoData.id))
                 {
                     //已经学习过该图书
-                    string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1009), characterData.baseInfo.name, itemsInfoData.name);
+                    string toastStr = string.Format(TextHandler.Instance.GetTextById(1009), characterData.baseInfo.name, itemsInfoData.name);
                     UIHandler.Instance.ToastHint<ToastView>(toastStr);
                 }
                 else
@@ -127,7 +128,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                         }
                         else
                         {
-                            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1035));
+                            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1035));
                         }
                     }
                     else
@@ -140,7 +141,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 if (characterData.attributes.CheckLearnSkills(itemsInfoData.add_id))
                 {
                     //已经学习过该技能
-                    string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1063), characterData.baseInfo.name, itemsInfoData.name);
+                    string toastStr = string.Format(TextHandler.Instance.GetTextById(1063), characterData.baseInfo.name, itemsInfoData.name);
                     UIHandler.Instance.ToastHint<ToastView>(toastStr);
                 }
                 else
@@ -159,7 +160,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                         int removePosition = UnityEngine.Random.Range(0, characterData.attributes.listSkills.Count);
                         characterData.attributes.listSkills.RemoveAt(removePosition);
                     }
-                    UIHandler.Instance.ToastHint<ToastView>(characterData.baseInfo.name + TextHandler.Instance.manager.GetTextById(1067));
+                    UIHandler.Instance.ToastHint<ToastView>(characterData.baseInfo.name + TextHandler.Instance.GetTextById(1067));
                     RefreshItems(itemsInfoData.id, -1);
                 }
                 else if (itemsInfoData.id == 99900002)
@@ -167,7 +168,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                     if (characterData.attributes.CheckLearnItem(itemsInfoData.id))
                     {
                         //已经学习过该图书
-                        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1055), characterData.baseInfo.name, itemsInfoData.name);
+                        string toastStr = string.Format(TextHandler.Instance.GetTextById(1055), characterData.baseInfo.name, itemsInfoData.name);
                         UIHandler.Instance.ToastHint<ToastView>(toastStr);
                     }
                     else
@@ -229,7 +230,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         //学习该图书
         characterData.attributes.LearnBook(itemsInfoData.id);
         characterData.attributes.AddAttributes(itemsInfoData);
-        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1008), characterData.baseInfo.name, itemsInfoData.name);
+        string toastStr = string.Format(TextHandler.Instance.GetTextById(1008), characterData.baseInfo.name, itemsInfoData.name);
         UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
         RefreshItems(itemsInfoData.id, -1);
     }
@@ -239,7 +240,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         //学习该道具
         characterData.attributes.LearnItem(itemsInfoData.id);
         characterData.attributes.AddAttributes(itemsInfoData);
-        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1054), characterData.baseInfo.name, itemsInfoData.name);
+        string toastStr = string.Format(TextHandler.Instance.GetTextById(1054), characterData.baseInfo.name, itemsInfoData.name);
         UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
         RefreshItems(itemsInfoData.id, -1);
     }

@@ -7,8 +7,7 @@ using DG.Tweening;
 public partial class UIMainCreate : BaseUIComponent,
     IRadioGroupCallBack,
     ColorView.ICallBack,
-    SelectView.ICallBack,
-    DialogView.IDialogCallBack
+    SelectView.ICallBack
 
 {
     public ColorView ui_ColorHair;
@@ -186,18 +185,19 @@ public partial class UIMainCreate : BaseUIComponent,
 
         if (ui_ETInnName.text.IsNull())
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1000));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1000));
             return;
         }
         if (ui_ETUserName.text.IsNull())
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1001));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1001));
             return;
         }
         DialogBean dialogData = new DialogBean();
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3012);
+        dialogData.content = TextHandler.Instance.GetTextById(3012);
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

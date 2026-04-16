@@ -30,13 +30,12 @@ public class PowerTestDialogView : DialogView, StrengthTestView.ICallBack
     /// 设置武力数值
     /// </summary>
     /// <param name="force"></param>
-    public void SetData(float moveSpeed,float timeDelayDelete)
+    public void SetData(float moveSpeed)
     {
-        SetDelayDelete(timeDelayDelete);
         resultsForce = 0;
         if (moveSpeed < 0.1f)
             moveSpeed = 0.1f;
-        strengthTest.SetData(TextHandler.Instance.manager.GetTextById(52), moveSpeed);
+        strengthTest.SetData(TextHandler.Instance.GetTextById(52), moveSpeed);
         StartPowerTest();
     }
 

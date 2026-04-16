@@ -123,7 +123,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         else
         {
             objNpcName.SetActive(true);
-            tvNpcName.text = TextHandler.Instance.manager.GetTextById(61) + ":" + name;
+            tvNpcName.text = TextHandler.Instance.GetTextById(61) + ":" + name;
         }
     }
 
@@ -156,7 +156,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     public void SetStatus(string status)
     {
         if (tvStatus != null)
-            tvStatus.text = TextHandler.Instance.manager.GetTextById(74) + ":" + status;
+            tvStatus.text = TextHandler.Instance.GetTextById(74) + ":" + status;
     }
 
     /// <summary>
@@ -169,11 +169,11 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         //设置类型
         if (npcAICustomer.GetOrderForCustomer() == null)
         {
-            SetType(TextHandler.Instance.manager.GetTextById(70));
+            SetType(TextHandler.Instance.GetTextById(70));
         }
         else
         {
-            SetType(TextHandler.Instance.manager.GetTextById(60));
+            SetType(TextHandler.Instance.GetTextById(60));
             //设置状态
             objNpcStatus.SetActive(true);
             npcAICustomer.GetCustomerStatus(out string customerStatus);
@@ -192,7 +192,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             {
                 objTeam.SetActive(true);
                 ivTeam.color = npcTeam.teamColor;
-                tvTeamName.text = TextHandler.Instance.manager.GetTextById(49) + ":" + npcTeam.teamData.name;
+                tvTeamName.text = TextHandler.Instance.GetTextById(49) + ":" + npcTeam.teamData.name;
             }
         }
         ShowCustomerFoodData();
@@ -204,11 +204,11 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         //设置类型
         if (npcAICustomer.orderForHotel == null)
         {
-            SetType(TextHandler.Instance.manager.GetTextById(70));
+            SetType(TextHandler.Instance.GetTextById(70));
         }
         else
         {
-            SetType(TextHandler.Instance.manager.GetTextById(60));
+            SetType(TextHandler.Instance.GetTextById(60));
             //设置状态
             objNpcStatus.SetActive(true);
             npcAICustomer.GetCustomerHotelStatus(out string customerStatus);
@@ -224,7 +224,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     public void SetDataForWork(NpcAIWorkerCpt npcAIWorker)
     {
         this.targetNpcAIForWorker = npcAIWorker;
-        SetType(TextHandler.Instance.manager.GetTextById(63));
+        SetType(TextHandler.Instance.GetTextById(63));
         //设置状态
         objNpcStatus.SetActive(true);
         npcAIWorker.GetWorkerStatus(out string workerStatus);
@@ -237,7 +237,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// <param name="npcAIRascal"></param>
     public void SetDataForRascal(NpcAIRascalCpt npcAIRascal)
     {
-        SetType(TextHandler.Instance.manager.GetTextById(59));
+        SetType(TextHandler.Instance.GetTextById(59));
     }
 
     /// <summary>

@@ -5,7 +5,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 
-public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, WorkerPriorityView.ICallBack
+public class ItemGameWorkerCpt : ItemGameBaseCpt, WorkerPriorityView.ICallBack
 {
     [Header("控件")]
     public Text tvName;
@@ -63,15 +63,15 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         if (pbName != null)
         {
-            pbName.SetContent(TextHandler.Instance.manager.GetTextById(61));
+            pbName.SetContent(TextHandler.Instance.GetTextById(61));
         }
         if (pbPrice != null)
         {
-            pbPrice.SetContent(TextHandler.Instance.manager.GetTextById(11002));
+            pbPrice.SetContent(TextHandler.Instance.GetTextById(11002));
         }
         if (pbLoyal != null)
         {
-            pbLoyal.SetContent(TextHandler.Instance.manager.GetTextById(11003));
+            pbLoyal.SetContent(TextHandler.Instance.GetTextById(11003));
         }
         if (pbCook != null)
         {
@@ -259,21 +259,22 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1082));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1082));
         }
         else
         {
             if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work || characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest)
             {
                 DialogBean dialogData = new DialogBean();
-                dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
+                dialogData.content = string.Format(TextHandler.Instance.GetTextById(3063), characterData.baseInfo.name);
                 dialogData.dialogType = DialogEnum.Normal;
-                dialogData.callBack = this;
+                dialogData.actionSubmit = Submit;
+                dialogData.actionCancel = Cancel;
                 UIHandler.Instance.ShowDialog<DialogView>(dialogData);
             }
             else
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1083));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1083));
             }
         }
     }
@@ -285,12 +286,13 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
-        // dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
+        // dialogData.content = string.Format(TextHandler.Instance.GetTextById(3063), characterData.baseInfo.name);
         dialogData.dialogType = DialogEnum.PickForItems;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.isDestroySubmit = false;
         PickForItemsDialogView dialogView = UIHandler.Instance.ShowDialog<PickForItemsDialogView>(dialogData);
         dialogView.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
-        dialogView.SetSubmitDestroy(false);
     }
 
     /// <summary>
@@ -472,7 +474,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
                     if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
                     {
                         tvStatus.color = Color.green;
-                        workerStatusStr = TextHandler.Instance.manager.GetTextById(282);
+                        workerStatusStr = TextHandler.Instance.GetTextById(282);
                     }
                     else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
                     {
@@ -514,7 +516,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             //刷新UI
             SetData(characterData);
             //提示
-            UIHandler.Instance.ToastHint<ToastView>(ivLoyal.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1132), characterData.baseInfo.name, addLoyal + ""));
+            UIHandler.Instance.ToastHint<ToastView>(ivLoyal.sprite, string.Format(TextHandler.Instance.GetTextById(1132), characterData.baseInfo.name, addLoyal + ""));
             pickForItems.RefreshUI();
         }
         else
@@ -546,7 +548,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             if (characterData.equips.shoesTFId != 0)
                 gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
 
-            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1081), characterData.baseInfo.name));
+            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1081), characterData.baseInfo.name));
             gameData.RemoveWorker(characterData);
 
             transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate

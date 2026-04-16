@@ -79,14 +79,14 @@ public class BaseGambleHandler<T,B> : BaseHandler<BaseGambleHandler<T,B>, BaseGa
         if (!gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
         {
             if(isShowHint)
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         //检测是否超过最大下注金额
         if (gambleData.betForMoneyS + moneyS > gambleData.betMaxForMoneyS)
         {
             if (isShowHint)
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1302));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1302));
             return;
         }
         gameData.PayMoney(moneyL, moneyM, moneyS);

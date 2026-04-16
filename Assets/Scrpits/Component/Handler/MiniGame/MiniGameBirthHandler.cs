@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>, DialogView.IDialogCallBack
+public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>
 {
 
     public List<MiniGameBirthSpermBean> listSperm = new List<MiniGameBirthSpermBean>();
@@ -42,25 +42,26 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
             familyData.birthPro = 0;
             if (familyData.listChildCharacter.Count >= 3)
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1351));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1351));
             }
             else
             {
                 if (familyData.mateCharacter.body.GetSex() == gameData.userCharacter.body.GetSex())
                 {
                     //同性
-                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7032), 10);
+                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7032), 10);
                 }
                 else
                 {
                     //异性
-                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7031), 10);
+                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7031), 10);
                 }
 
                 DialogBean dialogData = new DialogBean();
-                dialogData.title = TextHandler.Instance.manager.GetTextById(8011);
+                dialogData.title = TextHandler.Instance.GetTextById(8011);
                 dialogData.dialogType = DialogEnum.InputText;
-                dialogData.callBack = this;
+                dialogData.actionSubmit = Submit;
+                dialogData.actionCancel = Cancel;
                 UIHandler.Instance.ShowDialog<InputTextDialogView>(dialogData);
                 //设置游戏数据
                 miniGameData.SetGameResult(MiniGameResultEnum.Win);

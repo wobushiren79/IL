@@ -144,7 +144,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     public void SetYear(int year)
     {
         if (tvYear != null)
-            tvYear.text = TextHandler.Instance.manager.GetTextById(32) + year + TextHandler.Instance.manager.GetTextById(29);
+            tvYear.text = TextHandler.Instance.GetTextById(32) + year + TextHandler.Instance.GetTextById(29);
     }
 
     /// <summary>
@@ -158,16 +158,16 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         switch ((SeasonsEnum)month)
         {
             case SeasonsEnum.Spring:
-                tvSeasons.text = TextHandler.Instance.manager.GetTextById(33);
+                tvSeasons.text = TextHandler.Instance.GetTextById(33);
                 break;
             case SeasonsEnum.Summer:
-                tvSeasons.text = TextHandler.Instance.manager.GetTextById(34);
+                tvSeasons.text = TextHandler.Instance.GetTextById(34);
                 break;
             case SeasonsEnum.Autumn:
-                tvSeasons.text = TextHandler.Instance.manager.GetTextById(35);
+                tvSeasons.text = TextHandler.Instance.GetTextById(35);
                 break;
             case SeasonsEnum.Winter:
-                tvSeasons.text = TextHandler.Instance.manager.GetTextById(36);
+                tvSeasons.text = TextHandler.Instance.GetTextById(36);
                 break;
             default:
                 tvSeasons.text = "";

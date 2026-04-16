@@ -16,7 +16,7 @@ public class UITownBank : UIBaseOne, IRadioGroupCallBack
     {
         base.Start();
         rgType.SetCallBack(this);
-        loansStr = TextHandler.Instance.manager.GetTextById(191);
+        loansStr = TextHandler.Instance.GetTextById(191);
     }
 
     public override void Update()

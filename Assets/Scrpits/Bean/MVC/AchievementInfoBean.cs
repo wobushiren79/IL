@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class AchievementInfoBean : BaseBean
 {
+    public long id;
     public long ach_id;
     public string pre_ach_ids;//前置成就
     public int type;

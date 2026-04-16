@@ -118,7 +118,7 @@ public class InnCourtyardBean
             gameData.AddIng(itemIngData.Key, itemIngData.Value);
             Sprite spIng = IngredientsEnumTools.GetIngredientIcon(itemIngData.Key);
             string nameIng = IngredientsEnumTools.GetIngredientName(itemIngData.Key);
-            UIHandler.Instance.ToastHint<ToastView>(spIng, string.Format(TextHandler.Instance.manager.GetTextById(6099), $"{nameIng}x{itemIngData.Value}"));
+            UIHandler.Instance.ToastHint<ToastView>(spIng, string.Format(TextHandler.Instance.GetTextById(6099), $"{nameIng}x{itemIngData.Value}"));
         }
         //添加道具
         for (int i = 0; i < listItemsDataAdd.Count; i++)
@@ -127,7 +127,7 @@ public class InnCourtyardBean
             gameData.AddItemsNumber(itemData.itemId, itemData.itemNumber);
             var itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
             Sprite spItem = GeneralEnumTools.GetGeneralSprite(itemsInfo, false);
-            UIHandler.Instance.ToastHint<ToastView>(spItem, string.Format(TextHandler.Instance.manager.GetTextById(6099), $"{itemsInfo.name}x{itemData.itemNumber}"));
+            UIHandler.Instance.ToastHint<ToastView>(spItem, string.Format(TextHandler.Instance.GetTextById(6099), $"{itemsInfo.name}x{itemData.itemNumber}"));
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownBankExchangeCpt : ItemGameBaseCpt
 {
     public enum ExchangeMoneyEnum
     {
@@ -44,7 +44,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         if (tvLimit != null && exchangeType == ExchangeMoneyEnum.MToL)
         {
             tvLimit.gameObject.SetActive(true);
-            tvLimit.text = TextHandler.Instance.manager.GetTextById(19) + ":" + GameCommonInfo.DailyLimitData.exchangeMoneyL;
+            tvLimit.text = TextHandler.Instance.GetTextById(19) + ":" + GameCommonInfo.DailyLimitData.exchangeMoneyL;
         }
     }
 
@@ -207,7 +207,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         //兑换金额不对
         if (payMoney == 0 || exchangeMoney == 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(ivOldMoney.sprite, TextHandler.Instance.manager.GetTextById(1041));
+            UIHandler.Instance.ToastHint<ToastView>(ivOldMoney.sprite, TextHandler.Instance.GetTextById(1041));
             return;
         }
         //是否有足够的金额兑换
@@ -218,46 +218,47 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
             case ExchangeMoneyEnum.SToM:
                 mPayMoneyS = payMoney;
                 mExchangeMoneyM = exchangeMoney;
-                moneyOldUnit = TextHandler.Instance.manager.GetTextById(18);
-                moneyNewUnit = TextHandler.Instance.manager.GetTextById(17);
+                moneyOldUnit = TextHandler.Instance.GetTextById(18);
+                moneyNewUnit = TextHandler.Instance.GetTextById(17);
                 break;
             case ExchangeMoneyEnum.MToS:
                 mPayMoneyM = payMoney;
                 mExchangeMoneyS = exchangeMoney;
-                moneyOldUnit = TextHandler.Instance.manager.GetTextById(17);
-                moneyNewUnit = TextHandler.Instance.manager.GetTextById(18);
+                moneyOldUnit = TextHandler.Instance.GetTextById(17);
+                moneyNewUnit = TextHandler.Instance.GetTextById(18);
                 break;
             case ExchangeMoneyEnum.MToL:
                 mPayMoneyM = payMoney;
                 mExchangeMoneyL = exchangeMoney;
-                moneyOldUnit = TextHandler.Instance.manager.GetTextById(17);
-                moneyNewUnit = TextHandler.Instance.manager.GetTextById(16);
+                moneyOldUnit = TextHandler.Instance.GetTextById(17);
+                moneyNewUnit = TextHandler.Instance.GetTextById(16);
                 break;
             case ExchangeMoneyEnum.LToM:
                 mPayMoneyL = payMoney;
                 mExchangeMoneyM = exchangeMoney;
-                moneyOldUnit = TextHandler.Instance.manager.GetTextById(16);
-                moneyNewUnit = TextHandler.Instance.manager.GetTextById(17);
+                moneyOldUnit = TextHandler.Instance.GetTextById(16);
+                moneyNewUnit = TextHandler.Instance.GetTextById(17);
                 break;
         }
         //判断是否有足够的金钱兑换
         if (!gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(ivOldMoney.sprite, TextHandler.Instance.manager.GetTextById(1042));
+            UIHandler.Instance.ToastHint<ToastView>(ivOldMoney.sprite, TextHandler.Instance.GetTextById(1042));
             return;
         }
         //判断是否超过限额
         if (mExchangeMoneyL > GameCommonInfo.DailyLimitData.exchangeMoneyL)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1044));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1044));
             return;
         }
 
         DialogBean dialogData = new DialogBean();
         mExchangeMoneyStr = exchangeMoney + moneyNewUnit + "";
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -278,7 +279,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
         GameCommonInfo.DailyLimitData.exchangeMoneyL -= (int)mExchangeMoneyL;
         //成功提示
-        UIHandler.Instance.ToastHint<ToastView>(ivNewMoney.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1043), mExchangeMoneyStr));
+        UIHandler.Instance.ToastHint<ToastView>(ivNewMoney.sprite, string.Format(TextHandler.Instance.GetTextById(1043), mExchangeMoneyStr));
         //刷新UI
         RefreshUI();
     }

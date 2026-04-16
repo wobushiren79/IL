@@ -6,6 +6,8 @@ using System.Collections.Generic;
 [Serializable]
 public class BuildItemBean : BaseBean
 {
+    public long id;
+    public int valid;
     public long build_id;
     public int build_type;
     public string model_name;

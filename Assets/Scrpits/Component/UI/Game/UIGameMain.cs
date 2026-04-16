@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System.Collections.Generic;
-public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
+public partial class UIGameMain : BaseUIComponent, IRadioGroupCallBack
 {
     [Header("控件")]
     public UIPopupPromptButton popupWorker;
@@ -200,31 +200,31 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
             return;
 
         if (popupWorker != null)
-            popupWorker.SetContent(TextHandler.Instance.manager.GetTextById(2031));
+            popupWorker.SetContent(TextHandler.Instance.GetTextById(2031));
         if (popupBuild != null)
-            popupBuild.SetContent(TextHandler.Instance.manager.GetTextById(2032));
+            popupBuild.SetContent(TextHandler.Instance.GetTextById(2032));
         if (popupMenu != null)
-            popupMenu.SetContent(TextHandler.Instance.manager.GetTextById(2033));
+            popupMenu.SetContent(TextHandler.Instance.GetTextById(2033));
         if (popupBackpack != null)
-            popupBackpack.SetContent(TextHandler.Instance.manager.GetTextById(2034));
+            popupBackpack.SetContent(TextHandler.Instance.GetTextById(2034));
         if (popupFavorability != null)
-            popupFavorability.SetContent(TextHandler.Instance.manager.GetTextById(2035));
+            popupFavorability.SetContent(TextHandler.Instance.GetTextById(2035));
         if (popupDebug != null)
-            popupDebug.SetContent(TextHandler.Instance.manager.GetTextById(2036));
+            popupDebug.SetContent(TextHandler.Instance.GetTextById(2036));
         if (popupInnData != null)
-            popupInnData.SetContent(TextHandler.Instance.manager.GetTextById(2037));
+            popupInnData.SetContent(TextHandler.Instance.GetTextById(2037));
         if (popupSetting != null)
-            popupSetting.SetContent(TextHandler.Instance.manager.GetTextById(2038));
+            popupSetting.SetContent(TextHandler.Instance.GetTextById(2038));
         if (popupHelp != null)
-            popupHelp.SetContent(TextHandler.Instance.manager.GetTextById(2039));
+            popupHelp.SetContent(TextHandler.Instance.GetTextById(2039));
         if (popupJumpTime != null)
-            popupJumpTime.SetContent(TextHandler.Instance.manager.GetTextById(2040));
+            popupJumpTime.SetContent(TextHandler.Instance.GetTextById(2040));
         if (popupHotel != null)
-            popupHotel.SetContent(TextHandler.Instance.manager.GetTextById(2041));
+            popupHotel.SetContent(TextHandler.Instance.GetTextById(2041));
         if (popupFamily != null)
-            popupFamily.SetContent(TextHandler.Instance.manager.GetTextById(2042));
+            popupFamily.SetContent(TextHandler.Instance.GetTextById(2042));
         if (popupCourtyard != null)
-            popupCourtyard.SetContent(TextHandler.Instance.manager.GetTextById(2043));
+            popupCourtyard.SetContent(TextHandler.Instance.GetTextById(2043));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -380,7 +380,7 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         innAttributes.GetAesthetics(out float maxAesthetics, out float aesthetics);
         if (popupAesthetics != null)
         {
-            popupAesthetics.SetContent(TextHandler.Instance.manager.GetTextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
+            popupAesthetics.SetContent(TextHandler.Instance.GetTextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
         }
         if (proAesthetics != null)
         {
@@ -397,7 +397,7 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         innAttributes.GetRichness(out int maxRichness, out int richness);
         if (popupRichness != null)
         {
-            popupRichness.SetContent(TextHandler.Instance.manager.GetTextById(2005) + ":" + richness + "/" + maxRichness);
+            popupRichness.SetContent(TextHandler.Instance.GetTextById(2005) + ":" + richness + "/" + maxRichness);
         }
         if (proRichness != null)
         {
@@ -414,7 +414,7 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         innAttributes.GetPraise(out int maxPraise, out int praise);
         if (popupPraise != null)
         {
-            popupPraise.SetContent(TextHandler.Instance.manager.GetTextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%");
+            popupPraise.SetContent(TextHandler.Instance.GetTextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%");
         }
         if (proPraise != null)
         {
@@ -432,7 +432,7 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         string innLevelStr = innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
-            popupInnLevel.SetContent(TextHandler.Instance.manager.GetTextById(2006) + " " + innLevelStr);
+            popupInnLevel.SetContent(TextHandler.Instance.GetTextById(2006) + " " + innLevelStr);
         }
 
         if (ivInnLevel != null)
@@ -459,15 +459,16 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         if (InnHandler.Instance.rascalrQueue.IsNull())
         {
             DialogBean dialogData = new DialogBean();
-            dialogData.content = TextHandler.Instance.manager.GetTextById(3007);
+            dialogData.content = TextHandler.Instance.GetTextById(3007);
             dialogData.dialogPosition = 1;
             dialogData.dialogType = DialogEnum.Normal;
-            dialogData.callBack = this;
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
             UIHandler.Instance.ShowDialog<DialogView>(dialogData);
         }
         else
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1016));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1016));
         }
     }
 
@@ -535,10 +536,11 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3004);
+        dialogData.content = TextHandler.Instance.GetTextById(3004);
         dialogData.dialogPosition = 0;
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -551,7 +553,8 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.JumpTime;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         JumpTimeDialogView jumpTimeDialog = UIHandler.Instance.ShowDialog<JumpTimeDialogView>(dialogData);
         jumpTimeDialog.SetData();
     }
@@ -648,15 +651,15 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         switch (moneyType)
         {
             case MoneyEnum.L:
-                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyL.transform);
+                endPosition = UGUIUtil.GetRootPosForUI((RectTransform)transform, (RectTransform)tvMoneyL.transform);
                 tvColor = tvMoneyL.color;
                 break;
             case MoneyEnum.M:
-                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyM.transform);
+                endPosition = UGUIUtil.GetRootPosForUI((RectTransform)transform, (RectTransform)tvMoneyM.transform);
                 tvColor = tvMoneyM.color;
                 break;
             case MoneyEnum.S:
-                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyS.transform);
+                endPosition = UGUIUtil.GetRootPosForUI((RectTransform)transform, (RectTransform)tvMoneyS.transform);
                 tvColor = tvMoneyS.color;
                 break;
         }

@@ -34,32 +34,32 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         switch (customerHotelIntent)
         {
             case CustomerHotelIntentEnum.Walk:
-                intentStr = TextHandler.Instance.manager.GetTextById(151);
+                intentStr = TextHandler.Instance.GetTextById(151);
                 break;
             case CustomerHotelIntentEnum.GoToInn:
-                intentStr = TextHandler.Instance.manager.GetTextById(152);
+                intentStr = TextHandler.Instance.GetTextById(152);
                 break;
             case CustomerHotelIntentEnum.WaitAccost:
-                intentStr = TextHandler.Instance.manager.GetTextById(161);
+                intentStr = TextHandler.Instance.GetTextById(161);
                 break;
             case CustomerHotelIntentEnum.GoToStairsForFirst:
             case CustomerHotelIntentEnum.GoToBed:
-                intentStr = TextHandler.Instance.manager.GetTextById(162);
+                intentStr = TextHandler.Instance.GetTextById(162);
                 break;
             case CustomerHotelIntentEnum.Sleep:
-                intentStr = TextHandler.Instance.manager.GetTextById(164);
+                intentStr = TextHandler.Instance.GetTextById(164);
                 break;
             case CustomerHotelIntentEnum.GoToStairsForSecond:
-                intentStr = TextHandler.Instance.manager.GetTextById(163);
+                intentStr = TextHandler.Instance.GetTextById(163);
                 break;
             case CustomerHotelIntentEnum.GoToPay:
-                intentStr = TextHandler.Instance.manager.GetTextById(157);
+                intentStr = TextHandler.Instance.GetTextById(157);
                 break;
             case CustomerHotelIntentEnum.WaitPay:
-                intentStr = TextHandler.Instance.manager.GetTextById(158);
+                intentStr = TextHandler.Instance.GetTextById(158);
                 break;
             case CustomerHotelIntentEnum.Leave:
-                intentStr = TextHandler.Instance.manager.GetTextById(160);
+                intentStr = TextHandler.Instance.GetTextById(160);
                 break;
         }
         return customerHotelIntent;
@@ -345,7 +345,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                     orderForHotel = InnHandler.Instance.CreateOrderForHotel(this, buildBedCpt);
                     //记录
                     InnHandler.Instance.RecordCustomer(orderForHotel);
-                    characterShoutCpt.Shout(TextHandler.Instance.manager.GetTextById(13401));
+                    characterShoutCpt.Shout(TextHandler.Instance.GetTextById(13401));
                 }
                 else
                 {

@@ -69,7 +69,7 @@ public class ControlForBuildCourtyardCpt : BaseControlForBuild
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        //UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1003));
+                        //UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1003));
                     }
                 }
                 else
@@ -78,7 +78,7 @@ public class ControlForBuildCourtyardCpt : BaseControlForBuild
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1002));
+                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1002));
                     }
                 }
             }

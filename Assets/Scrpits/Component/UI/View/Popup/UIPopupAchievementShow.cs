@@ -97,16 +97,16 @@ public class UIPopupAchievementShow : PopupShowView
             switch (status)
             {
                 case AchievementStatusEnum.Completed:
-                    tvStatus.text = TextHandler.Instance.manager.GetTextById(12001);
+                    tvStatus.text = TextHandler.Instance.GetTextById(12001);
                     tvStatus.color = colorStatusCompleted;
                     break;
                 case AchievementStatusEnum.Processing:
-                    tvStatus.text = TextHandler.Instance.manager.GetTextById(12002);
+                    tvStatus.text = TextHandler.Instance.GetTextById(12002);
                     tvStatus.color = new Color();
                     tvStatus.color = colorStatusProcessing;
                     break;
                 case AchievementStatusEnum.ToBeConfirmed:
-                    tvStatus.text = TextHandler.Instance.manager.GetTextById(12003);
+                    tvStatus.text = TextHandler.Instance.GetTextById(12003);
                     tvStatus.color = new Color();
                     tvStatus.color = new Color(1, 0.2f, 0, 1);
                     break;

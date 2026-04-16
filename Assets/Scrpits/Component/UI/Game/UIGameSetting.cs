@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public partial class UIGameSetting : BaseUIComponent,
     DropdownView.ICallBack, 
     ProgressView.ICallBack,
-    DialogView.IDialogCallBack, 
     IRadioButtonCallBack,
     IRadioGroupCallBack
 {
@@ -349,8 +348,9 @@ public partial class UIGameSetting : BaseUIComponent,
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.Normal;
         dialogData.dialogPosition = 1;
-        dialogData.callBack = this;
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3081);
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = TextHandler.Instance.GetTextById(3081);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -363,8 +363,9 @@ public partial class UIGameSetting : BaseUIComponent,
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.Normal;
         dialogData.dialogPosition = 2;
-        dialogData.callBack = this;
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3082);
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = TextHandler.Instance.GetTextById(3082);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -376,9 +377,10 @@ public partial class UIGameSetting : BaseUIComponent,
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 3;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3083);
+        dialogData.content = TextHandler.Instance.GetTextById(3083);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

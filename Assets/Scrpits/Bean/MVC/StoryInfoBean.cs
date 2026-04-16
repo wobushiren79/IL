@@ -5,6 +5,8 @@ using System;
 [Serializable]
 public class StoryInfoBean : BaseBean
 {
+    public long id;
+    public int valid;
     //事件发生场景 1客栈 2城镇 3竞技场
     public int story_scene;
     //地点类型

@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
-public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
+public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack
 {
     [Header("控件")]
     //public Text tvName;
@@ -54,13 +54,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             rbShow.SetCallBack(this);
         if (pbReputation != null)
         {
-            pbReputation.SetContent(TextHandler.Instance.manager.GetTextById(100));
+            pbReputation.SetContent(TextHandler.Instance.GetTextById(100));
         }
         if (btResearch != null)
             btResearch.onClick.AddListener(OnClickResearch);
         if (btResearchCancel != null)
             btResearchCancel.onClick.AddListener(OnClickResearchCancel);
-        stringForNoIng = TextHandler.Instance.manager.GetTextById(13001);
+        stringForNoIng = TextHandler.Instance.GetTextById(13001);
     }
 
 
@@ -133,12 +133,12 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (popupForResearch == null)
             return;
-        string content = TextHandler.Instance.manager.GetTextById(285);
+        string content = TextHandler.Instance.GetTextById(285);
 
         SortedList<IngredientsEnum, long> listIng = menuOwn.GetResearchIngredients(data);
         if (listIng != null && listIng.Count != 0)
         {
-            content += (" " + TextHandler.Instance.manager.GetTextById(286) + "\n");
+            content += (" " + TextHandler.Instance.GetTextById(286) + "\n");
         }
         foreach (var item in listIng)
         {
@@ -233,14 +233,14 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             if (rbShow != null)
                 rbShow.ChangeStates(true);
             if (tvShow != null)
-                tvShow.text = TextHandler.Instance.manager.GetTextById(2021);
+                tvShow.text = TextHandler.Instance.GetTextById(2021);
         }
         else
         {
             if (rbShow != null)
                 rbShow.ChangeStates(false);
             if (tvShow != null)
-                tvShow.text = TextHandler.Instance.manager.GetTextById(2020);
+                tvShow.text = TextHandler.Instance.GetTextById(2020);
         }
     }
 
@@ -319,9 +319,10 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         DialogBean dialogData = new DialogBean
         {
             dialogType = DialogEnum.PickForCharacter,
-            title = TextHandler.Instance.manager.GetTextById(3071),
-            callBack = this
+            title = TextHandler.Instance.GetTextById(3071)
         };
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
@@ -359,9 +360,10 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         DialogBean dialogData = new DialogBean
         {
             dialogType = DialogEnum.Normal,
-            content = TextHandler.Instance.manager.GetTextById(3072),
-            callBack = this
+            content = TextHandler.Instance.GetTextById(3072)
         };
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -374,11 +376,11 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             switch (buttonStatus)
             {
                 case true:
-                    tvShow.text = TextHandler.Instance.manager.GetTextById(2021);
+                    tvShow.text = TextHandler.Instance.GetTextById(2021);
                     menuOwnData.isSell = true;
                     break;
                 case false:
-                    tvShow.text = TextHandler.Instance.manager.GetTextById(2020);
+                    tvShow.text = TextHandler.Instance.GetTextById(2020);
                     menuOwnData.isSell = false;
                     break;
             }
@@ -411,7 +413,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 if (!hasEnoughIng)
                 {
-                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1045));
+                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1045));
                     return;
                 }
                 foreach (var itemIng in listIng)
@@ -420,7 +422,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
-                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
+                string toastStr = string.Format(TextHandler.Instance.GetTextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
                 UIHandler.Instance.ToastHint<ToastView>(ivFood.sprite, toastStr);
             }
         }

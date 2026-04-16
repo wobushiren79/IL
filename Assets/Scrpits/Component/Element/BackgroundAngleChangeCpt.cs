@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using Cinemachine;
 
 public class BackgroundAngleChangeCpt : BaseMonoBehaviour
 {

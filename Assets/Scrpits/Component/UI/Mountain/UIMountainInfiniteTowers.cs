@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallBack
+public class UIMountainInfiniteTowers : BaseUIComponent
 {
     //返回按钮
     public Button btBack;
@@ -143,7 +143,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 0;
         dialogData.dialogType = DialogEnum.PickForCharacter;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         //排除不能参加的人
         List<string> listExpel = new List<string>();
@@ -171,7 +172,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
         dialogData.dialogType = DialogEnum.PickForCharacter;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         //排除主角和不能参加的人
         List<string> listExpel = new List<string>();
@@ -198,8 +200,9 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
-        dialogData.callBack = this;
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3112);
+            dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = TextHandler.Instance.GetTextById(3112);
         dialogData.dialogType = DialogEnum.Normal;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
@@ -236,7 +239,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                     WorkerStatusEnum workerStatusEnum = itemCharacter.baseInfo.GetWorkerStatus();
                     if (workerStatusEnum != WorkerStatusEnum.Rest && workerStatusEnum != WorkerStatusEnum.Work)
                     {
-                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1142));
+                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1142));
                         return;
                     }
                 }

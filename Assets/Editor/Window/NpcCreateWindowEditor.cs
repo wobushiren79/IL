@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using System;
-using Cinemachine;
-using System.Collections;
-using UnityEngine.U2D;
 
 public class NpcCreateWindowEditor : EditorWindow
 {

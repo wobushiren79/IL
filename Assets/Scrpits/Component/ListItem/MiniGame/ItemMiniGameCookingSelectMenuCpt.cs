@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 
-public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt
 {
     public UIPopupFoodButton infoFoodPopup;
 
@@ -48,9 +48,10 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3051), menuInfo.name);
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3051), menuInfo.name);
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionCancel  = Cancel;
+        dialogData.actionSubmit = Submit;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

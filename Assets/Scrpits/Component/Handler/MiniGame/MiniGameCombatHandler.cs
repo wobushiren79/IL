@@ -340,7 +340,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         else
         {
             //角色闪避了
-            targetNpc.ShowTextInfo(TextHandler.Instance.manager.GetTextById(14001),Color.blue);
+            targetNpc.ShowTextInfo(TextHandler.Instance.GetTextById(14001),Color.blue);
         }
         //行动角色回到自己的位置
         yield return new WaitForSeconds(0.5f);

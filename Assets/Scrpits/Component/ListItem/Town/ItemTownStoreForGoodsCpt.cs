@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
+public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt
 {
     public GameObject objCook;
     public Text tvCook;
@@ -148,7 +148,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         if (objCookBook != null && add_book == 0)
             objCookBook.SetActive(false);
         if (tvCook != null)
-            tvCook.text = TextHandler.Instance.manager.GetTextById(1) + "+" + add_cook;
+            tvCook.text = TextHandler.Instance.GetTextById(1) + "+" + add_cook;
         if (tvSpeed != null)
             tvSpeed.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed) + "+" + add_speed;
         if (tvAccount != null)
@@ -160,7 +160,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         if (tvLucky != null)
             tvLucky.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky) + "+" + add_lucky;
         if (tvCookBook != null)
-            tvCookBook.text = TextHandler.Instance.manager.GetTextById(7) + "+" + add_book;
+            tvCookBook.text = TextHandler.Instance.GetTextById(7) + "+" + add_book;
     }
 
     public override void SetOwn()
@@ -172,11 +172,11 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             if (tvOwn != null)
                 if (isHas)
                 {
-                    tvOwn.text = (TextHandler.Instance.manager.GetTextById(195));
+                    tvOwn.text = (TextHandler.Instance.GetTextById(195));
                 }
                 else
                 {
-                    tvOwn.text = (TextHandler.Instance.manager.GetTextById(196));
+                    tvOwn.text = (TextHandler.Instance.GetTextById(196));
                     tvOwn.color = Color.gray;
                 }
         }
@@ -200,7 +200,8 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
 
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogType = DialogEnum.PickForNumber;
-        dialogBean.callBack = this;
+        dialogBean.actionSubmit = Submit;
+        dialogBean.actionCancel = Cancel;
         PickForNumberDialogView dialogView = UIHandler.Instance.ShowDialog<PickForNumberDialogView>(dialogBean);
         dialogView.SetData(ivIcon.sprite, 999);
     }
@@ -218,17 +219,17 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             long number = pickForNumberDialog.GetPickNumber();
             if (!gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
                 return;
             }
             if (!gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1012));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1012));
                 return;
             }
             if (!gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1021));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1021));
                 return;
             }
 
@@ -244,7 +245,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             }
             gameData.AddItemsNumber(storeInfo.mark_id, number * getNumber);
 
-            UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1010), itemsInfo.name + "x" + (number * getNumber)));
+            UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, string.Format(TextHandler.Instance.GetTextById(1010), itemsInfo.name + "x" + (number * getNumber)));
             RefreshUI();
         }
     }

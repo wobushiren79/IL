@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using Cinemachine;
 
-public class BaseControl : BaseMonoBehaviour
+public partial class BaseControl : BaseMonoBehaviour
 {
     //镜头跟随对象
     public GameObject cameraFollowObj;
@@ -94,7 +92,7 @@ public class BaseControl : BaseMonoBehaviour
     {
         if (CameraHandler.Instance.manager.camera2D != null)
         {
-            CameraHandler.Instance.manager.camera2D.m_Lens.OrthographicSize = orthographicSize;
+            CameraHandler.Instance.manager.camera2D.Lens.OrthographicSize = orthographicSize;
         }
 
     }
@@ -108,7 +106,7 @@ public class BaseControl : BaseMonoBehaviour
         float size = 0;
         if (CameraHandler.Instance.manager.camera2D != null)
         {
-            size = CameraHandler.Instance.manager.camera2D.m_Lens.OrthographicSize;
+            size = CameraHandler.Instance.manager.camera2D.Lens.OrthographicSize;
         }
         return size;
     }

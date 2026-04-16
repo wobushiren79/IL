@@ -58,7 +58,7 @@ public class CharacterAttributeView : Graphic
         this.lucky = lucky;
 
         if (tvCook != null)
-            tvCook.text =  cook + " " + TextHandler.Instance.manager.GetTextById(1);
+            tvCook.text =  cook + " " + TextHandler.Instance.GetTextById(1);
         if (tvSpeed != null)
             tvSpeed.text = speed + " " + AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed);
         if (tvAccount != null)

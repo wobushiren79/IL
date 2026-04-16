@@ -7,6 +7,8 @@ using System.Collections.Generic;
 [Serializable]
 public class NpcInfoBean : BaseBean
 {
+    public int valid;
+    public long id;
     public long npc_id;//npcId
     public int npc_type;//0默认NPC，
     public int sex;//性别

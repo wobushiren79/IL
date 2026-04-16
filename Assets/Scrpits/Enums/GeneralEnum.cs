@@ -87,50 +87,50 @@ public class GeneralEnumTools
         switch (type)
         {
             case GeneralEnum.Mask:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(401);
+                itemsnTypeName = TextHandler.Instance.GetTextById(401);
                 break;
             case GeneralEnum.Hat:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(402);
+                itemsnTypeName = TextHandler.Instance.GetTextById(402);
                 break;
             case GeneralEnum.Clothes:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(403);
+                itemsnTypeName = TextHandler.Instance.GetTextById(403);
                 break;
             case GeneralEnum.Shoes:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(404);
+                itemsnTypeName = TextHandler.Instance.GetTextById(404);
                 break;
             case GeneralEnum.Chef:
             case GeneralEnum.Waiter:
             case GeneralEnum.Accoutant:
             case GeneralEnum.Accost:
             case GeneralEnum.Beater:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(405);
+                itemsnTypeName = TextHandler.Instance.GetTextById(405);
                 break;
             case GeneralEnum.Ing:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(406);
+                itemsnTypeName = TextHandler.Instance.GetTextById(406);
                 break;
             case GeneralEnum.Book:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(407);
+                itemsnTypeName = TextHandler.Instance.GetTextById(407);
                 break;
             case GeneralEnum.Menu:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(408);
+                itemsnTypeName = TextHandler.Instance.GetTextById(408);
                 break;
             case GeneralEnum.Medicine:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(409);
+                itemsnTypeName = TextHandler.Instance.GetTextById(409);
                 break;
             case GeneralEnum.SkillBook:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(410);
+                itemsnTypeName = TextHandler.Instance.GetTextById(410);
                 break;
             case GeneralEnum.Read:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(411);
+                itemsnTypeName = TextHandler.Instance.GetTextById(411);
                 break;
             case GeneralEnum.Gift:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(412);
+                itemsnTypeName = TextHandler.Instance.GetTextById(412);
                 break;
             case GeneralEnum.Other:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(413);
+                itemsnTypeName = TextHandler.Instance.GetTextById(413);
                 break;
             case GeneralEnum.Seed:
-                itemsnTypeName = TextHandler.Instance.manager.GetTextById(414);
+                itemsnTypeName = TextHandler.Instance.GetTextById(414);
                 break;
             default:
                 break;

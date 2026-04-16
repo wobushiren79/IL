@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
+public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
 {
     public Text tvLayer;
     public Text tvIsSend;
@@ -86,10 +86,11 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     public void OnClickForCancel()
     {       
         DialogBean dialogData = new DialogBean();
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3111);
+        dialogData.content = TextHandler.Instance.GetTextById(3111);
         dialogData.dialogPosition = 0;
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionCancel = Cancel;
+        dialogData.actionSubmit = Submit;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -105,7 +106,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
                 && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1141));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1141));
                 return;
             }
         }

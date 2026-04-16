@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class StoreInfoBean : BaseBean
 {
+    public long id;
     public long store_id;
     public int type;//类型 9市场
     public int store_goods_type;//商店商品类型（不同商店有不同类型）

@@ -84,7 +84,7 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
                 rbNear = rbBullet;
             }
         }
-        Vector3 moveVelocity = new Vector3(-rbNear.velocity.y, rbNear.velocity.x);
+        Vector3 moveVelocity = new Vector3(-rbNear.linearVelocity.y, rbNear.linearVelocity.x);
         characterMoveCpt.SetDestination(transform.position + moveVelocity.normalized);
     }
     #endregion

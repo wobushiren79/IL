@@ -58,19 +58,19 @@ public class ClockView : BaseMonoBehaviour
         switch (month)
         {
             case 1:
-                seasons = TextHandler.Instance.manager.GetTextById(33);
+                seasons = TextHandler.Instance.GetTextById(33);
                 break;
             case 2:
-                seasons = TextHandler.Instance.manager.GetTextById(34);
+                seasons = TextHandler.Instance.GetTextById(34);
                 break;
             case 3:
-                seasons = TextHandler.Instance.manager.GetTextById(35);
+                seasons = TextHandler.Instance.GetTextById(35);
                 break;
             case 4:
-                seasons = TextHandler.Instance.manager.GetTextById(36);
+                seasons = TextHandler.Instance.GetTextById(36);
                 break;
         }
         tvMonthAndDay.color = SeasonsEnumTools.GetSeasonsColor((SeasonsEnum)month);
-        tvMonthAndDay.text = seasons + " " + day + TextHandler.Instance.manager.GetTextById(31);
+        tvMonthAndDay.text = seasons + " " + day + TextHandler.Instance.GetTextById(31);
     }
 }

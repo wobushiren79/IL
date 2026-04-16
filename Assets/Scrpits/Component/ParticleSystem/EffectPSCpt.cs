@@ -14,9 +14,9 @@ public class EffectPSCpt : EffectBase
         mainModule.stopAction = ParticleSystemStopAction.Callback;
     }
 
-    public override void PlayEffect()
+    public override void PlayEffect(string sendEvent = "OnPlay")
     {
-        base.PlayEffect();
+        base.PlayEffect(sendEvent);
         effectPS.Play();
         AudioHandler.Instance.PlaySound(soundType);
     }

@@ -107,7 +107,7 @@ public class UIGameStatisticsForRevenue : BaseUIView, IRadioGroupCallBack
         {
             Dropdown.OptionData optionData = new Dropdown.OptionData
             {
-                text = string.Format(TextHandler.Instance.manager.GetTextById(46), itemYear + "")
+                text = string.Format(TextHandler.Instance.GetTextById(46), itemYear + "")
             };
             listOptionData.Add(optionData);
         }

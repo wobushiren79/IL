@@ -543,7 +543,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             if (isMenuLevelUp)
             {
                 Sprite spFoodIcon = IconHandler.Instance.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
-                UIHandler.Instance.ToastHint<ToastView>(spFoodIcon, string.Format(TextHandler.Instance.manager.GetTextById(1131), orderForCustomer.foodData.name));
+                UIHandler.Instance.ToastHint<ToastView>(spFoodIcon, string.Format(TextHandler.Instance.GetTextById(1131), orderForCustomer.foodData.name));
             }
             payEffectsPosition = orderForCustomer.customer.transform.position;
         }
@@ -566,7 +566,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             if (isBedLevelUp)
             {
                 Sprite spBedIcon = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
-                UIHandler.Instance.ToastHint<ToastView>(spBedIcon, string.Format(TextHandler.Instance.manager.GetTextById(1131), orderForHotel.bed.buildBedData.bedName));
+                UIHandler.Instance.ToastHint<ToastView>(spBedIcon, string.Format(TextHandler.Instance.GetTextById(1131), orderForHotel.bed.buildBedData.bedName));
             }
             payEffectsPosition = orderForHotel.customer.transform.position;
         }

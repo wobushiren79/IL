@@ -95,22 +95,22 @@ public class CharacterBaseBean
         switch (workerStatus)
         {
             case WorkerStatusEnum.Rest:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(282);
+                workerStatusStr = TextHandler.Instance.GetTextById(282);
                 break;
             case WorkerStatusEnum.Work:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(281);
+                workerStatusStr = TextHandler.Instance.GetTextById(281);
                 break;
             case WorkerStatusEnum.Vacation:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(283);
+                workerStatusStr = TextHandler.Instance.GetTextById(283);
                 break;
             case WorkerStatusEnum.Research:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(284);
+                workerStatusStr = TextHandler.Instance.GetTextById(284);
                 break;
             case WorkerStatusEnum.InfiniteTowers:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(288);
+                workerStatusStr = TextHandler.Instance.GetTextById(288);
                 break;
             case WorkerStatusEnum.CourtyardManager:
-                workerStatusStr = TextHandler.Instance.manager.GetTextById(289);
+                workerStatusStr = TextHandler.Instance.GetTextById(289);
                 break;
         }
         return workerStatus;

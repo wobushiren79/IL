@@ -99,7 +99,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
         string levelStr = "";
         if (expCurrent >= expLevelUp)
         {
-            levelStr = TextHandler.Instance.manager.GetTextById(75);
+            levelStr = TextHandler.Instance.GetTextById(75);
             pvLevel.SetContent(levelStr, colorLevel_1);
         }
         else

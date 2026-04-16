@@ -109,7 +109,7 @@ public class BuildBedCpt : BaseBuildItemCpt
             case Direction2DEnum.Down:
                 objBed.transform.position = objDownPosition.transform.position;
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 objBed.transform.position = objUpPosition.transform.position;
                 break;
         }
@@ -200,7 +200,7 @@ public class BuildBedCpt : BaseBuildItemCpt
             case Direction2DEnum.Down:
                 iconKey += "_2";
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 iconKey += "_3";
                 break;
         }

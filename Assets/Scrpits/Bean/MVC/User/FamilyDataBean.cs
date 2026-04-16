@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class FamilyDataBean : BaseBean
 {
+    public long id;
     //怀孕进度
     public float birthPro = 0;
     //结婚日

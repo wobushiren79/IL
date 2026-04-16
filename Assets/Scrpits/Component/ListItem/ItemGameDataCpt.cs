@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemGameDataCpt : ItemGameBaseCpt
 {
     public Text tvInnName;
     public Text tvUserName;
@@ -78,7 +78,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (tvInnName != null)
             tvInnName.text = innName;
         if (tvUserName != null)
-            tvUserName.text = TextHandler.Instance.manager.GetTextById(58) + ":" + userName;
+            tvUserName.text = TextHandler.Instance.GetTextById(58) + ":" + userName;
     }
 
     /// <summary>
@@ -118,9 +118,9 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (tvGameTime != null)
         {
             tvGameTime.text =
-                year + TextHandler.Instance.manager.GetTextById(29) +
-                month + TextHandler.Instance.manager.GetTextById(30) +
-                day + TextHandler.Instance.manager.GetTextById(31);
+                year + TextHandler.Instance.GetTextById(29) +
+                month + TextHandler.Instance.GetTextById(30) +
+                day + TextHandler.Instance.GetTextById(31);
         }
     }
 
@@ -133,7 +133,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvPlayTime != null)
         {
-            tvPlayTime.text = TextHandler.Instance.manager.GetTextById(48) + " " + hour + ":" + min;
+            tvPlayTime.text = TextHandler.Instance.GetTextById(48) + " " + hour + ":" + min;
         }
     }
 
@@ -155,9 +155,10 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
 
         DialogBean dialogData = new DialogBean();
-        dialogData.content = TextHandler.Instance.manager.GetTextById(3011);
+        dialogData.content = TextHandler.Instance.GetTextById(3011);
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

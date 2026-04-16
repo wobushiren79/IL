@@ -65,7 +65,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         tvPriceL.text = attendancePriceL + "";
         tvPriceM.text = attendancePriceM + "";
         tvPirceS.text = attendancePriceS + "";
-        tvNumber.text = TextHandler.Instance.manager.GetTextById(4003) + attendanceNumber;
+        tvNumber.text = TextHandler.Instance.GetTextById(4003) + attendanceNumber;
     }
 
     public void OnCellForItem(ScrollGridCell itemCell)
@@ -86,12 +86,12 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1013));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1013));
             return;
         }
         if (!gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1014));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1014));
             return;
         }
 

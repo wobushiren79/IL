@@ -101,7 +101,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
             case Direction2DEnum.Right:
                 spDirection = spRight;
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 spDirection = spUp;
                 break;
             case Direction2DEnum.Down:
@@ -157,7 +157,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
                 return leftUserFace;
             case Direction2DEnum.Right:
                 return rightUserFace;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 return upUserFace;
             case Direction2DEnum.Down:
                 return downUserFace;
@@ -176,9 +176,9 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
                 SetDirection(Direction2DEnum.Down);
                 break;
             case Direction2DEnum.Right:
-                SetDirection(Direction2DEnum.UP);
+                SetDirection(Direction2DEnum.Up);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 SetDirection(Direction2DEnum.Left);
                 break;
             case Direction2DEnum.Down:
@@ -195,12 +195,12 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         switch (direction)
         {
             case Direction2DEnum.Left:
-                SetDirection(Direction2DEnum.UP);
+                SetDirection(Direction2DEnum.Up);
                 break;
             case Direction2DEnum.Right:
                 SetDirection(Direction2DEnum.Down);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 SetDirection(Direction2DEnum.Right);
                 break;
             case Direction2DEnum.Down:
@@ -245,7 +245,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
                 spMianBuild = spDown;
                 objBox.transform.localEulerAngles = new Vector3(0, 0, 90);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 spShadow = spUp;
                 spMianBuild = spUp;
                 objBox.transform.localEulerAngles = new Vector3(0, 0, -90);

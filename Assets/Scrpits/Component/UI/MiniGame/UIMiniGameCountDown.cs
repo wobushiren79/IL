@@ -133,13 +133,13 @@ public class UIMiniGameCountDown : BaseUIComponent
         {
             string numberStr = "";
             if (i == 0)
-                numberStr = TextHandler.Instance.manager.GetTextById(252);
+                numberStr = TextHandler.Instance.GetTextById(252);
             else if (i == 1)
-                numberStr = TextHandler.Instance.manager.GetTextById(253);
+                numberStr = TextHandler.Instance.GetTextById(253);
             else if (i == 2)
-                numberStr = TextHandler.Instance.manager.GetTextById(254);
+                numberStr = TextHandler.Instance.GetTextById(254);
             else if (i == 3)
-                numberStr = TextHandler.Instance.manager.GetTextById(255);
+                numberStr = TextHandler.Instance.GetTextById(255);
             tvCountDown.text = numberStr;
             tvCountDown.transform.localScale = new Vector3(1, 1, 1);
             tvCountDown.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);

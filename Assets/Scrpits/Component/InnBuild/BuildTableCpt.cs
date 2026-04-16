@@ -106,7 +106,7 @@ public class BuildTableCpt : BaseBuildItemCpt
                 srMainBuild.transform.position = objTableDownPosition.transform.position;
                 objDownChair.SetActive(true);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 srMainBuild.transform.position = objTableUpPosition.transform.position;
                 objUpChair.SetActive(true);
                 break;
@@ -125,7 +125,7 @@ public class BuildTableCpt : BaseBuildItemCpt
                 return objLeftSeat.transform.position;
             case Direction2DEnum.Right:
                 return objRightSeat.transform.position;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 return objUpSeat.transform.position;
             case Direction2DEnum.Down:
                 return objDownSeat.transform.position;
@@ -147,7 +147,7 @@ public class BuildTableCpt : BaseBuildItemCpt
                 return objTableRightPosition;
             case Direction2DEnum.Down:
                 return objTableDownPosition;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 return objTableUpPosition;
         }
         return null;
@@ -167,7 +167,7 @@ public class BuildTableCpt : BaseBuildItemCpt
                 return objTableRightPosition.transform.position;
             case Direction2DEnum.Down:
                 return objTableDownPosition.transform.position;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 return objTableUpPosition.transform.position;
         }
         return Vector3.zero;

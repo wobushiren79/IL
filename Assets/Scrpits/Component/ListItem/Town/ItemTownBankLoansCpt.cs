@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownBankLoansCpt : ItemGameBaseCpt
 {
     public UserLoansBean loansData;
 
@@ -43,7 +43,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetLoansDays(int day)
     {
         if (tvDays != null)
-            tvDays.text = day + TextHandler.Instance.manager.GetTextById(31);
+            tvDays.text = day + TextHandler.Instance.GetTextById(31);
     }
 
     public void SetMoneyForDay(long moneys)
@@ -58,16 +58,17 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gameData.listLoans.Count >= gameData.loansNumberLimit)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1091));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1091));
             return;
         }
 
         DialogBean dialogData = new DialogBean
         {
-            callBack = this,
             dialogType = DialogEnum.Normal,
-            content = string.Format(TextHandler.Instance.manager.GetTextById(3091), tvMoneyS.text, tvDays.text)
+            content = string.Format(TextHandler.Instance.GetTextById(3091), tvMoneyS.text, tvDays.text)
         };
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
 
     }
@@ -79,11 +80,11 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (gameData.AddLoans(loansData))
         {
             gameData.AddMoney(0, 0, loansData.moneyS);
-            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1092), tvMoneyS.text));
+            UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1092), tvMoneyS.text));
         }
         else
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1091));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1091));
         }
     }
 

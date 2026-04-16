@@ -155,19 +155,19 @@ public class CharacterWorkerBaseBean
         switch (workerType)
         {
             case WorkerEnum.Chef:
-                workerName = TextHandler.Instance.manager.GetTextById(11);
+                workerName = TextHandler.Instance.GetTextById(11);
                 break;
             case WorkerEnum.Waiter:
-                workerName = TextHandler.Instance.manager.GetTextById(12);
+                workerName = TextHandler.Instance.GetTextById(12);
                 break;
             case WorkerEnum.Accountant:
-                workerName = TextHandler.Instance.manager.GetTextById(13);
+                workerName = TextHandler.Instance.GetTextById(13);
                 break;
             case WorkerEnum.Accost:
-                workerName = TextHandler.Instance.manager.GetTextById(14);
+                workerName = TextHandler.Instance.GetTextById(14);
                 break;
             case WorkerEnum.Beater:
-                workerName = TextHandler.Instance.manager.GetTextById(15);
+                workerName = TextHandler.Instance.GetTextById(15);
                 break;
         }
         return workerName;
@@ -183,25 +183,25 @@ public class CharacterWorkerBaseBean
         switch (level)
         {
             case 0:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(110);
+                workerLevelName = TextHandler.Instance.GetTextById(110);
                 break;
             case 1:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(111);
+                workerLevelName = TextHandler.Instance.GetTextById(111);
                 break;
             case 2:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(112);
+                workerLevelName = TextHandler.Instance.GetTextById(112);
                 break;
             case 3:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(113);
+                workerLevelName = TextHandler.Instance.GetTextById(113);
                 break;
             case 4:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(114);
+                workerLevelName = TextHandler.Instance.GetTextById(114);
                 break;
             case 5:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(115);
+                workerLevelName = TextHandler.Instance.GetTextById(115);
                 break;
             case 6:
-                workerLevelName = TextHandler.Instance.manager.GetTextById(116);
+                workerLevelName = TextHandler.Instance.GetTextById(116);
                 break;
         }
         return workerLevelName;

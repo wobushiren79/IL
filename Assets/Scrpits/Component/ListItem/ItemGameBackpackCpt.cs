@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsSelectionDialogView.ICallBack, DialogView.IDialogCallBack
+public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsSelectionDialogView.ICallBack
 {
     public Text tvName;
     public Text tvNumber;
@@ -140,7 +140,8 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
             return;
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.ItemsSelection;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         ItemsSelectionDialogView selectionDialog = UIHandler.Instance.ShowDialog<ItemsSelectionDialogView>(dialogData);
         selectionDialog.SetCallBack(this);
         switch (itemsInfoData.GetItemsType())
@@ -178,17 +179,18 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
                     DialogBean dialogData = new DialogBean
                     {
                         dialogType = DialogEnum.Achievement,
-                        title = TextHandler.Instance.manager.GetTextById(1047),
-                        content = menuInfo.name,
-                        callBack = this
+                        title = TextHandler.Instance.GetTextById(1047),
+                        content = menuInfo.name
                     };
+                    dialogData.actionSubmit = Submit;
+                    dialogData.actionCancel = Cancel;
                     AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
-                    UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, TextHandler.Instance.manager.GetTextById(1006));
+                    UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, TextHandler.Instance.GetTextById(1006));
                 }
                 else
                 {
-                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1007));
+                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1007));
                 };
                 break;
             default:
@@ -206,24 +208,26 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
             return;
         if (itemBean.itemNumber == 1)
         {
-            DialogBean dialogBean = new DialogBean
+            DialogBean dialogData = new DialogBean
             {
                 dialogType = DialogEnum.Normal,
-                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name),
-                remark = "1",
-                callBack = this
+                content = string.Format(TextHandler.Instance.GetTextById(3001), itemsInfoData.name),
+                remark = "1"
             };
-            UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
+            UIHandler.Instance.ShowDialog<DialogView>(dialogData);
         }
         else
         {
-            DialogBean dialogBean = new DialogBean
+            DialogBean dialogData = new DialogBean
             {
                 dialogType = DialogEnum.PickForNumber,
-                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name),
-                callBack = this
+                content = string.Format(TextHandler.Instance.GetTextById(3001), itemsInfoData.name)
             };
-            PickForNumberDialogView pickForNumberDialog = UIHandler.Instance.ShowDialog<PickForNumberDialogView>(dialogBean);
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
+            PickForNumberDialogView pickForNumberDialog = UIHandler.Instance.ShowDialog<PickForNumberDialogView>(dialogData);
             pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
         }
 
@@ -265,14 +269,15 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
             long pickNumber = pickForNumberDialog.GetPickNumber();
 
             //创建确认弹窗
-            DialogBean dialogBean = new DialogBean
+            DialogBean dialogData1 = new DialogBean
             {
                 dialogType = DialogEnum.Normal,
-                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name + "x" + pickNumber),
-                remark = "" + pickNumber,
-                callBack = this
+                content = string.Format(TextHandler.Instance.GetTextById(3001), itemsInfoData.name + "x" + pickNumber),
+                remark = "" + pickNumber
             };
-            UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+            dialogData1.actionSubmit = Submit;
+            dialogData1.actionCancel = Cancel;
+            UIHandler.Instance.ShowDialog<DialogView>(dialogData1);
         }
         else if (dialogView as AchievementDialogView)
         {

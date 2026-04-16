@@ -29,7 +29,7 @@ public class UIGameDate : BaseUIComponent
     private void Start()
     {
         if (tvDialogContent != null)
-            tvDialogContent.text = TextHandler.Instance.manager.GetTextById(3005);
+            tvDialogContent.text = TextHandler.Instance.GetTextById(3005);
         if (btWork != null)
             btWork.onClick.AddListener(OnClickInnWork);
         if (btRest != null)
@@ -211,7 +211,7 @@ public class UIGameDate : BaseUIComponent
                 if (itemWork.CalculationWorkerVacation())
                 {
                     long vacationId = Random.Range(1101, 1111);
-                    string vacationStr = string.Format(TextHandler.Instance.manager.GetTextById(vacationId), itemWork.baseInfo.name);
+                    string vacationStr = string.Format(TextHandler.Instance.GetTextById(vacationId), itemWork.baseInfo.name);
                     UIHandler.Instance.ToastHint<ToastView>(vacationStr);
                     itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Vacation);
                 }

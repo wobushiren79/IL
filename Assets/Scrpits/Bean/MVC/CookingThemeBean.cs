@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class CookingThemeBean : BaseBean
 {
+    public long id;
     public long theme_id;
     public string name;
 

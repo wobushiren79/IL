@@ -62,7 +62,7 @@ public class UIPopupSkillShow : PopupShowView
     public void SetAttributes(SkillInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
-        CreateItemAttributes("hourglass_1", TextHandler.Instance.manager.GetTextById(510) + " " + data.GetUseNumber());
+        CreateItemAttributes("hourglass_1", TextHandler.Instance.GetTextById(510) + " " + data.GetUseNumber());
 
 
         if (data.effect.IsNull())
@@ -79,7 +79,7 @@ public class UIPopupSkillShow : PopupShowView
             string describe = itemData.effectDescribe;
             if (durationForRound != 0)
             {
-                describe += ("\n" + string.Format(TextHandler.Instance.manager.GetTextById(502), "" + durationForRound));
+                describe += ("\n" + string.Format(TextHandler.Instance.GetTextById(502), "" + durationForRound));
             }
             CreateItemAttributes(itemData.spIcon, itemData.colorIcon, describe);
         }

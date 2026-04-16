@@ -55,7 +55,7 @@ public class UIPopupAbilityShow : PopupShowView
     public void SetCook(int cook)
     {
         if (tvCook != null)
-            tvCook.text = TextHandler.Instance.manager.GetTextById(1) + " " + cook;
+            tvCook.text = TextHandler.Instance.GetTextById(1) + " " + cook;
     }
 
     /// <summary>

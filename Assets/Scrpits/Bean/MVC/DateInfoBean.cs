@@ -5,6 +5,7 @@ using System;
 [Serializable]
 public class DateInfoBean : BaseBean 
 {
+    public long id;
     public long date_id;
     public int month;
     public int day;

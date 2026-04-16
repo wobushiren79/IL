@@ -32,7 +32,7 @@ public class UIGameStatisticsForCustomer : BaseUIView
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (tvNormalCustomerNumber != null)
-            tvNormalCustomerNumber.text = TextHandler.Instance.manager.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + TextHandler.Instance.manager.GetTextById(82);
+            tvNormalCustomerNumber.text = TextHandler.Instance.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + TextHandler.Instance.GetTextById(82);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class UIGameStatisticsForCustomer : BaseUIView
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
-            tvTeamCustomerNumber.text = TextHandler.Instance.manager.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + TextHandler.Instance.manager.GetTextById(82);
+            tvTeamCustomerNumber.text = TextHandler.Instance.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + TextHandler.Instance.GetTextById(82);
         //查询所有团队
         List<NpcTeamBean> listNpcTeamData = NpcTeamHandler.Instance.manager.GetCustomerTeam();
         for (int i = 0; i < listNpcTeamData.Count; i++)
@@ -88,7 +88,7 @@ public class UIGameStatisticsForCustomer : BaseUIView
 
         //设置数量
         if (tvFriendCustomerNumber != null)
-            tvFriendCustomerNumber.text = TextHandler.Instance.manager.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Friend) + TextHandler.Instance.manager.GetTextById(82);
+            tvFriendCustomerNumber.text = TextHandler.Instance.GetTextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Friend) + TextHandler.Instance.GetTextById(82);
         List<CharacterFavorabilityBean> listData = gameData.listCharacterFavorability;
 
         foreach (CharacterFavorabilityBean itemData in listData)

@@ -208,7 +208,8 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     {
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.PickForCharacter;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
 
@@ -226,26 +227,27 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             && selectMouth.IsNull()
             && selectSkin.IsNull())
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7005));
             return;
         }
         DialogBean dialogData = new DialogBean();
         string price = "";
         if (priceL != 0)
         {
-            price += priceL + TextHandler.Instance.manager.GetTextById(16);
+            price += priceL + TextHandler.Instance.GetTextById(16);
         }
         if (priceM != 0)
         {
-            price += priceM + TextHandler.Instance.manager.GetTextById(17);
+            price += priceM + TextHandler.Instance.GetTextById(17);
         }
         if (priceS != 0)
         {
-            price += priceS + TextHandler.Instance.manager.GetTextById(18);
+            price += priceS + TextHandler.Instance.GetTextById(18);
         }
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3104), price, characterData.baseInfo.name);
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3104), price, characterData.baseInfo.name);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -356,7 +358,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             }
             else
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             }
 
         }

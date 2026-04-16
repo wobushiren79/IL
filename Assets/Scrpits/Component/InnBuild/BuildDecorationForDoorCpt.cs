@@ -42,7 +42,7 @@ public class BuildDecorationForDoorCpt : BuildDecorationCpt
                 srMainBuild.transform.position = objTableDownPosition.transform.position;
                 srShadow.transform.position = objTableDownPosition.transform.position + new Vector3(0.05f, 0);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 srMainBuild.transform.position = objTableUpPosition.transform.position;
                 srShadow.transform.position = objTableUpPosition.transform.position + new Vector3(0.05f, 0);
                 break;
@@ -63,7 +63,7 @@ public class BuildDecorationForDoorCpt : BuildDecorationCpt
             case Direction2DEnum.Right:
                 spIcon = spLeftAndRightOpen;
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
             case Direction2DEnum.Down:
                 spIcon = spUpAndDownOpen;
                 break;

@@ -53,7 +53,7 @@ public class InputTextDialogView : DialogView
     {
         if (etContent.text.IsNull())
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1025));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1025));
             return;
         }
         base.SubmitOnClick();

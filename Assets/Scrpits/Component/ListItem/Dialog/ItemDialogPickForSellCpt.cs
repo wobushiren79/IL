@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
+public class ItemDialogPickForSellCpt : BaseMonoBehaviour
 {
     public Image ivIcon;
     public Text tvName;
@@ -129,7 +129,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = (TextHandler.Instance.manager.GetTextById(4001) + "\n" + itemData.itemNumber);
+        tvOwn.text = (TextHandler.Instance.GetTextById(4001) + "\n" + itemData.itemNumber);
     }
 
     /// <summary>
@@ -167,9 +167,10 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     public void OnClickForSell()
     {
         DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3102), tvName.text, sellNumber + "");
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3102), tvName.text, sellNumber + "");
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

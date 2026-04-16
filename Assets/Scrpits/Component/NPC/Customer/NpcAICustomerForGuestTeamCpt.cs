@@ -159,7 +159,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             SetMood(30,true);
             EndOrderAndLeave(true);
 
-            characterShoutCpt.Shout(TextHandler.Instance.manager.GetTextById(13002));
+            characterShoutCpt.Shout(TextHandler.Instance.GetTextById(13002));
         }
     }
 

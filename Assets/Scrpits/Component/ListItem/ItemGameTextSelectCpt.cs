@@ -4,7 +4,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
-public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemGameTextSelectCpt : ItemGameBaseCpt
 {
     [Header("控件")]
     public Text tvContent;
@@ -74,7 +74,8 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.PickForCharacter;
-            dialogData.callBack = this;
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
             PickForCharacterDialogView dialogView = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
             PreTypeForMiniGameEnumTools.GetPlayerNumber(textData.pre_data_minigame, out int playerNumber);
             dialogView.SetPickCharacterMax(playerNumber);

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
+public class UIBaseGamble<T, H, B> : BaseUIComponent
 
     where T : GambleBaseBean
     where H : BaseGambleHandler<T, B>
@@ -129,7 +129,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         if (tvBetMoneyS != null)
             tvBetMoneyS.text = gambleData.betForMoneyS + "/" + gambleData.betMaxForMoneyS;
         if (winRewardRate != null)
-            winRewardRate.text = TextHandler.Instance.manager.GetTextById(612) + "x" + gambleData.winRewardRate;
+            winRewardRate.text = TextHandler.Instance.GetTextById(612) + "x" + gambleData.winRewardRate;
     }
 
     /// <summary>
@@ -151,9 +151,10 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         if (gambleData.GetGambleStatus() == GambleStatusType.Prepare)
         {
             DialogBean dialogData = new DialogBean();
-            dialogData.title = TextHandler.Instance.manager.GetTextById(611);
+            dialogData.title = TextHandler.Instance.GetTextById(611);
             dialogData.dialogType = DialogEnum.PickForMoney;
-            dialogData.callBack = this;
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
 
             PickForMoneyDialogView PickForMoneyDialog = UIHandler.Instance.ShowDialog<PickForMoneyDialogView>(dialogData);
             PickForMoneyDialog.SetData((int)gambleData.betMaxForMoneyL / 10, (int)gambleData.betMaxForMoneyM / 10, (int)gambleData.betMaxForMoneyS / 10);
@@ -188,7 +189,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
             if (gambleData.betForMoneyS == 0)
             {
                 Sprite iconSp = IconHandler.Instance.GetIconSpriteByName("money_1");
-                UIHandler.Instance.ToastHint<ToastView>(iconSp, TextHandler.Instance.manager.GetTextById(1301));
+                UIHandler.Instance.ToastHint<ToastView>(iconSp, TextHandler.Instance.GetTextById(1301));
                 return;
             }
             gambleHandler.StartChange();

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using static GameControlHandler;
 
-public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt
 {
     [Header("控件")]
     public CharacterUICpt characterUICpt;
@@ -231,7 +231,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public void SetTime(int time)
     {
         if (tvTime != null)
-            tvTime.text = time + TextHandler.Instance.manager.GetTextById(37);
+            tvTime.text = time + TextHandler.Instance.GetTextById(37);
     }
 
     /// <summary>
@@ -260,14 +260,14 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         GameDataBean gameData= GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         //判断时间是否过晚
         GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (hour >= 18 || hour < 6)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1031));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1031));
             return;
         }
 
@@ -275,16 +275,17 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         string contentStr = "???";
         if (type == 0)
         {
-             contentStr = string.Format(TextHandler.Instance.manager.GetTextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+             contentStr = string.Format(TextHandler.Instance.GetTextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
         }
         else if (type == 1)
         {
-             contentStr = string.Format(TextHandler.Instance.manager.GetTextById(3015), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+             contentStr = string.Format(TextHandler.Instance.GetTextById(3015), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
         }
         dialogData.content = contentStr;
         dialogData.dialogPosition = type;
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -343,7 +344,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             bool isWin = characterData.CalculationGuildSendWin(miniGameData.gameType);
             if (isWin)
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7021));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7021));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
                 RewardTypeEnumTools.CompleteReward(miniGameData.GetListUserCharacterData(), miniGameData.listReward);
@@ -383,7 +384,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             }
             else
             {
-                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7022));
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7022));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
             }
         }

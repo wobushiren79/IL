@@ -3,6 +3,7 @@ using System.Collections.Generic;
 [Serializable]
 public partial class WeatherInfoBean : BaseBean
 {
+	public long id;
 	/// <summary>
 	///场景类型
 	/// </summary>

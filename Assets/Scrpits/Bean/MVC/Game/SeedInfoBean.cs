@@ -3,6 +3,7 @@ using System.Collections.Generic;
 [Serializable]
 public partial class SeedInfoBean : BaseBean
 {
+	public long id;
 	/// <summary>
 	///道具ID
 	/// </summary>

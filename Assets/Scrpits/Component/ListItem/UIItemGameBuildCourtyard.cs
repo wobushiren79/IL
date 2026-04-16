@@ -79,10 +79,7 @@ public partial class UIItemGameBuildCourtyard : BaseUIView
     /// </summary>
     public void SetIcon(string iconKey)
     {
-        IconHandler.Instance.manager.GetItemsSpriteByName(iconKey,(sp)=> 
-        {
-            ui_Icon.sprite = sp;
-        });
+        ui_Icon.sprite = IconHandler.Instance.GetItemsSpriteByName(iconKey);
     }
 
 

@@ -58,19 +58,19 @@ public static class WorkerEnumTools
         switch (worker)
         {
             case WorkerEnum.Chef:
-                workName = TextHandler.Instance.manager.GetTextById(11);
+                workName = TextHandler.Instance.GetTextById(11);
                 break;
             case WorkerEnum.Waiter:
-                workName = TextHandler.Instance.manager.GetTextById(12);
+                workName = TextHandler.Instance.GetTextById(12);
                 break;
             case WorkerEnum.Accountant:
-                workName = TextHandler.Instance.manager.GetTextById(13);
+                workName = TextHandler.Instance.GetTextById(13);
                 break;
             case WorkerEnum.Accost:
-                workName = TextHandler.Instance.manager.GetTextById(14);
+                workName = TextHandler.Instance.GetTextById(14);
                 break;
             case WorkerEnum.Beater:
-                workName = TextHandler.Instance.manager.GetTextById(15);
+                workName = TextHandler.Instance.GetTextById(15);
                 break;
         }
         return workName;

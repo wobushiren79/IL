@@ -69,11 +69,11 @@ public class JumpTimeDialogView : DialogView
         GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (tvCurrentTime)
         {
-            tvCurrentTime.text = TextHandler.Instance.manager.GetTextById(721) + "\n" + hour + ":" + (int)min;
+            tvCurrentTime.text = TextHandler.Instance.GetTextById(721) + "\n" + hour + ":" + (int)min;
         }
         if (tvJumpTime)
         {
-            tvJumpTime.text = TextHandler.Instance.manager.GetTextById(722) + "\n" + (jumpNumber + (int)hour) + ":" + (int)min;
+            tvJumpTime.text = TextHandler.Instance.GetTextById(722) + "\n" + (jumpNumber + (int)hour) + ":" + (int)min;
         }
     }
 

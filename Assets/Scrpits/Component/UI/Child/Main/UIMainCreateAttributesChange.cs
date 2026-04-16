@@ -86,7 +86,7 @@ public class UIMainCreateAttributesChange : BaseUIView, NumberChangeView.ICallBa
     {
         if (tvTitle != null)
         {
-            tvTitle.text = string.Format(TextHandler.Instance.manager.GetTextById(77), " "+ pointsForResidue );
+            tvTitle.text = string.Format(TextHandler.Instance.GetTextById(77), " "+ pointsForResidue );
         }
     }
 

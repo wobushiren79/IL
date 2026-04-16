@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Pathfinding;
-public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
+public class SceneGameInnInit : BaseSceneInit
 {
 
 
@@ -178,14 +178,15 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         DialogBean dialogBean = new DialogBean();
         if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            dialogBean.content = TextHandler.Instance.manager.GetTextById(3006);
+            dialogBean.content = TextHandler.Instance.GetTextById(3006);
         }
         else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
         {
-            dialogBean.content = TextHandler.Instance.manager.GetTextById(3014);
+            dialogBean.content = TextHandler.Instance.GetTextById(3014);
         }
         dialogBean.dialogType = DialogEnum.Text;
-        dialogBean.callBack = this;
+        dialogBean.actionSubmit = Submit;
+        dialogBean.actionCancel = Cancel;
         UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
     }
 

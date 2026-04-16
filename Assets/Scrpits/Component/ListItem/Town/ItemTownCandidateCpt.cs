@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownCandidateCpt : ItemGameBaseCpt
 {
     public Text tvName;
     public Text tvPrice;
@@ -32,14 +32,15 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //检测是否超过人员上限
         if (gameData.listWorkerCharacter.Count >= gameData.workerNumberLimit)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1051));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1051));
             return;
         };
         //确认
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.Normal;
-        dialogData.callBack = this;
-        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
+        dialogData.content = string.Format(TextHandler.Instance.GetTextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -72,7 +73,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetName(string name)
     {
         if (tvName != null)
-            tvName.text = TextHandler.Instance.manager.GetTextById(61) + "：" + name;
+            tvName.text = TextHandler.Instance.GetTextById(61) + "：" + name;
     }
 
     /// <summary>
@@ -85,13 +86,13 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvPrice != null)
         {
-            string priceStr = TextHandler.Instance.manager.GetTextById(62) + "：";
+            string priceStr = TextHandler.Instance.GetTextById(62) + "：";
             if (price_l > 0)
-                priceStr += price_l + TextHandler.Instance.manager.GetTextById(16);
+                priceStr += price_l + TextHandler.Instance.GetTextById(16);
             if (price_m > 0)
-                priceStr += price_m + TextHandler.Instance.manager.GetTextById(17);
+                priceStr += price_m + TextHandler.Instance.GetTextById(17);
             if (price_s > 0)
-                priceStr += price_s + TextHandler.Instance.manager.GetTextById(18);
+                priceStr += price_s + TextHandler.Instance.GetTextById(18);
             tvPrice.text = priceStr;
         }
     }
@@ -132,14 +133,14 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         if (!gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         gameData.listWorkerCharacter.Add(characterData);
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
 
-        UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1053), characterData.baseInfo.name));
+        UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1053), characterData.baseInfo.name));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)

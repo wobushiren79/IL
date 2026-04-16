@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
+public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
 {
     public Text tvTitle;
     public Image ivTitleIcon;
@@ -55,7 +55,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     {
         if (tvTitle == null)
             return;
-        tvTitle.text = TextHandler.Instance.manager.GetTextById(71) + ":" + name;
+        tvTitle.text = TextHandler.Instance.GetTextById(71) + ":" + name;
     }
 
     /// <summary>
@@ -149,18 +149,19 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             //客栈升级
             gameData.innAttributes.SetInnLevelUp();
 
-            UIHandler.Instance.ToastHint<ToastView>(ivTitleIcon.sprite, TextHandler.Instance.manager.GetTextById(1062));
+            UIHandler.Instance.ToastHint<ToastView>(ivTitleIcon.sprite, TextHandler.Instance.GetTextById(1062));
             UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
 
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.Achievement;
-            dialogData.callBack = this;
+            dialogData.actionSubmit = Submit;
+            dialogData.actionCancel = Cancel;
             AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
             achievementDialog.SetData(storeInfo);
         }
         else
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1061));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1061));
         }
     }
 

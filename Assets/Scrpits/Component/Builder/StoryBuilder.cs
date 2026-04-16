@@ -396,7 +396,7 @@ public class StoryBuilder : BaseMonoBehaviour
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);
         //设置编号
         objNpc.name = "character_" + itemData.num;
-        CharacterBean copyCharacterData = ClassUtil.DeepCopyByBin<CharacterBean>(characterData);
+        CharacterBean copyCharacterData = ClassUtil.DeepCopyBinary<CharacterBean>(characterData);
         aiNpc.SetCharacterData(copyCharacterData);
         //默认设置NPC速度为1
         aiNpc.characterMoveCpt.SetMoveSpeed(1);

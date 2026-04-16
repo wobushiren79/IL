@@ -22,28 +22,28 @@ public static class AttributesTypeEnumTools
         switch (attributesType)
         {
             case AttributesTypeEnum.Cook:
-                name = TextHandler.Instance.manager.GetTextById(1);
+                name = TextHandler.Instance.GetTextById(1);
                 break;
             case AttributesTypeEnum.Speed:
-                name = TextHandler.Instance.manager.GetTextById(2);
+                name = TextHandler.Instance.GetTextById(2);
                 break;
             case AttributesTypeEnum.Account:
-                name = TextHandler.Instance.manager.GetTextById(3);
+                name = TextHandler.Instance.GetTextById(3);
                 break;
             case AttributesTypeEnum.Charm:
-                name = TextHandler.Instance.manager.GetTextById(4);
+                name = TextHandler.Instance.GetTextById(4);
                 break;
             case AttributesTypeEnum.Force:
-                name = TextHandler.Instance.manager.GetTextById(5);
+                name = TextHandler.Instance.GetTextById(5);
                 break;
             case AttributesTypeEnum.Life:
-                name = TextHandler.Instance.manager.GetTextById(9);
+                name = TextHandler.Instance.GetTextById(9);
                 break;
             case AttributesTypeEnum.Lucky:
-                name = TextHandler.Instance.manager.GetTextById(6);
+                name = TextHandler.Instance.GetTextById(6);
                 break;
             case AttributesTypeEnum.Loyal:
-                name = TextHandler.Instance.manager.GetTextById(8);
+                name = TextHandler.Instance.GetTextById(8);
                 break;
         }
         return name;

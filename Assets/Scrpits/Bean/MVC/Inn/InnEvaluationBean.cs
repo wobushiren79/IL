@@ -52,22 +52,22 @@ public class InnEvaluationBean
         switch (praiseType)
         {
             case PraiseTypeEnum.Excited:
-                praiseStr = TextHandler.Instance.manager.GetTextById(64);
+                praiseStr = TextHandler.Instance.GetTextById(64);
                 break;
             case PraiseTypeEnum.Happy:
-                praiseStr = TextHandler.Instance.manager.GetTextById(65);
+                praiseStr = TextHandler.Instance.GetTextById(65);
                 break;
             case PraiseTypeEnum.Okay:
-                praiseStr = TextHandler.Instance.manager.GetTextById(66);
+                praiseStr = TextHandler.Instance.GetTextById(66);
                 break;
             case PraiseTypeEnum.Ordinary:
-                praiseStr = TextHandler.Instance.manager.GetTextById(67);
+                praiseStr = TextHandler.Instance.GetTextById(67);
                 break;
             case PraiseTypeEnum.Disappointed:
-                praiseStr = TextHandler.Instance.manager.GetTextById(68);
+                praiseStr = TextHandler.Instance.GetTextById(68);
                 break;
             case PraiseTypeEnum.Anger:
-                praiseStr = TextHandler.Instance.manager.GetTextById(69);
+                praiseStr = TextHandler.Instance.GetTextById(69);
                 break;
         }
         return praiseStr;

@@ -147,7 +147,7 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
 
     public void FindLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7004));
+        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7004));
     }
     #endregion
 
@@ -155,13 +155,13 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     #region 排行榜更新回调
     public void UpdateLeaderboardSucess()
     {
-        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7001));
+        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7001));
         OnClickForRefresh();
     }
 
     public void UpdateLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7002));
+        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7002));
     }
     #endregion
 
@@ -195,12 +195,12 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
 
     public void GetEntriesFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7004));
+        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7004));
     }
 
     public void GetEntriesForUserListFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(7004));
+        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(7004));
     }
     #endregion
 }

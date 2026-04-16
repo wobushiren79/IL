@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
+public class UITownRecruitment : UIBaseOne
 {
     //人员数量
     public Text tvNumber;
@@ -31,7 +31,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
         if (popupPromptButton != null)
         {
-            popupPromptButton.SetContent(TextHandler.Instance.manager.GetTextById(271));
+            popupPromptButton.SetContent(TextHandler.Instance.GetTextById(271));
         }
     }
 
@@ -118,16 +118,17 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (gameData.listWorkerCharacter.Count >= gameData.workerNumberLimit)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1051));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1051));
             return;
         }
         pickMoneyL = 0;
         pickMoneyM = 0;
         pickMoneyS = 0;
         DialogBean dialogData = new DialogBean();
-        dialogData.title = TextHandler.Instance.manager.GetTextById(3062);
+        dialogData.title = TextHandler.Instance.GetTextById(3062);
         dialogData.dialogType = DialogEnum.PickForMoney;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         PickForMoneyDialogView pickForMoneyDialog = UIHandler.Instance.ShowDialog<PickForMoneyDialogView>(dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
         pickForMoneyDialog.SetMaxMoney(99999, 99999, 99999);
@@ -160,7 +161,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 FindCharacterDialogView findCharacterDialog = dialogView as FindCharacterDialogView;
                 gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
-                UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.manager.GetTextById(1053), findCharacterDialog.characterData.baseInfo.name));
+                UIHandler.Instance.ToastHint<ToastView>(string.Format(TextHandler.Instance.GetTextById(1053), findCharacterDialog.characterData.baseInfo.name));
             }
         }
     }
@@ -177,7 +178,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1005));
             return;
         }
         gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
@@ -188,7 +189,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         //根据金额获取角色
         CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(pickMoneyL, pickMoneyM, pickMoneyS);
         dialogData.dialogType = DialogEnum.FindCharacter;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         FindCharacterDialogView findCharacterDialog = UIHandler.Instance.ShowDialog<FindCharacterDialogView>(dialogData);
         findCharacterDialog.SetData(characterData);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);

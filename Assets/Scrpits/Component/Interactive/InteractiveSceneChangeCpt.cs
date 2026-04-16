@@ -42,7 +42,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                     }
                     else
                     {
-                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1321));
+                        UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1321));
                     }
                 }
                 else

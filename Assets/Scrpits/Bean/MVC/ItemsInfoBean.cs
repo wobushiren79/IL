@@ -5,6 +5,8 @@ using System;
 [Serializable]
 public class ItemsInfoBean : BaseBean
 {
+    public long id;
+    public int valid;
     public long intact_id;//套装ID
     public long items_id;//装备ID
 

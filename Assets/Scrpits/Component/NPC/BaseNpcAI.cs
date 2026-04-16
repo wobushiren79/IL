@@ -356,7 +356,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
                 characterBody.transform.localPosition = new Vector3(0, 0.2f, 0);
                 break;
-            case Direction2DEnum.UP:
+            case Direction2DEnum.Up:
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, 180), 0.1f).SetEase(Ease.OutBack);
                 break;
             case Direction2DEnum.Right:

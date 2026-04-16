@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseOne : BaseUIComponent, DialogView.IDialogCallBack
+public class UIBaseOne : BaseUIComponent
 {
     //返回按钮
     public Button btBack;
@@ -100,9 +100,10 @@ public class UIBaseOne : BaseUIComponent, DialogView.IDialogCallBack
     protected virtual void CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog)
     {
         DialogBean dialogData = new DialogBean();
-        dialogData.title = TextHandler.Instance.manager.GetTextById(3101);
+        dialogData.title = TextHandler.Instance.GetTextById(3101);
         dialogData.dialogType = DialogEnum.PickForSell;
-        dialogData.callBack = this;
+        dialogData.actionSubmit = Submit;
+        dialogData.actionCancel = Cancel;
         pickForSellDialog = UIHandler.Instance.ShowDialog<PickForSellDialogView>(dialogData);
     }
 

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
+public class ControlForWorkCpt : BaseControl
 {
     //角色移动组建
     public CharacterMoveCpt cameraMove;
@@ -192,7 +192,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
                         dialogData.dialogType = DialogEnum.SelectForNpc;
-                        dialogData.callBack = this;
+                        dialogData.actionSubmit = Submit;
+                        dialogData.actionCancel = Cancel;
                         dialogSelectView = UIHandler.Instance.ShowDialog<SelectForNpcDialogView>(dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
                         //如果是员工
@@ -213,7 +214,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
                         dialogData.dialogType = DialogEnum.SelectForBed;
-                        dialogData.callBack = this;
+                        dialogData.actionSubmit = Submit;
+                        dialogData.actionCancel = Cancel;
                         dialogSelectView = UIHandler.Instance.ShowDialog<SelectForBedDialogView>(dialogData);
                         ((SelectForBedDialogView)dialogSelectView).SetData(selectBed);
                         return;
