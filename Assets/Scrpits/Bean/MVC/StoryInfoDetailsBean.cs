@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class StoryInfoDetailsBean
+public partial class StoryInfoDetailsBean
 {
     public enum StoryInfoDetailsTypeEnum
     {
@@ -25,66 +25,6 @@ public class StoryInfoDetailsBean
 
         SceneInt = 41,//场景互动
     }
-
-    public long story_id;
-    //类型 1 NPC站位 11对话 12剧情自动跳转
-    public int type;
-    //事件顺序
-    public int story_order;
-
-    public string key_name;
-
-    //坐标
-    public float position_x;
-    public float position_y;
-    //编号
-    public int num;
-
-    //NPCID
-    public long npc_id;
-    //npc朝向
-    public int face;
-
-    //剧情自动跳转时间
-    public float wait_time;
-    //文本ID
-    public long text_mark_id;
-    //表情
-    public int expression;
-
-    //摧毁的NPCID
-    public string npc_destroy;
-
-    public string npc_hat;
-    public string npc_clothes;
-    public string npc_shoes;
-
-    //场景互动物体名称
-    public string scene_intobj_name;
-    //场景互动物体具体名称你
-    public string scene_intcomponent_name;
-    //场景互动物体方法
-    public string scene_intcomponent_method;
-    //场景互动物体方法参数
-    public string scene_intcomponent_parameters;
-
-    //播放的音效
-    public int audio_sound;
-    public int audio_music;
-
-    //偏移
-    public float offset_x;
-    public float offset_y;
-
-    //横竖
-    public int horizontal;
-    public int vertical;
-
-    public int time_year;
-    public int time_month;
-    public int time_day;
-    public int time_hour;
-    public int time_minute;
 
     //获取NPC装备
     public void GetNpcEquip(SexEnum sex,out long hatId, out long clothesId, out long shoesId)

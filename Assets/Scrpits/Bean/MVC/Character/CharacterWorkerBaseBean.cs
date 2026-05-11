@@ -123,22 +123,22 @@ public class CharacterWorkerBaseBean
         switch (level)
         {
             case 1:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp1, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp1, out nextLevelExp);
                 break;
             case 2:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp2, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp2, out nextLevelExp);
                 break;
             case 3:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp3, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp3, out nextLevelExp);
                 break;
             case 4:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp4, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp4, out nextLevelExp);
                 break;
             case 5:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp5, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp5, out nextLevelExp);
                 break;
             case 6:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp6, out nextLevelExp);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp6, out nextLevelExp);
                 break;
         }
         return nextLevelExp;

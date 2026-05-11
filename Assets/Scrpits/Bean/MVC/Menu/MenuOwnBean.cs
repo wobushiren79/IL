@@ -51,15 +51,15 @@ public class MenuOwnBean
         }
         else if (menuLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate1, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate1, out addRate);
         }
         else if (menuLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate2, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate2, out addRate);
         }
         else if (menuLevel == LevelTypeEnum.Sun)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate3, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate3, out addRate);
         }
         priceL = (long)(menuInfo.price_l * addRate);
         priceM = (long)(menuInfo.price_m * addRate);
@@ -110,15 +110,15 @@ public class MenuOwnBean
         int levelExp = 0;
         if (menuLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
         }
         else if (menuLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
         }
         else if (menuLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
         }
         MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
         //不同稀有度经验不同
@@ -156,15 +156,15 @@ public class MenuOwnBean
         LevelTypeEnum menuLevel = GetMenuLevel();
         if (menuLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out researchLevelExp);
         }
         else if (menuLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out researchLevelExp);
         }
         else if (menuLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out researchLevelExp);
         }
 
         if (researchLevelExp == 0)
@@ -210,15 +210,15 @@ public class MenuOwnBean
         LevelTypeEnum menuLevel = GetMenuLevel();
         if (menuLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out completeResearchExp);
         }
         else if (menuLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out completeResearchExp);
         }
         else if (menuLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out completeResearchExp);
         }
         researchExp = this.researchExp;
         float progress = (float)researchExp / completeResearchExp;

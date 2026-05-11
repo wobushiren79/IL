@@ -337,7 +337,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
     {
         if (EditorUI.GUIButton("删除", 200, 20))
         {
-            storyInfoService.DeleteDetailsDataByIdOrderType(itemData.story_id, itemData.story_order, itemData.type);
+            storyInfoService.DeleteDetailsDataByIdOrderType(itemData.id, itemData.story_order, itemData.type);
             listOrderStoryInfoDetails.Remove(itemData);
         }
         GUILayout.BeginVertical();
@@ -397,13 +397,13 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                     if (textInfo.user_id == 0)
                     {
                         npcInfo = new NpcInfoBean();
-                        npcInfo.name = "玩家";
+                        npcInfo.name_language = "玩家";
                     }
                     else
                     {
                         npcInfo = mapNpcInfo[textInfo.user_id];
                     }
-                    EditorUI.GUIText(npcInfo.title_name + "-" + npcInfo.name, 120, 20);
+                    EditorUI.GUIText(npcInfo.title_name_language + "-" + npcInfo.name, 120, 20);
                     EditorUI.GUIText("指定的姓名", 120, 20);
                     textInfo.name = EditorUI.GUIEditorText(textInfo.name, 100, 20);
 
@@ -472,12 +472,12 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         if (itemData.npc_id == 0)
         {
             npcInfo = new NpcInfoBean();
-            npcInfo.name = "玩家";
+            npcInfo.name_language = "玩家";
         }
         else if (itemData.npc_id == -1)
         {
             npcInfo = new NpcInfoBean();
-            npcInfo.name = "妻子";
+            npcInfo.name_language = "妻子";
         }
         else
         {
@@ -485,7 +485,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         }
         EditorUI.GUIText("NPCId(0:自己，-1：妻子):", 200, 20);
         itemData.npc_id = EditorUI.GUIEditorText(itemData.npc_id, 100, 20);
-        EditorUI.GUIText("姓名：" + npcInfo.title_name + "-" + npcInfo.name, 200, 20);
+        EditorUI.GUIText("姓名：" + npcInfo.title_name_language + "-" + npcInfo.name, 200, 20);
         EditorUI.GUIText("NPC序号:", 100, 20);
         itemData.num = int.Parse(EditorUI.GUIEditorText(itemData.num + "", 50, 20));
         EditorUI.GUIText("NPC站位 ", 100, 20);
@@ -930,7 +930,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                             LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
                         }
                     }
-                    objNpc = CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.position_x, itemData.position_y), itemData.num);
+                    objNpc = CreateNpc(npcInfoBean.id, new Vector3(itemData.position_x, itemData.position_y), itemData.num);
                     npcAI = objNpc.GetComponent<BaseNpcAI>();
                 }
                 npcAI.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
@@ -1043,7 +1043,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 break;
         }
 
-        itemDetailsInfo.story_id = storyId;
+        itemDetailsInfo.id = storyId;
         itemDetailsInfo.story_order = mFindStroyOrder;
         listAllStoryInfoDetails.Add(itemDetailsInfo);
         listOrderStoryInfoDetails.Add(itemDetailsInfo);

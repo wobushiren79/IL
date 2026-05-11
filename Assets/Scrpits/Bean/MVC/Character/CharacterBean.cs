@@ -22,8 +22,8 @@ public class CharacterBean
     {
         baseInfo.characterType = npcInfo.npc_type;
         baseInfo.characterId = npcInfo.id + "";
-        baseInfo.titleName = npcInfo.title_name;
-        baseInfo.name = npcInfo.name;
+        baseInfo.titleName = npcInfo.title_name_language;
+        baseInfo.name = npcInfo.name_language;
         baseInfo.priceL = npcInfo.wage_l;
         baseInfo.priceM = npcInfo.wage_m;
         baseInfo.priceS = npcInfo.wage_s;
@@ -363,24 +363,24 @@ public class CharacterBean
         switch (level)
         {
             case 1:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel1, out randomHatListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel1, out randomClothesListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel1, out randomShoesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.HatForLevel1, out randomHatListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ClothesForLevel1, out randomClothesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ShoesForLevel1, out randomShoesListStr);
                 break;
             case 2:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel2, out randomHatListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel2, out randomClothesListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel2, out randomShoesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.HatForLevel2, out randomHatListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ClothesForLevel2, out randomClothesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ShoesForLevel2, out randomShoesListStr);
                 break;
             case 3:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel3, out randomHatListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel3, out randomClothesListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel3, out randomShoesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.HatForLevel3, out randomHatListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ClothesForLevel3, out randomClothesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ShoesForLevel3, out randomShoesListStr);
                 break;
             default:
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out randomHatListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel0, out randomClothesListStr);
-                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel0, out randomShoesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.HatForLevel0, out randomHatListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ClothesForLevel0, out randomClothesListStr);
+                GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.ShoesForLevel0, out randomShoesListStr);
                 break;
         }
         randomHat = randomHatListStr.SplitAndRandomForLong(',');

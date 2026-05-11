@@ -32,8 +32,6 @@ public class ItemCreateWindowsEditor : EditorWindow
         storeInfoManager.Awake();
         innBuildManager = new InnBuildManager();
         innBuildManager.Awake();
-        gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        innBuildManager.buildDataController.GetAllBuildItemsData();
         itemsInfoService = new ItemsInfoService();
         storeInfoService = new StoreInfoService();
         buildItemService = new BuildItemService();
@@ -44,7 +42,6 @@ public class ItemCreateWindowsEditor : EditorWindow
 
     public void RefreshData()
     {
-        gameItemsManager.itemsInfoController.GetAllItemsInfo();
         listFindItem.Clear();
         listFindStoreItem.Clear();
         listFindAchItem.Clear();
@@ -207,7 +204,6 @@ public class ItemCreateWindowsEditor : EditorWindow
 
         GUILayout.Label("成就ID：", GUILayout.Width(50), GUILayout.Height(20));
         achievementInfo.id = int.Parse(EditorGUILayout.TextArea(achievementInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-        achievementInfo.ach_id = achievementInfo.id;
         achievementInfo.type = (int)(AchievementTypeEnum)EditorGUILayout.EnumPopup("成就类型", (AchievementTypeEnum)achievementInfo.type, GUILayout.Width(300), GUILayout.Height(20));
         string path = "Assets/Texture/Common/UI/";
         path += (achievementInfo.icon_key + ".png");
@@ -219,9 +215,9 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("icon_key：", GUILayout.Width(150), GUILayout.Height(20));
         achievementInfo.icon_key = EditorGUILayout.TextArea(achievementInfo.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
         GUILayout.Label("名称：", GUILayout.Width(100), GUILayout.Height(20));
-        achievementInfo.name = EditorGUILayout.TextArea(achievementInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
+        achievementInfo.name_language = EditorGUILayout.TextArea(achievementInfo.name_language + "", GUILayout.Width(150), GUILayout.Height(20));
         GUILayout.Label("内容：", GUILayout.Width(100), GUILayout.Height(20));
-        achievementInfo.content = EditorGUILayout.TextArea(achievementInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
+        achievementInfo.content_language = EditorGUILayout.TextArea(achievementInfo.content_language + "", GUILayout.Width(150), GUILayout.Height(20));
         EditorUI.GUIText("前置成就:");
         achievementInfo.pre_ach_ids = EditorUI.GUIEditorText(achievementInfo.pre_ach_ids);
         //前置相关
@@ -402,7 +398,6 @@ public class ItemCreateWindowsEditor : EditorWindow
 
         GUILayout.Label("商品ID：", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.id = int.Parse(EditorGUILayout.TextArea(storeInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-        storeInfo.store_id = storeInfo.id;
         storeInfo.type = (int)(StoreTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreTypeEnum)storeInfo.type, GUILayout.Width(300), GUILayout.Height(20));
         switch ((StoreTypeEnum)storeInfo.type)
         {
@@ -523,9 +518,9 @@ public class ItemCreateWindowsEditor : EditorWindow
                 break;
         }
         GUILayout.Label("备用名字", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.name_language = EditorGUILayout.TextArea(storeInfo.name_language + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("备用描述", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.content_language = EditorGUILayout.TextArea(storeInfo.content_language + "", GUILayout.Width(100), GUILayout.Height(20));
     }
 
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
@@ -559,9 +554,9 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("消耗时间(小时)", GUILayout.Width(100), GUILayout.Height(20));
         storeInfo.mark = EditorGUILayout.TextArea(storeInfo.mark + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("名字", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.name_language = EditorGUILayout.TextArea(storeInfo.name_language + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.content_language = EditorGUILayout.TextArea(storeInfo.content_language + "", GUILayout.Width(100), GUILayout.Height(20));
 
         storeInfo.pre_data_minigame = EditorUI.GUIListData<PreTypeForMiniGameEnum>("小游戏数据", storeInfo.pre_data_minigame);
     }
@@ -571,9 +566,9 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("客栈等级：", GUILayout.Width(100), GUILayout.Height(20));
         storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
         GUILayout.Label("名字", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.name_language = EditorGUILayout.TextArea(storeInfo.name_language + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.content_language = EditorGUILayout.TextArea(storeInfo.content_language + "", GUILayout.Width(100), GUILayout.Height(20));
         //前置
         GUIPre(storeInfo);
         //奖励相关
@@ -592,27 +587,27 @@ public class ItemCreateWindowsEditor : EditorWindow
         createItemsInfo.items_type = (int)createItemType;
 
         EditorUI.GUIText("名字：", 50);
-        createItemsInfo.name = EditorUI.GUIEditorText(createItemsInfo.name + "", 150);
+        createItemsInfo.name_language = EditorUI.GUIEditorText(createItemsInfo.name_language + "", 150);
 
         if (createItemType == GeneralEnum.Hat)
         {
-            if (!createItemsInfo.name.Contains("-头"))
+            if (!createItemsInfo.name_language.Contains("-头"))
             {
-                createItemsInfo.name += "-头";
+                createItemsInfo.name_language += "-头";
             }
         }
         else if (createItemType == GeneralEnum.Clothes)
         {
-            if (!createItemsInfo.name.Contains("-衣"))
+            if (!createItemsInfo.name_language.Contains("-衣"))
             {
-                createItemsInfo.name += "-衣";
+                createItemsInfo.name_language += "-衣";
             }
         }
         else if (createItemType == GeneralEnum.Shoes)
         {
-            if (!createItemsInfo.name.Contains("-鞋"))
+            if (!createItemsInfo.name_language.Contains("-鞋"))
             {
-                createItemsInfo.name += "-鞋";
+                createItemsInfo.name_language += "-鞋";
             }
         }
         spriteCreateIcon = EditorGUILayout.ObjectField(new GUIContent("选择图片", ""), spriteCreateIcon, typeof(Sprite), true, GUILayout.Width(250)) as Sprite;
@@ -681,10 +676,9 @@ public class ItemCreateWindowsEditor : EditorWindow
         EditorGUILayout.TextArea((inputId + autoId) + "", GUILayout.Width(100), GUILayout.Height(20));
 
         createItemsInfo.id = (int)(inputId + autoId);
-        createItemsInfo.items_id = createItemsInfo.id;
 
         GUILayout.Label("描述：");
-        createItemsInfo.content = EditorGUILayout.TextArea(createItemsInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
+        createItemsInfo.content_language = EditorGUILayout.TextArea(createItemsInfo.content_language + "", GUILayout.Width(150), GUILayout.Height(20));
 
         GUILayout.Label("增加属性：");
         GUILayout.Label("命");
@@ -868,9 +862,9 @@ public class ItemCreateWindowsEditor : EditorWindow
             itemInfo.icon_key = EditorGUILayout.TextArea(itemInfo.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
             itemInfo.items_type = (int)EditorUI.GUIEnum<GeneralEnum>("物品类型", itemInfo.items_type);
             EditorUI.GUIText("名字：");
-            itemInfo.name = EditorGUILayout.TextArea(itemInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
+            itemInfo.name_language = EditorGUILayout.TextArea(itemInfo.name_language + "", GUILayout.Width(150), GUILayout.Height(20));
             EditorUI.GUIText("描述：");
-            itemInfo.content = EditorGUILayout.TextArea(itemInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
+            itemInfo.content_language = EditorGUILayout.TextArea(itemInfo.content_language + "", GUILayout.Width(150), GUILayout.Height(20));
             GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
             if (itemType != GeneralEnum.Menu
                 && itemType != GeneralEnum.Medicine
@@ -1167,7 +1161,6 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.BeginHorizontal();
         EditorUI.GUIText("id：");
         buildItem.id = EditorUI.GUIEditorText(buildItem.id);
-        buildItem.build_id = buildItem.id;
         buildItem.build_type = (int)EditorUI.GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
         EditorUI.GUIText("模型ID：");
         buildItem.model_name = EditorUI.GUIEditorText(buildItem.model_name);
@@ -1302,7 +1295,6 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.BeginHorizontal();
         EditorUI.GUIText("ID:");
         menuInfo.id = EditorUI.GUIEditorText(menuInfo.id);
-        menuInfo.menu_id = menuInfo.id;
 
         EditorUI.GUIText("名称:");
         menuInfo.name = EditorUI.GUIEditorText(menuInfo.name, 150);
@@ -1329,7 +1321,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         {
             //自定义了利润
             menuInfo.price_s =
-                setGetmoney +
+                (int)setGetmoney +
              menuInfo.ing_oilsalt * 5 +
              menuInfo.ing_meat * 10 +
              menuInfo.ing_riverfresh * 10 +
@@ -1445,7 +1437,6 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.BeginHorizontal();
         EditorUI.GUIText("ID:");
         skillInfo.id = EditorUI.GUIEditorText(skillInfo.id);
-        skillInfo.skill_id = skillInfo.id;
         EditorUI.GUIText("名称");
         skillInfo.name = EditorUI.GUIEditorText(skillInfo.name);
         EditorUI.GUIText("介绍");
@@ -1462,10 +1453,4 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    #region 商店数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
-    {
-        listFindStoreItem = listData;
-    }
-    #endregion
 }

@@ -141,15 +141,15 @@ public class BuildBedBean : BaseBean
         int levelExp = 0;
         if (level == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp1, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp1, out levelExp);
         }
         else if (level == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp2, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp2, out levelExp);
         }
         else if (level == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp3, out levelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelUpExp3, out levelExp);
         }
         return levelExp;
     }
@@ -165,15 +165,15 @@ public class BuildBedBean : BaseBean
         LevelTypeEnum bedLevel = GetBedLevel();
         if (bedLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp1, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp1, out researchLevelExp);
         }
         else if (bedLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp2, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp2, out researchLevelExp);
         }
         else if (bedLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp3, out researchLevelExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp3, out researchLevelExp);
         }
 
         if (researchLevelExp == 0)
@@ -205,15 +205,15 @@ public class BuildBedBean : BaseBean
         }
         else if (bedLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
         }
         else if (bedLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
         }
         else if (bedLevel == LevelTypeEnum.Sun)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
         }
         outPriceL = (long)(priceL * addRate);
         outPriceM = (long)(priceM * addRate);
@@ -230,15 +230,15 @@ public class BuildBedBean : BaseBean
         }
         else if (bedLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
         }
         else if (bedLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
         }
         else if (bedLevel == LevelTypeEnum.Sun)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
         }
         return addRate;
     }
@@ -272,15 +272,15 @@ public class BuildBedBean : BaseBean
         LevelTypeEnum bedLevel = GetBedLevel();
         if (bedLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp1, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp1, out completeResearchExp);
         }
         else if (bedLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp2, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp2, out completeResearchExp);
         }
         else if (bedLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp3, out completeResearchExp);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForLevelResearchExp3, out completeResearchExp);
         }
         researchExp = this.researchExp;
         float progress = (float)researchExp / completeResearchExp;
@@ -356,16 +356,16 @@ public class BuildBedBean : BaseBean
         LevelTypeEnum bedLevel = GetBedLevel();
         if (bedLevel == LevelTypeEnum.Init)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice1, out  researchPrice);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForResearchPrice1, out  researchPrice);
 
         }
         else if (bedLevel == LevelTypeEnum.Star)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice2, out  researchPrice);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForResearchPrice2, out  researchPrice);
         }
         else if (bedLevel == LevelTypeEnum.Moon)
         {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice3, out  researchPrice);
+            GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.BedForResearchPrice3, out  researchPrice);
         }
         long[] priceList= researchPrice.SplitForArrayLong(',');
         researchPriceL = priceList[0];

@@ -41,12 +41,12 @@ public class CharacterFavorabilityBean
     public void AddFavorability(int addFavorability)
     {
         favorability += addFavorability;
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityForMarry, out int love6);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityForMarry, out int love6);
         if (favorability >= 0 && favorability <= love1)
         {
             favorabilityLevel = 0;
@@ -84,12 +84,12 @@ public class CharacterFavorabilityBean
     public void GetFavorability(bool canMarry, out int favorability, out int favorabilityMax)
     {
         favorability = this.favorability;
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
-        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityForMarry, out int love6);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
+        GameCommonInfo.baseDataService.GetBaseData(BaseDataTypeEnum.NpcFavorabilityForMarry, out int love6);
         if (favorability >= 0 && favorability <= love1)
         {
             favorabilityMax = love1;

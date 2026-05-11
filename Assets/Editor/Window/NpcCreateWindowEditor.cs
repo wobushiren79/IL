@@ -119,8 +119,7 @@ public class NpcCreateWindowEditor : EditorWindow
         if (EditorUI.GUIButton("复制"))
         {
             CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(copyNpcId);
-            characterData.npcInfoData.id = (int)copyNpcNewId;
-            characterData.npcInfoData.npc_id = copyNpcNewId;
+            characterData.npcInfoData.id = copyNpcNewId;
             npcInfoService.InsertData(characterData.npcInfoData);
         }
         GUILayout.EndHorizontal();
@@ -265,7 +264,6 @@ public class NpcCreateWindowEditor : EditorWindow
         }
         GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.id = int.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-        npcInfo.npc_id = npcInfo.id;
         GUILayout.BeginHorizontal();
         npcInfo.npc_type = (int)EditorUI.GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
         NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
@@ -276,11 +274,11 @@ public class NpcCreateWindowEditor : EditorWindow
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
-            npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.name_language = EditorGUILayout.TextArea(npcInfo.name_language + "", GUILayout.Width(100), GUILayout.Height(20));
             GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.sex = int.Parse(EditorGUILayout.TextArea(npcInfo.sex + "", GUILayout.Width(30), GUILayout.Height(20)));
             GUILayout.Label("称号：", GUILayout.Width(100), GUILayout.Height(20));
-            npcInfo.title_name = EditorGUILayout.TextArea(npcInfo.title_name + "", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.title_name_language = EditorGUILayout.TextArea(npcInfo.title_name_language + "", GUILayout.Width(100), GUILayout.Height(20));
             GUILayout.Label("朝向 1左 2右", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.face = int.Parse(EditorGUILayout.TextArea(npcInfo.face + "", GUILayout.Width(30), GUILayout.Height(20)));
             GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
@@ -394,7 +392,7 @@ public class NpcCreateWindowEditor : EditorWindow
         npcInfo.hand_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hand_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         ItemsInfoBean handInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.hand_id);
         if (handInfo != null)
-            EditorUI.GUIText(handInfo.name, 50);
+            EditorUI.GUIText(handInfo.name_language, 50);
 
         EditorUI.GUIText("|", 10);
         GUILayout.EndHorizontal();
@@ -507,10 +505,9 @@ public class NpcCreateWindowEditor : EditorWindow
         GUILayout.Label("团队类型 " + npcTeamData.team_type, GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.team_type = (int)(NpcTeamTypeEnum)EditorGUILayout.EnumPopup((NpcTeamTypeEnum)npcTeamData.team_type, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("团队名称", GUILayout.Width(100), GUILayout.Height(20));
-        npcTeamData.name = EditorGUILayout.TextArea(npcTeamData.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        npcTeamData.name_language = EditorGUILayout.TextArea(npcTeamData.name_language + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("团队ID", GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.id = int.Parse(EditorGUILayout.TextArea(npcTeamData.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-        npcTeamData.team_id = npcTeamData.id;
         GUILayout.Label("团队领袖IDs(,)", GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.team_leader = EditorGUILayout.TextArea(npcTeamData.team_leader + "", GUILayout.Width(200), GUILayout.Height(20));
         GUILayout.Label("团队成员IDs(,)", GUILayout.Width(100), GUILayout.Height(20));
