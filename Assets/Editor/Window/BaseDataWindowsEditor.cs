@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
 public class BaseDataWindowsEditor : EditorWindow
 {
-    public BaseDataService baseDataService;
-    public List<BaseDataBean> listBaseData;
+    public List<BaseInfoBean> listBaseData;
 
     [MenuItem("Tools/Window/BaseData")]
     static void CreateWindows()
@@ -17,24 +16,31 @@ public class BaseDataWindowsEditor : EditorWindow
 
     private void OnEnable()
     {
-        baseDataService = new BaseDataService();
-        listBaseData = baseDataService.QueryAllData();
+        LoadData();
+    }
+
+    private void LoadData()
+    {
+        listBaseData = new List<BaseInfoBean>();
+        var dic = BaseInfoCfg.GetAllData();
+        if (dic != null)
+            foreach (var item in dic)
+                listBaseData.Add(item.Value);
     }
 
     private void OnGUI()
     {
-        //滚动布局
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.BeginVertical();
         if (EditorUI.GUIButton("刷新数据"))
         {
-            listBaseData = baseDataService.QueryAllData();
+            LoadData();
         }
         EditorUI.GUIText("-------------------------------------------", 500);
 
         if (listBaseData != null)
         {
-            foreach (BaseDataBean itemData in listBaseData)
+            foreach (BaseInfoBean itemData in listBaseData)
             {
                 GUILayout.BeginHorizontal();
                 BaseDataTypeEnum baseDataType = (BaseDataTypeEnum)itemData.id;
@@ -58,9 +64,7 @@ public class BaseDataWindowsEditor : EditorWindow
                         break;
                     case BaseDataTypeEnum.WorkerForLevelUpExp6:
                         EditorUI.GUIText("职业升级经验(等级6)：", 150);
-
                         break;
-
                     case BaseDataTypeEnum.MenuForLevelUpExp1:
                         EditorUI.GUIText("菜品升级经验(星级)：", 150);
                         break;
@@ -70,7 +74,6 @@ public class BaseDataWindowsEditor : EditorWindow
                     case BaseDataTypeEnum.MenuForLevelUpExp3:
                         EditorUI.GUIText("菜品升级经验(阳级)：", 150);
                         break;
-
                     case BaseDataTypeEnum.MenuForPriceAddRate1:
                         EditorUI.GUIText("菜品价格等级加成(星级)：", 150);
                         break;
@@ -80,7 +83,6 @@ public class BaseDataWindowsEditor : EditorWindow
                     case BaseDataTypeEnum.MenuForPriceAddRate3:
                         EditorUI.GUIText("菜品价格等级加成(阳级)：", 150);
                         break;
-
                     case BaseDataTypeEnum.MenuForLevelResearchExp1:
                         EditorUI.GUIText("菜品升级研究经验(星级)：", 150);
                         break;
@@ -91,9 +93,8 @@ public class BaseDataWindowsEditor : EditorWindow
                         EditorUI.GUIText("菜品升级研究经验(阳级)：", 150);
                         break;
                 }
-                itemData.content = EditorUI.GUIEditorText(itemData.content, 200);
+                EditorUI.GUIText(itemData.content, 200);
                 GUILayout.EndHorizontal();
-           
             }
         }
         GUILayout.EndVertical();

@@ -8,6 +8,7 @@ public class NpcInfoManager : BaseManager
 
     public void Awake()
     {
+        listNpcInfo = NpcInfoCfg.GetAllData() ?? new Dictionary<long, NpcInfoBean>();
     }
 
     /// <summary>

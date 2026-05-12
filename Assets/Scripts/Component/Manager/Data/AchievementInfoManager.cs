@@ -1,15 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System;
 
 public class AchievementInfoManager : BaseManager
 {
-    protected AchievementInfoService achievementInfoService;
-
     private void Awake()
     {
-        achievementInfoService = new AchievementInfoService();
     }
 
     /// <summary>
@@ -17,17 +14,33 @@ public class AchievementInfoManager : BaseManager
     /// </summary>
     public void GetAllAchievement(Action<List<AchievementInfoBean>> action)
     {
-        List<AchievementInfoBean> listData = achievementInfoService.QueryAllData();
+        var dicData = AchievementInfoCfg.GetAllData();
+        List<AchievementInfoBean> listData = new List<AchievementInfoBean>();
+        if (dicData != null)
+        {
+            foreach (var item in dicData)
+                listData.Add(item.Value);
+        }
         action?.Invoke(listData);
     }
 
     /// <summary>
     /// 通过ID获取所有成就
     /// </summary>
-    /// <param name="ids"></param>
     public void GetAchievementByIds(List<long> ids, Action<List<AchievementInfoBean>> action)
     {
-        List<AchievementInfoBean> listData = achievementInfoService.QueryDataByIds(TypeConversionUtil.ListToArray(ids));
+        List<AchievementInfoBean> listData = new List<AchievementInfoBean>();
+        if (ids == null)
+        {
+            action?.Invoke(listData);
+            return;
+        }
+        foreach (long id in ids)
+        {
+            AchievementInfoBean data = AchievementInfoCfg.GetItemData(id);
+            if (data != null)
+                listData.Add(data);
+        }
         action?.Invoke(listData);
     }
 }

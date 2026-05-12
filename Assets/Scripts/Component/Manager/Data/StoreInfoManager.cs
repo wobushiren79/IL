@@ -5,23 +5,30 @@ using System;
 
 public class StoreInfoManager : BaseManager
 {
-    protected StoreInfoService storeInfoService;
-    //商店数据
-    public List<StoreInfoBean> listStoreData;
-
     public void Awake()
     {
-        storeInfoService = new StoreInfoService();
     }
 
+    private List<StoreInfoBean> GetStoreInfoByType(int type)
+    {
+        List<StoreInfoBean> listData = new List<StoreInfoBean>();
+        var dicData = StoreInfoCfg.GetAllData();
+        if (dicData == null)
+            return listData;
+        foreach (var item in dicData)
+        {
+            if (item.Value.type == type)
+                listData.Add(item.Value);
+        }
+        return listData;
+    }
 
     /// <summary>
     /// 获取市场数据
     /// </summary>
     public void GetStoreInfoForMarket(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Market);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Market));
     }
 
     /// <summary>
@@ -29,8 +36,7 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForDress(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Dress);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Dress));
     }
 
     /// <summary>
@@ -38,8 +44,7 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForGrocery(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Grocery);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Grocery));
     }
 
     /// <summary>
@@ -47,32 +52,31 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForCarpenter(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Carpenter);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Carpenter));
     }
+
     /// <summary>
     /// 获取建筑坊床数据
     /// </summary>
     public void GetStoreInfoForCarpenterBed(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.CarpenterBed);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.CarpenterBed));
     }
+
     /// <summary>
     /// 获取药店数据
     /// </summary>
     public void GetStoreInfoForPharmacy(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Pharmacy);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Pharmacy));
     }
+
     /// <summary>
     /// 获取公会角色提升数据
     /// </summary>
     public void GetStoreInfoForGuildImprove(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Improve);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Improve));
     }
 
     /// <summary>
@@ -80,8 +84,7 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForGuildGoods(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.Guild);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.Guild));
     }
 
     /// <summary>
@@ -89,8 +92,7 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForGuildInnLevel(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.InnLevel);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.InnLevel));
     }
 
     /// <summary>
@@ -98,8 +100,7 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForArenaInfo(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.ArenaInfo);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.ArenaInfo));
     }
 
     /// <summary>
@@ -107,7 +108,6 @@ public class StoreInfoManager : BaseManager
     /// </summary>
     public void GetStoreInfoForArenaGoods(Action<List<StoreInfoBean>> action)
     {
-        List<StoreInfoBean> listData = storeInfoService.QueryDataByType((int)StoreTypeEnum.ArenaGoods);
-        action?.Invoke(listData);
+        action?.Invoke(GetStoreInfoByType((int)StoreTypeEnum.ArenaGoods));
     }
 }

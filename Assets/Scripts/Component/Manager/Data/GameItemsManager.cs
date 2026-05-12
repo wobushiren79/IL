@@ -8,13 +8,11 @@ public class GameItemsManager : BaseManager
     public Dictionary<string,AnimationClip> dicItemsAnim = new Dictionary<string, AnimationClip>();
 
     //物品数据
-    public Dictionary<long, ItemsInfoBean> listDataItems;
-    protected ItemsInfoService itemsInfoService;
+    public Dictionary<long, ItemsInfoBean> listDataItems => ItemsInfoCfg.GetAllData();
 
     public Dictionary<string, Texture2DArray> listItemsTex = new Dictionary<string, Texture2DArray>();
     public void Awake()
     {
-        itemsInfoService = new ItemsInfoService();
     }
 
     /// <summary>

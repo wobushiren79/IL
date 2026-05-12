@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System;
@@ -14,11 +14,88 @@ public class TextInfoManager : BaseManager
     public Dictionary<long, List<TextInfoBean>> mapTalkRascalData;
     public Dictionary<long, List<TextInfoBean>> mapTalkExchangeData;
 
-    protected TextInfoService textInfoService;
-
     private void Awake()
     {
-        textInfoService = new TextInfoService();
+    }
+
+    private static TextInfoBean ConvertTalkBean(TextTalkBean src)
+    {
+        if (src == null) return null;
+        TextInfoBean bean = new TextInfoBean();
+        bean.id = src.id;
+        bean.valid = src.valid;
+        bean.mark_id = src.mark_id;
+        bean.type = src.type;
+        bean.text_order = src.text_order;
+        bean.next_order = src.next_order;
+        bean.talk_type = src.talk_type;
+        bean.user_id = src.user_id;
+        bean.condition_min_favorability = src.condition_min_favorability;
+        bean.condition_max_favorability = src.condition_max_favorability;
+        bean.select_type = src.select_type;
+        bean.add_favorability = src.add_favorability;
+        bean.pre_data_minigame = src.pre_data_minigame;
+        bean.reward_data = src.reward_data;
+        bean.wait_time = src.wait_time;
+        bean.is_stoptime = src.is_stoptime;
+        bean.scene_expression = src.scene_expression;
+        bean.pre_data = src.pre_data;
+        bean.name = src.name_language;
+        bean.content = src.content_language;
+        return bean;
+    }
+
+    private static TextInfoBean ConvertStoryBean(TextStoryBean src)
+    {
+        if (src == null) return null;
+        TextInfoBean bean = new TextInfoBean();
+        bean.id = src.id;
+        bean.valid = src.valid;
+        bean.mark_id = src.mark_id;
+        bean.type = src.type;
+        bean.text_order = src.text_order;
+        bean.next_order = src.next_order;
+        bean.talk_type = src.talk_type;
+        bean.user_id = src.user_id;
+        bean.condition_min_favorability = src.condition_min_favorability;
+        bean.condition_max_favorability = src.condition_max_favorability;
+        bean.select_type = src.select_type;
+        bean.add_favorability = src.add_favorability;
+        bean.pre_data_minigame = src.pre_data_minigame;
+        bean.reward_data = src.reward_data;
+        bean.wait_time = src.wait_time;
+        bean.is_stoptime = src.is_stoptime;
+        bean.scene_expression = src.scene_expression;
+        bean.pre_data = src.pre_data;
+        bean.name = src.name_language;
+        bean.content = src.content_language;
+        return bean;
+    }
+
+    private List<TextInfoBean> QueryTalkBeans(Func<TextTalkBean, bool> predicate)
+    {
+        List<TextInfoBean> result = new List<TextInfoBean>();
+        TextTalkBean[] array = TextTalkCfg.GetAllArrayData();
+        if (array == null) return result;
+        foreach (TextTalkBean item in array)
+        {
+            if (predicate(item))
+                result.Add(ConvertTalkBean(item));
+        }
+        return result;
+    }
+
+    private List<TextInfoBean> QueryStoryBeans(Func<TextStoryBean, bool> predicate)
+    {
+        List<TextInfoBean> result = new List<TextInfoBean>();
+        TextStoryBean[] array = TextStoryCfg.GetAllArrayData();
+        if (array == null) return result;
+        foreach (TextStoryBean item in array)
+        {
+            if (predicate(item))
+                result.Add(ConvertStoryBean(item));
+        }
+        return result;
     }
 
     /// <summary>
@@ -32,13 +109,13 @@ public class TextInfoManager : BaseManager
         switch (textEnum)
         {
             case TextEnum.Look:
-                listData = textInfoService.QueryDataByMarkId(textEnum, id);
+                listData = QueryTalkBeans(b => b.mark_id == id);
                 break;
             case TextEnum.Talk:
-                listData = textInfoService.QueryDataByMarkId(textEnum, id);
+                listData = QueryTalkBeans(b => b.mark_id == id);
                 break;
             case TextEnum.Story:
-                listData = textInfoService.QueryDataByMarkId(textEnum, id);
+                listData = QueryStoryBeans(b => b.mark_id == id);
                 break;
         }
         action?.Invoke(listData);
@@ -49,7 +126,7 @@ public class TextInfoManager : BaseManager
     /// </summary>
     public void GetTextForTownFirstMeet(long userId, Action<List<TextInfoBean>> action)
     {
-        List<TextInfoBean> listData = textInfoService.QueryDataByFirstMeet(TextEnum.Talk, userId);
+        List<TextInfoBean> listData = QueryTalkBeans(b => b.user_id == userId && b.talk_type == (int)TextTalkTypeEnum.First);
         action?.Invoke(listData);
     }
 
@@ -58,11 +135,10 @@ public class TextInfoManager : BaseManager
     /// </summary>
     public void GetTextForTalkOptions(GameDataBean gameData, NpcInfoBean npcInfo, Action<List<TextInfoBean>> action)
     {
-        //如果不是第一次对话则有以下选项
         listTextData = new List<TextInfoBean>();
 
-        List<NpcTalkTypeEnum>  npcTalkTypes= npcInfo.GetTalkTypes();
-        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk,0, TextHandler.Instance.GetTextById(99101)));
+        List<NpcTalkTypeEnum> npcTalkTypes = npcInfo.GetTalkTypes();
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 0, TextHandler.Instance.GetTextById(99101)));
         foreach (NpcTalkTypeEnum itemType in npcTalkTypes)
         {
             switch (itemType)
@@ -104,22 +180,16 @@ public class TextInfoManager : BaseManager
         }
 
         CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcInfo.id);
-        FamilyDataBean familyData= gameData.GetFamilyData();
-        //如果满足了结婚条件。添加结婚对话
+        FamilyDataBean familyData = gameData.GetFamilyData();
         if (
-            //该角色是否可以结婚
-            npcInfo.CheckCanMarry() 
-            //好感是否达到要求
-            && characterFavorability.CheckCanMarry() 
-            //是否已经向其他人求婚或者已经结婚
+            npcInfo.CheckCanMarry()
+            && characterFavorability.CheckCanMarry()
             && (familyData.timeForMarry == null || familyData.timeForMarry.year == 0))
         {
             listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.GetTextById(99205)));
         }
-        //离开选项
         listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.GetTextById(99103)));
 
-        //继续查询该人物的所有对话
         GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel, action);
         action?.Invoke(listTextData);
     }
@@ -127,39 +197,37 @@ public class TextInfoManager : BaseManager
     /// <summary>
     /// 根据markID获取对话
     /// </summary>
-    /// <param name="userId"></param>
-    /// <param name="favorabilityLevel"></param>
-    public void GetTextForTalkByMarkId(long markId,Action<List<TextInfoBean>> action)
+    public void GetTextForTalkByMarkId(long markId, Action<List<TextInfoBean>> action)
     {
-        List<TextInfoBean> listData = textInfoService.QueryDataByMarkId(TextEnum.Talk, markId);
+        List<TextInfoBean> listData = QueryTalkBeans(b => b.mark_id == markId);
         action?.Invoke(listData);
     }
 
     /// <summary>
     /// 根据好感获取对话
     /// </summary>
-    /// <param name="userId"></param>
-    /// <param name="favorabilityLevel"></param>
     public void GetTextForTalkByMinFavorability(long userId, int favorabilityLevel, Action<List<TextInfoBean>> action)
     {
-        List<TextInfoBean> listData = textInfoService.QueryDataByMinFavorability(TextEnum.Talk, userId, favorabilityLevel);
+        List<TextInfoBean> listData = QueryTalkBeans(b =>
+            b.user_id == userId &&
+            b.condition_min_favorability <= favorabilityLevel);
         action?.Invoke(listData);
     }
 
     /// <summary>
     /// 获取捣乱对话
     /// </summary>
-    /// <param name="userId"></param>
     public void GetTextForTalkType(long userId, TextTalkTypeEnum textTalkType, Action<List<TextInfoBean>> action)
     {
-        List<TextInfoBean> listData = textInfoService.QueryDataByTalkType(TextEnum.Talk, textTalkType, userId);
+        List<TextInfoBean> listData = QueryTalkBeans(b =>
+            b.user_id == userId &&
+            b.talk_type == (int)textTalkType);
         action?.Invoke(listData);
     }
 
     /// <summary>
     /// 通过等级获取赠送对话
     /// </summary>
-    /// <param name="level"></param>
     public List<TextInfoBean> GetGiftTalkByFavorability(int favorability)
     {
         List<List<TextInfoBean>> listData = new List<List<TextInfoBean>>();
@@ -184,8 +252,6 @@ public class TextInfoManager : BaseManager
     /// <summary>
     /// 根据顺序获取文本数据
     /// </summary>
-    /// <param name="order"></param>
-    /// <returns></returns>
     public List<TextInfoBean> GetTextDataByOrder(int order)
     {
         List<TextInfoBean> listData = new List<TextInfoBean>();
@@ -201,4 +267,20 @@ public class TextInfoManager : BaseManager
         return listData;
     }
 
+    public List<TextInfoBean> QueryDataForFirstOrderByFavorability(long characterId, int favorability)
+    {
+        return QueryTalkBeans(b =>
+            b.user_id == characterId &&
+            b.text_order == 1 &&
+            b.condition_min_favorability <= favorability &&
+            b.condition_max_favorability > favorability);
+    }
+
+    public List<TextInfoBean> QueryDataForFirstOrderByFirstMeet(long characterId)
+    {
+        return QueryTalkBeans(b =>
+            b.user_id == characterId &&
+            b.text_order == 1 &&
+            b.talk_type == (int)TextTalkTypeEnum.First);
+    }
 }

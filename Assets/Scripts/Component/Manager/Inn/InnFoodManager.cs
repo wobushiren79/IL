@@ -8,24 +8,17 @@ public class InnFoodManager : BaseManager
     public Dictionary<string,AnimationClip> dicFoodAnim = new Dictionary<string, AnimationClip>();
 
     //菜单数据
-    public Dictionary<long, MenuInfoBean> listMenuData;
+    public Dictionary<long, MenuInfoBean> listMenuData => MenuInfoCfg.GetAllData();
     //料理主题数据
-    public Dictionary<long, CookingThemeBean> listCookingTheme;
-
-    protected MenuInfoService menuInfoService;
-    protected CookingThemeService cookingThemeService;
+    public Dictionary<long, CookingThemeBean> listCookingTheme => CookingThemeCfg.GetAllData();
 
     private void Awake()
     {
-        menuInfoService = new MenuInfoService();
-        cookingThemeService = new CookingThemeService();
     }
 
     /// <summary>
     /// 获取食物动画
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
     public AnimationClip GetFoodAnimByName(string name)
     {
        return GetModelForAddressablesSync<AnimationClip>(dicFoodAnim,$"Assets/Anim/Animation/Food/{name}.anim");
@@ -36,11 +29,13 @@ public class InnFoodManager : BaseManager
     /// <summary>
     /// 通过自己的列表获取食物数据
     /// </summary>
-    /// <param name="listMenu"></param>
     public List<MenuInfoBean> GetFoodDataListByMenuList(List<MenuOwnBean> listOwnMenu)
     {
         List<MenuInfoBean> listFood = new List<MenuInfoBean>();
-        if (listMenuData == null || listOwnMenu == null)
+        if (listOwnMenu == null)
+            return listFood;
+        var dicMenu = listMenuData;
+        if (dicMenu == null)
             return listFood;
         for (int i = 0; i < listOwnMenu.Count; i++)
         {
@@ -55,12 +50,10 @@ public class InnFoodManager : BaseManager
     /// <summary>
     /// 通过列表获取食物数据
     /// </summary>
-    /// <param name="listItem"></param>
-    /// <returns></returns>
     public List<MenuInfoBean> GetFoodDataListByItemList(List<ItemBean> listItem)
     {
         List<MenuInfoBean> listFood = new List<MenuInfoBean>();
-        if (listMenuData == null || listItem == null)
+        if (listItem == null)
             return listFood;
         for (int i = 0; i < listItem.Count; i++)
         {
@@ -77,21 +70,22 @@ public class InnFoodManager : BaseManager
     /// </summary>
     public MenuInfoBean GetRandomFoodDataByCookingTheme(CookingThemeBean cookingTheme)
     {
-        //TODO
         return RandomUtil.GetRandomDataByDictionary(listMenuData);
     }
 
     /// <summary>
     /// 随机获取一个料理主题
     /// </summary>
-    /// <returns></returns>
     public CookingThemeBean GetRandomCookingTheme()
     {
-        int randomTempNum = Random.Range(0,listCookingTheme.Count);
+        var dicTheme = listCookingTheme;
+        if (dicTheme == null || dicTheme.Count == 0)
+            return null;
+        int randomTempNum = Random.Range(0, dicTheme.Count);
         int i = 0;
-        foreach (var item in listCookingTheme)
+        foreach (var item in dicTheme)
         {
-            if(i == randomTempNum)
+            if (i == randomTempNum)
             {
                 return item.Value;
             }
@@ -103,31 +97,24 @@ public class InnFoodManager : BaseManager
     /// <summary>
     /// 通过主题ID获取料理主题
     /// </summary>
-    /// <param name="themeId"></param>
-    /// <returns></returns>
     public CookingThemeBean GetCookingThemeById(long themeId)
     {
-        if (listCookingTheme.TryGetValue(themeId, out CookingThemeBean cookingTheme))
-        {
-            return cookingTheme;
-        }
-        return null;
+        return CookingThemeCfg.GetItemData(themeId);
     }
 
     /// <summary>
     /// 通过等级获取烹饪主题
     /// </summary>
-    /// <param name="themeLevel"></param>
-    /// <returns></returns>
     public List<CookingThemeBean> GetCookingThemeByLevel(int themeLevel)
     {
         List<CookingThemeBean> listData = new List<CookingThemeBean>();
-        if (listCookingTheme == null)
+        var dicTheme = listCookingTheme;
+        if (dicTheme == null)
             return listData;
-        foreach ( var itemData in listCookingTheme)
+        foreach (var itemData in dicTheme)
         {
             CookingThemeBean itemCookingTheme = itemData.Value;
-            if (itemCookingTheme.theme_level== themeLevel)
+            if (itemCookingTheme.theme_level == themeLevel)
             {
                 listData.Add(itemCookingTheme);
             }
@@ -138,10 +125,8 @@ public class InnFoodManager : BaseManager
     /// <summary>
     /// 根据ID获取食物数据
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public MenuInfoBean GetFoodDataById(long id)
     {
-        return GetDataById(id, listMenuData);
+        return MenuInfoCfg.GetItemData(id);
     }
 }

@@ -17,8 +17,6 @@ public class CalendarView : BaseMonoBehaviour
     public int month;
     public int day;
 
-    protected DateInfoService dateInfoService;
-
     private List<ItemGameCalendarCpt> mListItemDay = new List<ItemGameCalendarCpt>();
 
     private void OnGUI()
@@ -33,7 +31,6 @@ public class CalendarView : BaseMonoBehaviour
 
     private void Awake()
     {
-        dateInfoService = new DateInfoService();
     }
 
     /// <summary>
@@ -183,7 +180,12 @@ public class CalendarView : BaseMonoBehaviour
     {
         CptUtil.RemoveChildsByActive(objDayContent.transform);
         mListItemDay.Clear();
-        List<DateInfoBean> listData = dateInfoService.QueayDataByMonth(month);
+        List<DateInfoBean> listData = new List<DateInfoBean>();
+        DateInfoBean[] allDateData = DateInfoCfg.GetAllArrayData();
+        if (allDateData != null)
+            foreach (DateInfoBean item in allDateData)
+                if (item.month == month)
+                    listData.Add(item);
         for (int i = 0; i < listData.Count; i++)
         {
             DateInfoBean itemData = listData[i];
