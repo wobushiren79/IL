@@ -35,7 +35,7 @@ public partial class IconHandler
     //食物图标
     public Dictionary<string, Sprite> dicFoodIcon = new Dictionary<string, Sprite>();
 
-    public static string PathSpriteAtlas = "Assets/Texture/SpriteAtlas";
+    public static string PathSpriteAtlas = "Assets/LoadResources/Textures/SpriteAtlas";
 
     public string PathAtlasForFurniture = $"{PathSpriteAtlas}/AtlasForFurniture.spriteatlas";
     public string PathAtlasForFloor = $"{PathSpriteAtlas}/AtlasForFloor.spriteatlas";
