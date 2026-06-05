@@ -334,6 +334,8 @@ public partial class UIMainCreate : BaseUIComponent,
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataBean gameData = new GameDataBean();
+        //初始化游戏起始时间（221年 春季 第0天，进入游戏后会推进到第1天）
+        gameData.gameTime.SetTimeForYMD(221, 1, 0);
         gameData.innAttributes.innName = ui_ETInnName.text;
 
         gameData.userCharacter = new CharacterBean();

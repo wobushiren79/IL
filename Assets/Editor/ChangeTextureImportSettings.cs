@@ -34,7 +34,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/Auto Compressed")]
+    [MenuItem("游戏/贴图/Change Texture Format/Auto Compressed")]
     static void ChangeTextureFormat_AutoCompressed()
     {
 
@@ -44,7 +44,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/Auto 16bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/Auto 16bit")]
     static void ChangeTextureFormat_Auto16Bit()
     {
 
@@ -54,7 +54,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/Auto Truecolor")]
+    [MenuItem("游戏/贴图/Change Texture Format/Auto Truecolor")]
     static void ChangeTextureFormat_AutoTruecolor()
     {
 
@@ -64,7 +64,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB Compressed DXT1")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB Compressed DXT1")]
 
     static void ChangeTextureFormat_RGB_DXT1()
     {
@@ -75,7 +75,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB Compressed DXT5")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB Compressed DXT5")]
 
     static void ChangeTextureFormat_RGB_DXT5()
     {
@@ -86,7 +86,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB 16 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB 16 bit")]
 
     static void ChangeTextureFormat_RGB_16bit()
     {
@@ -97,7 +97,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB 24 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB 24 bit")]
 
     static void ChangeTextureFormat_RGB_24bit()
     {
@@ -108,7 +108,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/Alpha 8 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/Alpha 8 bit")]
 
     static void ChangeTextureFormat_Alpha_8bit()
     {
@@ -119,7 +119,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/ARGB 16 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/ARGB 16 bit")]
 
     static void ChangeTextureFormat_RGBA_16bit()
     {
@@ -130,7 +130,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGBA 32 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGBA 32 bit")]
 
     static void ChangeTextureFormat_RGBA_32bit()
     {
@@ -141,7 +141,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/ARGB 32 bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/ARGB 32 bit")]
 
     static void ChangeTextureFormat_ARGB_32bit()
     {
@@ -152,7 +152,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB PVRTC 2bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB PVRTC 2bit")]
 
     static void ChangeTextureFormat_RGB_PVRTC_2bit()
     {
@@ -163,7 +163,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGBA PVRTC 2bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGBA PVRTC 2bit")]
 
     static void ChangeTextureFormat_RGBA_PVRTC_2bit()
     {
@@ -174,7 +174,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGB PVRTC 4bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGB PVRTC 4bit")]
 
     static void ChangeTextureFormat_RGB_PVRTC_4bit()
     {
@@ -185,7 +185,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Format/RGBA PVRTC 4bit")]
+    [MenuItem("游戏/贴图/Change Texture Format/RGBA PVRTC 4bit")]
 
     static void ChangeTextureFormat_RGBA_PVRTC_4bit()
     {
@@ -200,7 +200,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/32")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/32")]
 
     static void ChangeTextureSize_32()
     {
@@ -211,7 +211,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/64")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/64")]
 
     static void ChangeTextureSize_64()
     {
@@ -222,7 +222,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/128")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/128")]
 
     static void ChangeTextureSize_128()
     {
@@ -233,7 +233,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/256")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/256")]
 
     static void ChangeTextureSize_256()
     {
@@ -244,7 +244,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/512")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/512")]
 
     static void ChangeTextureSize_512()
     {
@@ -255,7 +255,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/1024")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/1024")]
 
     static void ChangeTextureSize_1024()
     {
@@ -266,7 +266,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/2048")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/2048")]
 
     static void ChangeTextureSize_2048()
     {
@@ -277,7 +277,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Texture Size/Change Max Texture Size/16384")]
+    [MenuItem("游戏/贴图/Change Texture Size/Change Max Texture Size/16384")]
 
     static void ChangeTextureSize_16384()
     {
@@ -291,7 +291,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change MipMap/Enable MipMap")]
+    [MenuItem("游戏/贴图/Change MipMap/Enable MipMap")]
 
     static void ChangeMipMap_On()
     {
@@ -302,7 +302,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change MipMap/Disable MipMap")]
+    [MenuItem("游戏/贴图/Change MipMap/Disable MipMap")]
 
     static void ChangeMipMap_Off()
     {
@@ -319,7 +319,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Non Power of 2/None")]
+    [MenuItem("游戏/贴图/Change Non Power of 2/None")]
 
     static void ChangeNPOT_None()
     {
@@ -330,7 +330,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Non Power of 2/ToNearest")]
+    [MenuItem("游戏/贴图/Change Non Power of 2/ToNearest")]
 
     static void ChangeNPOT_ToNearest()
     {
@@ -341,7 +341,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Non Power of 2/ToLarger")]
+    [MenuItem("游戏/贴图/Change Non Power of 2/ToLarger")]
 
     static void ChangeNPOT_ToLarger()
     {
@@ -352,7 +352,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Non Power of 2/ToSmaller")]
+    [MenuItem("游戏/贴图/Change Non Power of 2/ToSmaller")]
 
     static void ChangeNPOT_ToSmaller()
     {
@@ -367,7 +367,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Is Readable/Enable")]
+    [MenuItem("游戏/贴图/Change Is Readable/Enable")]
 
     static void ChangeIsReadable_Yes()
     {
@@ -378,7 +378,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
 
-    [MenuItem("Custom/Texture/Change Is Readable/Disable")]
+    [MenuItem("游戏/贴图/Change Is Readable/Disable")]
 
     static void ChangeIsReadable_No()
     {

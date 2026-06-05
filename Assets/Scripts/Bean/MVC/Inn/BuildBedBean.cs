@@ -6,7 +6,6 @@ using System.Collections.Generic;
 [Serializable]
 public class BuildBedBean : BaseBean
 {
-    public long id;
     //床的名字
     public string bedName;
 

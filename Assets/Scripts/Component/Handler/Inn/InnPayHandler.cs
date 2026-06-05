@@ -142,7 +142,7 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public void ShowPayEffects(Vector3 position, long priceL, long priceM, long priceS)
     {
-        GameObject payEffectsModel = LoadAddressablesUtil.LoadAssetSync<GameObject>("PayMoney");
+        GameObject payEffectsModel = LoadAddressablesUtil.LoadAssetSync<GameObject>("Assets/Prefabs/Effects/Other/PayMoney.prefab");
         GameObject payEffects = Instantiate(gameObject, payEffectsModel);
         payEffects.transform.position = position;
         payEffects.transform.rotation = new Quaternion();

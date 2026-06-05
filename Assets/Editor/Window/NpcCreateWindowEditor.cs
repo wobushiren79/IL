@@ -20,7 +20,7 @@ public class NpcCreateWindowEditor : EditorWindow
     public List<NpcTeamBean> listNpcTeamDataForFind = new List<NpcTeamBean>();
     public Dictionary<long, List<TextInfoBean>> mapNpcTeamTalkInfoForFind = new Dictionary<long, List<TextInfoBean>>();
 
-    [MenuItem("Tools/Window/NpcCreate")]
+    [MenuItem("游戏/NPC创建")]
     static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(NpcCreateWindowEditor));

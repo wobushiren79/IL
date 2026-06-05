@@ -8,7 +8,7 @@ public class ItemCreateWindowsEditor : EditorWindow
     StoreInfoManager storeInfoManager;
     InnBuildManager innBuildManager;
 
-    [MenuItem("Tools/Window/ItemCreate")]
+    [MenuItem("游戏/物品创建")]
     static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(ItemCreateWindowsEditor));

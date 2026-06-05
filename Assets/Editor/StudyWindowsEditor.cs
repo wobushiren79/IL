@@ -13,7 +13,7 @@ public class StudyWindowsEditor : EditorWindow
 
     private StudyEnum mStudyEnum = StudyEnum.A;
     private GameObject mGameObject ;
-    [MenuItem("Tools/Window/Study")]
+    [MenuItem("游戏/学习")]
     static void CreateTestWindows()
     {
         EditorWindow.GetWindow(typeof(StudyWindowsEditor));

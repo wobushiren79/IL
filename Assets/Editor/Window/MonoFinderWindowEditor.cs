@@ -13,7 +13,7 @@ public class MonoFinderWindowEditor  : EditorWindow
 
     List<Transform> results = new List<Transform>();
 
-    [MenuItem("Tools/Finder/MonoFinder")]
+    [MenuItem("游戏/Mono查找")]
     static void Init()
     {
         EditorWindow.GetWindow(typeof(MonoFinderWindowEditor));

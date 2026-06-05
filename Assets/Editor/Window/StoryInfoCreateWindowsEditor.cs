@@ -5,7 +5,7 @@ using static CharacterExpressionCpt;
 
 public class StoryInfoCreateWindowsEditor : EditorWindow
 {
-    [MenuItem("Tools/Window/StoryCreate")]
+    [MenuItem("游戏/剧情创建")]
     static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(StoryInfoCreateWindowsEditor));

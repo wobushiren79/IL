@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class DatabaseResourceWindowsEditor : EditorWindow
 {
-    [MenuItem("Tools/Window/DatabaseResource")]
+    [MenuItem("游戏/数据库资源")]
     static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(DatabaseResourceWindowsEditor));

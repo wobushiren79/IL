@@ -4,7 +4,7 @@ using UnityEditor;
 public class GameAnimEditor : AnimEditor
 {
 
-    [MenuItem("Custom/Anim/CreateAnimForUI")]
+    [MenuItem("游戏/动画/CreateAnimForUI")]
     public static void CreateAnimForUI()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -14,7 +14,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForMask")]
+    [MenuItem("游戏/动画/CreateAnimForMask")]
     public static void CreateAnimForMask()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -24,7 +24,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForHat")]
+    [MenuItem("游戏/动画/CreateAnimForHat")]
     public static void CreateAnimForHat()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -34,7 +34,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForClothes")]
+    [MenuItem("游戏/动画/CreateAnimForClothes")]
     public static void CreateAnimForClothes()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -44,7 +44,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForShoes")]
+    [MenuItem("游戏/动画/CreateAnimForShoes")]
     public static void CreateAnimForShoes()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -54,7 +54,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForItems")]
+    [MenuItem("游戏/动画/CreateAnimForItems")]
     public static void CreateAnimForItems()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
@@ -64,7 +64,7 @@ public class GameAnimEditor : AnimEditor
         }
     }
 
-    [MenuItem("Custom/Anim/CreateAnimForFood")]
+    [MenuItem("游戏/动画/CreateAnimForFood")]
     public static void CreateAnimForFood()
     {
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);

@@ -6,7 +6,7 @@ public class BaseDataWindowsEditor : EditorWindow
 {
     public List<BaseInfoBean> listBaseData;
 
-    [MenuItem("Tools/Window/BaseData")]
+    [MenuItem("游戏/基础数据")]
     static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(BaseDataWindowsEditor));
