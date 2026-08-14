@@ -38,6 +38,19 @@ IL 项目的 Claude Code 工具链分三层：**Commands**（结构化代码生�
 | `/il-gamble-scaffold` | 赌博子游戏脚手架（Bean/UI/Item，轻量） |
 | `/il-datetime-check` | 日期/时间系统审计（gameTime 初始化哨兵、历法常量一致性、季节映射、特殊日期比对、日历显示链路） |
 
+## 框架层开发 Skills（共享框架，从同源框架项目迁移）
+
+| Skill | 用途 |
+|---|---|
+| `/framework-core-system` | 框架核心基类（BaseMonoBehaviour / BaseSingleton / BaseManager / BaseHandler 配对 / BaseMVCService / BaseUI* / AutoLinkUI） |
+| `/event-system` | 事件系统（EventHandler 全局 / BaseEvent 实例 / EventsInfo 常量） |
+| `/resource-loading-system` | 资源加载（Addressables / Resources / AssetBundle / WWW + 缓存） |
+| `/ui-framework` | UI 框架（BaseUIInit / BaseUIView / UIHandler / 弹窗气泡提示） |
+| `/utils-system` | 工具类分层规范（Utils / Extension / Tools） |
+| `/data-service-system` | 数据服务（BaseDataService\<T\> / BaseMVCService / BaseDataStorageImpl） |
+| `/editor-extension-system` | 编辑器扩展（窗口 / Inspector / Hierarchy / 代码生成） |
+| `/excel-io` | openpyxl 读写 Excel 配置表（3 行表头规范） |
+
 ## Agents（独立 spawn 的子代理）
 
 | Agent | 用途 |
@@ -50,6 +63,21 @@ IL 项目的 Claude Code 工具链分三层：**Commands**（结构化代码生�
 | `il-cn-text-extractor` | 中文硬编码字符串扫描与迁移建议 |
 | `il-minigame-balance-analyst` | 小游戏 + 赌博 数值平衡分析（胜率/奖励/期望值/职业经验分布） |
 | `il-minigame-flow-tracer` | 小游戏全流程追踪（触发→Init→Start→进行→End→Close 断点定位） |
+
+### 框架层 Agents（共享框架，从同源框架项目迁移）
+
+| Agent | 用途 |
+|---|---|
+| `framework-core` | 框架核心基础类 |
+| `framework-editor` | Unity 编辑器工具 |
+| `framework-event` | 事件系统 |
+| `framework-resource` | 资源加载 |
+| `framework-utils` | 工具类 / 扩展方法 |
+| `ui-core` | UI 核心框架 |
+| `ui-components` | UI 通用组件 |
+| `data-bean` | 数据模型 Bean |
+| `data-service` | 数据服务层 |
+| `data-excel` | Excel 配置表 |
 
 ## 关联文档
 - `.claude/md/framework.md` — 框架技术文档
