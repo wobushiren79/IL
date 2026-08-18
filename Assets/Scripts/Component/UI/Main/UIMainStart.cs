@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +33,25 @@ public partial class UIMainStart : BaseUIComponent
 
     private void Start()
     {
+        SetTexts();
+        SetVersion(ProjectConfigInfo.GAME_VERSION);
+    }
+
+    /// <summary>
+    /// 刷新UI：每次打开主界面（含语言切换后刷新）都会调用，
+    /// 保证按钮文本跟随当前语言（Start 只在首次实例化时执行一次）
+    /// </summary>
+    public override void RefreshUI(bool isOpenInit = false)
+    {
+        base.RefreshUI(isOpenInit);
+        SetTexts();
+    }
+
+    /// <summary>
+    /// 设置主界面按钮文本（语言相关）
+    /// </summary>
+    private void SetTexts()
+    {
         if (ui_BTStartText != null)
             ui_BTStartText.text = TextHandler.Instance.GetTextById(4011);
         if (ui_BTContinueText != null)
@@ -41,8 +60,6 @@ public partial class UIMainStart : BaseUIComponent
             ui_BTSettingText.text = TextHandler.Instance.GetTextById(4013);
         if (ui_BTExitText != null)
             ui_BTExitText.text = TextHandler.Instance.GetTextById(4014);
-
-        SetVersion(ProjectConfigInfo.GAME_VERSION);
     }
 
     public override void OpenUI()

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BackgroundAngleChangeCpt : BaseMonoBehaviour
 {
@@ -17,10 +17,14 @@ public class BackgroundAngleChangeCpt : BaseMonoBehaviour
         {
             return;
         }
-       
-        if (CameraHandler.Instance.manager.camera2D.transform.position.y >= minCameraY &&  CameraHandler.Instance.manager.camera2D.transform.position.y <= maxCameraY)
+        var camera2D = CameraHandler.Instance.manager.camera2D;
+        if (camera2D == null)
         {
-            float lerp = (CameraHandler.Instance.manager.camera2D.transform.position.y - minCameraY) / (maxCameraY - minCameraY);
+            return;
+        }
+        if (camera2D.transform.position.y >= minCameraY && camera2D.transform.position.y <= maxCameraY)
+        {
+            float lerp = (camera2D.transform.position.y - minCameraY) / (maxCameraY - minCameraY);
             transform.position = new Vector3(0, Mathf.Lerp(minUpAndDown, maxUpAndDown, lerp), 0);
         }
 

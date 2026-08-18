@@ -138,10 +138,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UseE"",
+                    ""name"": ""E"",
                     ""type"": ""Button"",
                     ""id"": ""2198c02c-14be-4198-a9df-85a424fcbe3a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -150,25 +150,34 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""b600098a-4e06-4d35-ae95-358442be91b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UserDetails"",
+                    ""name"": ""B"",
                     ""type"": ""Button"",
                     ""id"": ""b3e0f2ef-4b70-463b-95e8-a6f00c39d08e"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Drop"",
+                    ""name"": ""Q"",
                     ""type"": ""Button"",
                     ""id"": ""4792ad03-ce54-4ac9-83e6-c70b7a67f58f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""C"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f74baee-a4eb-4f91-850b-050a2c25dacf"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -427,7 +436,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""UserDetails"",
+                    ""action"": ""B"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -438,7 +447,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UserDetails"",
+                    ""action"": ""B"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -471,7 +480,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drop"",
+                    ""action"": ""Q"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -482,7 +491,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""UseE"",
+                    ""action"": ""E"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -606,6 +615,17 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MoveMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec2bd574-d1f2-4187-b28d-bb72729365f2"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -923,7 +943,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""T"",
                     ""type"": ""Button"",
                     ""id"": ""50025688-0fc4-4465-9b66-e2d7ae41e083"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -950,7 +970,16 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""I"",
                     ""type"": ""Button"",
                     ""id"": ""ed0ad51c-3c5b-41f0-a8c5-09fdd37c3dae"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""C"",
+                    ""type"": ""Button"",
+                    ""id"": ""e628fc6b-bdb6-4a27-8ab1-fb72077b0116"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1583,6 +1612,17 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""F12"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af663742-43c9-427b-88e3-7d1fc580aa93"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""C"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1657,10 +1697,11 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_UseL = m_Player.FindAction("UseL", throwIfNotFound: true);
         m_Player_UseR = m_Player.FindAction("UseR", throwIfNotFound: true);
-        m_Player_UseE = m_Player.FindAction("UseE", throwIfNotFound: true);
+        m_Player_E = m_Player.FindAction("E", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_UserDetails = m_Player.FindAction("UserDetails", throwIfNotFound: true);
-        m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
+        m_Player_B = m_Player.FindAction("B", throwIfNotFound: true);
+        m_Player_Q = m_Player.FindAction("Q", throwIfNotFound: true);
+        m_Player_C = m_Player.FindAction("C", throwIfNotFound: true);
         m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
         m_Player_Ctrl = m_Player.FindAction("Ctrl", throwIfNotFound: true);
         m_Player_ShortcutsSelect = m_Player.FindAction("ShortcutsSelect", throwIfNotFound: true);
@@ -1705,6 +1746,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_UI_N = m_UI.FindAction("N", throwIfNotFound: true);
         m_UI_P = m_UI.FindAction("P", throwIfNotFound: true);
         m_UI_I = m_UI.FindAction("I", throwIfNotFound: true);
+        m_UI_C = m_UI.FindAction("C", throwIfNotFound: true);
     }
 
     ~@GameInputActions()
@@ -1791,10 +1833,11 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_UseL;
     private readonly InputAction m_Player_UseR;
-    private readonly InputAction m_Player_UseE;
+    private readonly InputAction m_Player_E;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_UserDetails;
-    private readonly InputAction m_Player_Drop;
+    private readonly InputAction m_Player_B;
+    private readonly InputAction m_Player_Q;
+    private readonly InputAction m_Player_C;
     private readonly InputAction m_Player_Shift;
     private readonly InputAction m_Player_Ctrl;
     private readonly InputAction m_Player_ShortcutsSelect;
@@ -1831,21 +1874,25 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @UseR => m_Wrapper.m_Player_UseR;
         /// <summary>
-        /// Provides access to the underlying input action "Player/UseE".
+        /// Provides access to the underlying input action "Player/E".
         /// </summary>
-        public InputAction @UseE => m_Wrapper.m_Player_UseE;
+        public InputAction @E => m_Wrapper.m_Player_E;
         /// <summary>
         /// Provides access to the underlying input action "Player/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         /// <summary>
-        /// Provides access to the underlying input action "Player/UserDetails".
+        /// Provides access to the underlying input action "Player/B".
         /// </summary>
-        public InputAction @UserDetails => m_Wrapper.m_Player_UserDetails;
+        public InputAction @B => m_Wrapper.m_Player_B;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Drop".
+        /// Provides access to the underlying input action "Player/Q".
         /// </summary>
-        public InputAction @Drop => m_Wrapper.m_Player_Drop;
+        public InputAction @Q => m_Wrapper.m_Player_Q;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/C".
+        /// </summary>
+        public InputAction @C => m_Wrapper.m_Player_C;
         /// <summary>
         /// Provides access to the underlying input action "Player/Shift".
         /// </summary>
@@ -1903,18 +1950,21 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @UseR.started += instance.OnUseR;
             @UseR.performed += instance.OnUseR;
             @UseR.canceled += instance.OnUseR;
-            @UseE.started += instance.OnUseE;
-            @UseE.performed += instance.OnUseE;
-            @UseE.canceled += instance.OnUseE;
+            @E.started += instance.OnE;
+            @E.performed += instance.OnE;
+            @E.canceled += instance.OnE;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @UserDetails.started += instance.OnUserDetails;
-            @UserDetails.performed += instance.OnUserDetails;
-            @UserDetails.canceled += instance.OnUserDetails;
-            @Drop.started += instance.OnDrop;
-            @Drop.performed += instance.OnDrop;
-            @Drop.canceled += instance.OnDrop;
+            @B.started += instance.OnB;
+            @B.performed += instance.OnB;
+            @B.canceled += instance.OnB;
+            @Q.started += instance.OnQ;
+            @Q.performed += instance.OnQ;
+            @Q.canceled += instance.OnQ;
+            @C.started += instance.OnC;
+            @C.performed += instance.OnC;
+            @C.canceled += instance.OnC;
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
@@ -1953,18 +2003,21 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @UseR.started -= instance.OnUseR;
             @UseR.performed -= instance.OnUseR;
             @UseR.canceled -= instance.OnUseR;
-            @UseE.started -= instance.OnUseE;
-            @UseE.performed -= instance.OnUseE;
-            @UseE.canceled -= instance.OnUseE;
+            @E.started -= instance.OnE;
+            @E.performed -= instance.OnE;
+            @E.canceled -= instance.OnE;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @UserDetails.started -= instance.OnUserDetails;
-            @UserDetails.performed -= instance.OnUserDetails;
-            @UserDetails.canceled -= instance.OnUserDetails;
-            @Drop.started -= instance.OnDrop;
-            @Drop.performed -= instance.OnDrop;
-            @Drop.canceled -= instance.OnDrop;
+            @B.started -= instance.OnB;
+            @B.performed -= instance.OnB;
+            @B.canceled -= instance.OnB;
+            @Q.started -= instance.OnQ;
+            @Q.performed -= instance.OnQ;
+            @Q.canceled -= instance.OnQ;
+            @C.started -= instance.OnC;
+            @C.performed -= instance.OnC;
+            @C.canceled -= instance.OnC;
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
@@ -2052,6 +2105,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_N;
     private readonly InputAction m_UI_P;
     private readonly InputAction m_UI_I;
+    private readonly InputAction m_UI_C;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -2216,6 +2270,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @I => m_Wrapper.m_UI_I;
         /// <summary>
+        /// Provides access to the underlying input action "UI/C".
+        /// </summary>
+        public InputAction @C => m_Wrapper.m_UI_C;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_UI; }
@@ -2355,6 +2413,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @I.started += instance.OnI;
             @I.performed += instance.OnI;
             @I.canceled += instance.OnI;
+            @C.started += instance.OnC;
+            @C.performed += instance.OnC;
+            @C.canceled += instance.OnC;
         }
 
         /// <summary>
@@ -2480,6 +2541,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @I.started -= instance.OnI;
             @I.performed -= instance.OnI;
             @I.canceled -= instance.OnI;
+            @C.started -= instance.OnC;
+            @C.performed -= instance.OnC;
+            @C.canceled -= instance.OnC;
         }
 
         /// <summary>
@@ -2621,12 +2685,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseR(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "UseE" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUseE(InputAction.CallbackContext context);
+        void OnE(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2635,19 +2699,26 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "UserDetails" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "B" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUserDetails(InputAction.CallbackContext context);
+        void OnB(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Drop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDrop(InputAction.CallbackContext context);
+        void OnQ(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "C" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnC(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Shift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2950,5 +3021,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "C" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnC(InputAction.CallbackContext context);
     }
 }

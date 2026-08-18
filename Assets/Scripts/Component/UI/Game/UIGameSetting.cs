@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -95,17 +95,13 @@ public partial class UIGameSetting : BaseUIComponent,
             dvLanguage.SetCallBack(this);
             List<Dropdown.OptionData> listLanguage = new List<Dropdown.OptionData>
             {
-                new Dropdown.OptionData("简体中文")
-               //new Dropdown.OptionData("English")
+                new Dropdown.OptionData("简体中文"),
+                new Dropdown.OptionData("English")
             };
             dvLanguage.SetData(listLanguage);
-            switch (GameDataHandler.Instance.manager.GetGameConfig().language)
-            {
-                case "cn":
-                    dvLanguage.SetPosition("简体中文");
-                    break;
-            }
-
+            //按当前实际语言定位下拉框（配置为空时按 Steam/默认语言解析）
+            LanguageEnum currentLanguage = GameDataHandler.Instance.manager.GetGameConfig().GetLanguage();
+            dvLanguage.SetPosition(currentLanguage == LanguageEnum.en ? "English" : "简体中文");
         }
 
         //UI大小选择初始化
@@ -463,14 +459,23 @@ public partial class UIGameSetting : BaseUIComponent,
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (view == dvLanguage)
         {
-            string languageStr = "cn";
+            LanguageEnum languageType = LanguageEnum.cn;
             switch (optionData.text)
             {
                 case "简体中文":
-                    languageStr = "cn";
+                    languageType = LanguageEnum.cn;
+                    break;
+                case "English":
+                    languageType = LanguageEnum.en;
                     break;
             }
-            GameDataHandler.Instance.manager.GetGameConfig().language = languageStr;
+            //保存配置
+            gameConfig.SetLanguage(languageType);
+            GameDataHandler.Instance.manager.SaveGameConfig();
+            //应用语言切换
+            TextHandler.Instance.ChangeLanguageEnum(languageType);
+            //刷新所有已打开UI的多语言文本
+            RefreshLanguageForAllUI();
         }
         else if (view == dvWindow)
         {
@@ -496,6 +501,30 @@ public partial class UIGameSetting : BaseUIComponent,
         else if (view == dvCheckOut)
         {
             gameConfig.statusForCheckOut = position;
+        }
+    }
+
+    /// <summary>
+    /// 语言切换后刷新所有已打开UI的多语言文本：
+    /// 1. 刷新每个UI下的 UITextLanguageView（textId 驱动的文本）
+    /// 2. 调用每个UI的 RefreshUI（代码动态赋值的文本）
+    /// </summary>
+    public void RefreshLanguageForAllUI()
+    {
+        List<BaseUIComponent> uiList = UIHandler.Instance.manager.uiList;
+        if (uiList == null)
+            return;
+        for (int i = 0; i < uiList.Count; i++)
+        {
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI == null)
+                continue;
+            UITextLanguageView[] languageViews = itemUI.GetComponentsInChildren<UITextLanguageView>(true);
+            for (int j = 0; j < languageViews.Length; j++)
+            {
+                languageViews[j].RefreshUI();
+            }
+            itemUI.RefreshUI();
         }
     }
     #endregion

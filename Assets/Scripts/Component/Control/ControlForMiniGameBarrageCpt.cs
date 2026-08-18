@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 
 public class ControlForMiniGameBarrageCpt : ControlForMoveCpt
@@ -20,7 +20,11 @@ public class ControlForMiniGameBarrageCpt : ControlForMoveCpt
         gameObject.SetActive(true);
         this.enabled = true;
         if (cameraFollowObj != null)
-            CameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
+        {
+            var camera2D = CameraHandler.Instance.manager.camera2D;
+            if (camera2D != null)
+                camera2D.Follow = cameraFollowObj.transform;
+        }
         InitCharacter();
     }
 }

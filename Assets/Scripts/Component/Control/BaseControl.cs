@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using Unity.Cinemachine;
 
 public partial class BaseControl : BaseMonoBehaviour
 {
@@ -19,7 +20,9 @@ public partial class BaseControl : BaseMonoBehaviour
         {
             cameraFollowObj = gameObject;
         }
-        CameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
+        CinemachineVirtualCameraBase camera2D = CameraHandler.Instance.manager.camera2D;
+        if (camera2D != null)
+            camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -30,7 +33,11 @@ public partial class BaseControl : BaseMonoBehaviour
         gameObject.SetActive(true);
         this.enabled = true;
         if (cameraFollowObj != null)
-            CameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
+        {
+            CinemachineVirtualCameraBase camera2D = CameraHandler.Instance.manager.camera2D;
+            if (camera2D != null)
+                camera2D.Follow = cameraFollowObj.transform;
+        }
     }
 
     /// <summary>
@@ -48,7 +55,11 @@ public partial class BaseControl : BaseMonoBehaviour
     {
         this.enabled = true;
         if (cameraFollowObj != null)
-            CameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
+        {
+            CinemachineVirtualCameraBase camera2D = CameraHandler.Instance.manager.camera2D;
+            if (camera2D != null)
+                camera2D.Follow = cameraFollowObj.transform;
+        }
     }
 
 
@@ -90,11 +101,7 @@ public partial class BaseControl : BaseMonoBehaviour
     ///
     public void SetCameraOrthographicSize(float orthographicSize)
     {
-        if (CameraHandler.Instance.manager.camera2D != null)
-        {
-            CameraHandler.Instance.manager.camera2D.Lens.OrthographicSize = orthographicSize;
-        }
-
+        CameraHandler.Instance.manager.SetCameraOrthographicSize(orthographicSize);
     }
     public void SetCameraOrthographicSize()
     {
@@ -103,12 +110,7 @@ public partial class BaseControl : BaseMonoBehaviour
 
     public float GetCameraOrthographicSize()
     {
-        float size = 0;
-        if (CameraHandler.Instance.manager.camera2D != null)
-        {
-            size = CameraHandler.Instance.manager.camera2D.Lens.OrthographicSize;
-        }
-        return size;
+        return CameraHandler.Instance.manager.GetCameraOrthographicSize();
     }
 
 
