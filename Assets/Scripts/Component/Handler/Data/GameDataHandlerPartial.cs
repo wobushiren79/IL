@@ -40,6 +40,37 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
     }
 
     /// <summary>
+    /// 应用存档中的游戏配置（语言、窗口模式、分辨率、音量、垂直同步、帧数限制）
+    /// 游戏启动时需调用一次，否则这些配置只在设置界面修改时当场生效，重启后丢失
+    /// （UI大小已在 BaseUIManager.InitUI 中单独应用，此处不重复处理）
+    /// </summary>
+    public void ApplyGameConfig()
+    {
+        GameConfigBean gameConfig = manager.GetGameConfig();
+        //语言
+        TextHandler.Instance.InitData();
+        //窗口模式与分辨率
+        gameConfig.GetScreenResolution(out int w, out int h);
+        if (gameConfig.window == 1)
+        {
+            if (w > 0 && h > 0)
+                Screen.SetResolution(w, h, true);
+            else
+                Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+        //音量
+        AudioHandler.Instance.InitAudio();
+        //垂直同步（开启时会忽略 targetFrameRate）
+        FPSHandler.Instance.SetSyncCount(gameConfig.vsync ? 1 : 0);
+        //帧数限制
+        FPSHandler.Instance.SetData(gameConfig.stateForFrames, gameConfig.frames);
+    }
+
+    /// <summary>
     /// 协程-真实时间处理
     /// </summary>
     /// <returns></returns>
