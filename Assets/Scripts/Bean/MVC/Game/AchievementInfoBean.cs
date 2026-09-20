@@ -57,6 +57,14 @@ public partial class AchievementInfoBean : BaseBean
 	[JsonIgnore]
 	public string content_language { get => _content_language.Get(() => TextHandler.Instance.GetTextById(AchievementInfoCfg.fileName, content, 1)); set => _content_language.Set(value); }
 	private LanguageCache _content_language;
+	/// <summary>
+	/// Mod合并引用字段拼接（由Excel列头 [language]/[mode_id] 标记自动生成，请勿手改）：该行来自 Mod JsonText 时，下列字段按同一 modId 拼接，指向 Mod 自带配置/语言表的同自ID行；0=无引用不拼接
+	/// </summary>
+	public override void CombineModReferenceIds(int modId)
+	{
+		if (name > 0) name = AchievementInfoCfg.CombineModId(modId, name);
+		if (content > 0) content = AchievementInfoCfg.CombineModId(modId, content);
+	}
 }
 public partial class AchievementInfoCfg : BaseCfg<long, AchievementInfoBean>
 {
