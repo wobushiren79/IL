@@ -169,6 +169,14 @@ public partial class NpcInfoBean : BaseBean
 	[JsonIgnore]
 	public string title_name_language { get => _title_name_language.Get(() => TextHandler.Instance.GetTextById(NpcInfoCfg.fileName, title_name, 1)); set => _title_name_language.Set(value); }
 	private LanguageCache _title_name_language;
+	/// <summary>
+	/// Mod合并引用字段拼接（由Excel列头 [language]/[mode_id] 标记自动生成，请勿手改）：该行来自 Mod JsonText 时，下列字段按同一 modId 拼接，指向 Mod 自带配置/语言表的同自ID行；0=无引用不拼接
+	/// </summary>
+	public override void CombineModReferenceIds(int modId)
+	{
+		if (name > 0) name = NpcInfoCfg.CombineModId(modId, name);
+		if (title_name > 0) title_name = NpcInfoCfg.CombineModId(modId, title_name);
+	}
 }
 public partial class NpcInfoCfg : BaseCfg<long, NpcInfoBean>
 {

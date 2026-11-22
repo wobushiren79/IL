@@ -58,6 +58,13 @@ public partial class NpcTeamBean : BaseBean
 	[JsonIgnore]
 	public string name_language { get => _name_language.Get(() => TextHandler.Instance.GetTextById(NpcTeamCfg.fileName, name)); set => _name_language.Set(value); }
 	private LanguageCache _name_language;
+	/// <summary>
+	/// Mod合并引用字段拼接（由Excel列头 [language]/[mode_id] 标记自动生成，请勿手改）：该行来自 Mod JsonText 时，下列字段按同一 modId 拼接，指向 Mod 自带配置/语言表的同自ID行；0=无引用不拼接
+	/// </summary>
+	public override void CombineModReferenceIds(int modId)
+	{
+		if (name > 0) name = NpcTeamCfg.CombineModId(modId, name);
+	}
 }
 public partial class NpcTeamCfg : BaseCfg<long, NpcTeamBean>
 {
