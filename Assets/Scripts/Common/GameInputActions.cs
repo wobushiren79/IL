@@ -733,6 +733,15 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Space"",
+                    ""type"": ""Button"",
+                    ""id"": ""df4b5b26-36a5-403d-a670-30085da2eb50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""F3"",
                     ""type"": ""Button"",
                     ""id"": ""69d32d55-795e-4b2c-98c0-0aa857d4e274"",
@@ -790,6 +799,15 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""F12"",
                     ""type"": ""Button"",
                     ""id"": ""e13a7001-5d49-439c-b893-7e8f67b19c0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F11"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b7ec543-a84b-4357-adf6-2e3f0034bb91"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1538,6 +1556,17 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a8ddd864-820a-4dc2-9ef9-dc89e177bb6d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Space"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""46ff8b3f-0085-45e4-8c65-6161f684ad66"",
                     ""path"": ""<Keyboard>/f3"",
                     ""interactions"": """",
@@ -1610,6 +1639,17 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""F12"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff500589-88a6-4222-b831-2f5bd220fa46"",
+                    ""path"": ""<Keyboard>/f11"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""F11"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1719,6 +1759,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_F1 = m_UI.FindAction("F1", throwIfNotFound: true);
         m_UI_F2 = m_UI.FindAction("F2", throwIfNotFound: true);
+        m_UI_Space = m_UI.FindAction("Space", throwIfNotFound: true);
         m_UI_F3 = m_UI.FindAction("F3", throwIfNotFound: true);
         m_UI_F4 = m_UI.FindAction("F4", throwIfNotFound: true);
         m_UI_F5 = m_UI.FindAction("F5", throwIfNotFound: true);
@@ -1726,6 +1767,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_UI_F7 = m_UI.FindAction("F7", throwIfNotFound: true);
         m_UI_F8 = m_UI.FindAction("F8", throwIfNotFound: true);
         m_UI_F12 = m_UI.FindAction("F12", throwIfNotFound: true);
+        m_UI_F11 = m_UI.FindAction("F11", throwIfNotFound: true);
         m_UI_ESC = m_UI.FindAction("ESC", throwIfNotFound: true);
         m_UI_Shift = m_UI.FindAction("Shift", throwIfNotFound: true);
         m_UI_Ctrl = m_UI.FindAction("Ctrl", throwIfNotFound: true);
@@ -2078,6 +2120,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_F1;
     private readonly InputAction m_UI_F2;
+    private readonly InputAction m_UI_Space;
     private readonly InputAction m_UI_F3;
     private readonly InputAction m_UI_F4;
     private readonly InputAction m_UI_F5;
@@ -2085,6 +2128,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_F7;
     private readonly InputAction m_UI_F8;
     private readonly InputAction m_UI_F12;
+    private readonly InputAction m_UI_F11;
     private readonly InputAction m_UI_ESC;
     private readonly InputAction m_UI_Shift;
     private readonly InputAction m_UI_Ctrl;
@@ -2162,6 +2206,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @F2 => m_Wrapper.m_UI_F2;
         /// <summary>
+        /// Provides access to the underlying input action "UI/Space".
+        /// </summary>
+        public InputAction @Space => m_Wrapper.m_UI_Space;
+        /// <summary>
         /// Provides access to the underlying input action "UI/F3".
         /// </summary>
         public InputAction @F3 => m_Wrapper.m_UI_F3;
@@ -2189,6 +2237,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/F12".
         /// </summary>
         public InputAction @F12 => m_Wrapper.m_UI_F12;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/F11".
+        /// </summary>
+        public InputAction @F11 => m_Wrapper.m_UI_F11;
         /// <summary>
         /// Provides access to the underlying input action "UI/ESC".
         /// </summary>
@@ -2332,6 +2384,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @F2.started += instance.OnF2;
             @F2.performed += instance.OnF2;
             @F2.canceled += instance.OnF2;
+            @Space.started += instance.OnSpace;
+            @Space.performed += instance.OnSpace;
+            @Space.canceled += instance.OnSpace;
             @F3.started += instance.OnF3;
             @F3.performed += instance.OnF3;
             @F3.canceled += instance.OnF3;
@@ -2353,6 +2408,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @F12.started += instance.OnF12;
             @F12.performed += instance.OnF12;
             @F12.canceled += instance.OnF12;
+            @F11.started += instance.OnF11;
+            @F11.performed += instance.OnF11;
+            @F11.canceled += instance.OnF11;
             @ESC.started += instance.OnESC;
             @ESC.performed += instance.OnESC;
             @ESC.canceled += instance.OnESC;
@@ -2460,6 +2518,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @F2.started -= instance.OnF2;
             @F2.performed -= instance.OnF2;
             @F2.canceled -= instance.OnF2;
+            @Space.started -= instance.OnSpace;
+            @Space.performed -= instance.OnSpace;
+            @Space.canceled -= instance.OnSpace;
             @F3.started -= instance.OnF3;
             @F3.performed -= instance.OnF3;
             @F3.canceled -= instance.OnF3;
@@ -2481,6 +2542,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @F12.started -= instance.OnF12;
             @F12.performed -= instance.OnF12;
             @F12.canceled -= instance.OnF12;
+            @F11.started -= instance.OnF11;
+            @F11.performed -= instance.OnF11;
+            @F11.canceled -= instance.OnF11;
             @ESC.started -= instance.OnESC;
             @ESC.performed -= instance.OnESC;
             @ESC.canceled -= instance.OnESC;
@@ -2833,6 +2897,13 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnF2(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "Space" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpace(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "F3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -2881,6 +2952,13 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnF12(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "F11" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnF11(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ESC" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

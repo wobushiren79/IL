@@ -334,11 +334,16 @@ public partial class UIMainCreate : BaseUIComponent,
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataBean gameData = new GameDataBean();
+        //生成新存档ID（存档按 UserId_ 前缀目录区分，为空会导致所有新号共用根目录Base互相覆盖）
+        gameData.userId = "UserId_" + System.Guid.NewGuid().ToString("N");
         //初始化游戏起始时间（221年 春季 第0天，进入游戏后会推进到第1天）
         gameData.gameTime.SetTimeForYMD(221, 1, 0);
         gameData.innAttributes.innName = ui_ETInnName.text;
+        //初始化默认客栈（9x9，含门/炉灶/柜台/桌椅；不初始化的话进场景StartBuild会用空数据清空客栈）
+        gameData.GetInnBuildData().InitDefaultData();
 
         gameData.userCharacter = new CharacterBean();
+        gameData.userCharacter.baseInfo.characterId = gameData.userId;
         gameData.userCharacter.baseInfo.name = ui_ETUserName.text;
         gameData.userCharacter.body = ui_CharacterUI.characterBodyData;
         gameData.userCharacter.equips = ui_CharacterUI.characterEquipData;

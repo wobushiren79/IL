@@ -69,6 +69,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3168077917463717860
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -87,6 +88,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -108,9 +111,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -597549249
   m_SortingLayer: 8
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -9033058693428045840, guid: 5d452fd6aa62bba4eaf30244d625b2f8,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.29803923}
@@ -121,7 +126,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &984426314346972032
 GameObject:
@@ -267,18 +271,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildItemData:
     id: 0
-    valid: 0
-    name_cn: 
-    name_en: 
-    build_id: 0
     build_type: 0
     model_name: 
     icon_key: 
     icon_list: 
     tile_name: 
-    name: 
-    content: 
+    valid: 0
     aesthetics: 0
+    name: 0
+    content: 0
   itemData:
     itemId: 0
     itemNumber: 0
@@ -317,6 +318,7 @@ SortingGroup:
   m_SortingLayer: 9
   m_SortingOrder: 0
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &3248474746089359934
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +479,7 @@ SortingGroup:
   m_SortingLayer: 9
   m_SortingOrder: 1
   m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &5375911963975835625
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +669,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6140205839723701954
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -684,6 +688,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -705,9 +711,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -63496745
   m_SortingLayer: 9
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 8744754548728704970, guid: 5d452fd6aa62bba4eaf30244d625b2f8,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -718,7 +726,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8664466819423704459
 GameObject:

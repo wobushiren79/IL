@@ -34,6 +34,31 @@ public class InnBuildBean
     public int buildInnSecondHeight = 0;
 
     /// <summary>
+    /// 初始化新号的默认客栈（9x9：门、炉灶、柜台、5张桌子，并生成墙和地板）
+    /// 注意：必须先放门再生成墙，InitWall 会移除门所占用的墙体
+    /// </summary>
+    public void InitDefaultData()
+    {
+        //默认门（客栈正门，底边3格宽）
+        AddFurniture(1, new InnResBean(90001, new Vector3(4.5f, 0.5f),
+            new List<Vector3> { new Vector3(4, 0), new Vector3(5, 0), new Vector3(6, 0) }, Direction2DEnum.Left));
+        //默认炉灶（右上厨房区）
+        AddFurniture(1, new InnResBean(40001, new Vector3(6.5f, 6.5f),
+            new List<Vector3> { new Vector3(7, 5), new Vector3(6, 5), new Vector3(7, 6), new Vector3(6, 6), new Vector3(7, 7), new Vector3(6, 7), new Vector3(8, 6) }, Direction2DEnum.Right));
+        //默认柜台（右下）
+        AddFurniture(1, new InnResBean(50001, new Vector3(6.5f, 2.5f),
+            new List<Vector3> { new Vector3(7, 3), new Vector3(8, 3), new Vector3(7, 2), new Vector3(8, 2), new Vector3(7, 1), new Vector3(8, 1), new Vector3(6, 2) }, Direction2DEnum.Left));
+        //默认5张桌子（左侧一列，每桌带1把椅子）
+        for (int i = 0; i < 5; i++)
+        {
+            AddFurniture(1, new InnResBean(30001, new Vector3(3.5f, 6.5f - i),
+                new List<Vector3> { new Vector3(4, 6 - i), new Vector3(3, 6 - i) }, Direction2DEnum.Right));
+        }
+        //生成默认墙（自动移除门所占墙体）和地板
+        ChangeInnSize(1, 9, 9);
+    }
+
+    /// <summary>
     /// 改变客栈大小
     /// </summary>
     /// <param name="width"></param>

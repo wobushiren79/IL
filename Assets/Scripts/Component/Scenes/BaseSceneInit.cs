@@ -11,6 +11,8 @@ public class BaseSceneInit : BaseMonoBehaviour
 
     public virtual void Start()
     {
+        //各场景打开UI前，先按已保存配置同步运行时语言
+        TextHandler.Instance.InitData();
         GameTimeHandler.Instance.SetTimeStop();
         StartCoroutine(BuildNavMesh());
     }

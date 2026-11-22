@@ -346,6 +346,7 @@ public class UIGameText : BaseUIComponent
     /// <param name="listData"></param>
     public void SetTextInfoData(List<TextInfoBean> listData)
     {
+        TextInfoHandler.Instance.manager.listTextData = listData;
         ShowText(listData);
         if (callBack != null)
             callBack.UITextInitReady();

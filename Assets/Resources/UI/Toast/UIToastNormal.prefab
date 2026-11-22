@@ -38,7 +38,6 @@ RectTransform:
   - {fileID: 3777485672350929052}
   - {fileID: 3777485671273384983}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -95,8 +94,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a42f9f5d8e60c44863b684af222968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ivIcon: {fileID: 8578684966146102656}
-  tvContent: {fileID: 3777485671273384982}
+  uiOpenAnimType: 0
+  uiOpenAnimTarget: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  ui_Icon: {fileID: 3777485672350929055}
+  ui_Content: {fileID: 3777485671273384982}
+  ui_ContentPro: {fileID: 0}
   cgToast: {fileID: 270189705851342989}
 --- !u!225 &270189705851342989
 CanvasGroup:
@@ -204,11 +207,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3777485670742464904}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 280, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 280, y: -45}
   m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3777485671273384969
@@ -334,7 +336,6 @@ RectTransform:
   m_Children:
   - {fileID: 6236404356391456041}
   m_Father: {fileID: 3777485670742464904}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -410,7 +411,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3777485672350929052}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

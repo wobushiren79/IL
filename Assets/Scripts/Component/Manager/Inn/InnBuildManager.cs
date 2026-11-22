@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 
 public class InnBuildManager : BaseManager
 {
-    //建造物品数据
+    //建造物品数据（已废弃：配置统一走 BuildItemCfg.GetItemData，此字典无任何赋值来源，保留仅为兼容旧引用）
     public Dictionary<long, BuildItemBean> listBuildData;
 
     //墙体tile列表
@@ -137,7 +137,8 @@ public class InnBuildManager : BaseManager
     /// <returns></returns>
     public BuildItemBean GetBuildDataById(long id)
     {
-        return GetDataById(id, listBuildData);
+        //配置统一走静态Cfg（旧的listBuildData字典字段已无人赋值，直接查会返回null）
+        return BuildItemCfg.GetItemData(id);
     }
 
     /// <summary>
