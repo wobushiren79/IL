@@ -24,6 +24,8 @@ watched_files:
 - **AnimSearchWindow** - 动画搜索
 - **ImageResWindow** - 图片资源管理
 - **PixelArtPreviewWindow** - 像素图预览工具（多文件夹选择/拖拽 → Grid 预览全部图片 → 点击 Ping 定位；虚拟滚动 + AssetPreview 异步缩略图 + 预览缓存优化大量图片）
+- **PixelDaEditorWindow** - AI 像素美术生成工具（专项开发使用 `pixelda` agent）
+- **PixelImageEditorWindow** - 像素图重采样、编辑、调色与排版（专项开发使用 `pixel-image-editor` agent）
 
 ### Inspector 扩展
 - **InspectorBaseUIComponent** - UI 组件 Inspector

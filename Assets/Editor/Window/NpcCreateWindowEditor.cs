@@ -610,7 +610,7 @@ public class NpcCreateWindowEditor : EditorWindow
             case NpcTeamTypeEnum.Disappointed:
                 GUILayout.BeginHorizontal();
                 EditorUI.GUIText("持续时间", 60);
-                teamData.effect_time = EditorGUILayout.TextField(teamData.effect_time + "", GUILayout.Width(70));
+                teamData.effect_time = EditorGUILayout.FloatField(teamData.effect_time, GUILayout.Width(70));
                 EditorUI.GUIText("对话markId(,)", 90);
                 teamData.talk_ids = EditorGUILayout.TextField(teamData.talk_ids + "", GUILayout.Width(160));
                 EditorUI.GUIText("喊话markId(,)", 90);

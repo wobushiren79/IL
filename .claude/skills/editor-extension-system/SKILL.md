@@ -34,7 +34,8 @@ EditorWindow (Unity)
 ├── ProjectAssetCollectorWindow    # 项目资源收集器
 ├── PixelArtPreviewWindow          # 像素图预览工具（多文件夹拖拽→Grid预览→点击Ping定位；虚拟滚动+AssetPreview异步缩略图）
 ├── StyleBaseWindow                # 样式基础窗口
-└── PixelDaEditorWindow            # PixelDa 像素美术生成 (AI 文生图/图编辑/图生视频/抽帧/音乐)
+├── PixelDaEditorWindow            # PixelDa 像素美术生成（详见 pixelda Skill）
+└── PixelImageEditorWindow         # 像素图重采样/编辑/调色/排版（详见 pixel-image-editor Skill）
 
 项目编辑器（Assets/Editor/，游戏专属）：
 ├── StoryCreateEditor              # 故事/剧情创建

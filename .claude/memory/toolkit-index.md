@@ -51,6 +51,21 @@ IL 项目的 Claude Code 工具链分三层：**Commands**（结构化代码生�
 | `/editor-extension-system` | 编辑器扩展（窗口 / Inspector / Hierarchy / 代码生成） |
 | `/excel-io` | openpyxl 读写 Excel 配置表（3 行表头规范） |
 
+## 通用工作流与 Unity/美术工具 Skills
+
+| Skill | 用途 |
+|---|---|
+| `/commit` | 按 IL 模块归类改动，生成中文提交信息并在显式调用时提交 |
+| `/diagnosing-bugs` | 复现→最小化→假设→插桩→修复→回归的根因排查纪律 |
+| `/grill` | 高歧义/高风险需求的决策分支盘问与收敛 |
+| `/writing-great-skills` | Skill 新建、修改与体检的质量参考 |
+| `/unity-mcp-connection` | Unity MCP 检测、连接、实例选择与 JSON-RPC 调用 |
+| `/pixelda` | PixelDa AI 像素美术生成编辑器工具开发 |
+| `/pixel-image-editor` | 像素图重采样、编辑、调色、排版与导出工具开发 |
+| `/aseprite-pixel-editor` | Aseprite CLI/Lua 源文件检查、非覆盖编辑与预览验收 |
+| `/aseprite-ai-artist` | Aseprite AI Artist 原生像素网格绘制、修复与检查 |
+| `/blender-scene-from-reference` | 参考图重建 Blender 场景与 Unity 独立验收/入库流程 |
+
 ## Agents（独立 spawn 的子代理）
 
 | Agent | 用途 |
@@ -78,6 +93,23 @@ IL 项目的 Claude Code 工具链分三层：**Commands**（结构化代码生�
 | `data-bean` | 数据模型 Bean |
 | `data-service` | 数据服务层 |
 | `data-excel` | Excel 配置表 |
+
+### 通用工具与共享系统 Agents
+
+| Agent | 用途 |
+|---|---|
+| `unity-mcp` | Unity MCP 连接检测、实例选择与调用诊断 |
+| `pixelda` | PixelDa 编辑器工具维护 |
+| `pixel-image-editor` | 像素图编辑器工具维护 |
+| `blender-scene-artist` | Blender 场景重建与 Unity 验收交付 |
+| `system-network` | UnityWebRequest、网络回调与网络资源加载 |
+| `system-steam` | Steamworks.NET、排行榜、统计与创意工坊 |
+| `system-audio` | 音频播放、环境音、循环音源池与 UI 音频组件 |
+| `system-camera` | 主/UI 摄像机引用与通用 Cinemachine 控制 |
+| `system-effect` | 特效加载、播放、池化与回收 |
+| `system-spine` | Spine 资源、动画、皮肤与 SpineWindow 开发 |
+| `system-localization` | 文本读取、语言切换、UI 绑定与动态占位符 |
+| `system-volume` | URP Volume、景深、内置雾与环境渲染状态 |
 
 ## 关联文档
 - `.claude/md/framework.md` — 框架技术文档
